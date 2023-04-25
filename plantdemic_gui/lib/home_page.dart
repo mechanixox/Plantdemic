@@ -46,72 +46,83 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            backgroundColor: Color.fromRGBO(54, 145, 236, 1),
-            expandedHeight: 50,
-            pinned: true,
-            floating: true,
-            flexibleSpace: FlexibleSpaceBar(
-              background: Container(
-                color: Color.fromRGBO(71, 173, 86, 1),
+      body: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+          color: Color.fromARGB(255, 255, 255, 255),
+        ),
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              backgroundColor: Color.fromRGBO(54, 145, 236, 1),
+              expandedHeight: 80,
+              pinned: true,
+              floating: true,
+              elevation: 0,
+              flexibleSpace: FlexibleSpaceBar(
+                background: Container(
+                  color: Color.fromRGBO(71, 173, 86, 1),
+                ),
               ),
-            ),
-            title: Text(
-              appBarTitles[selectedIndex],
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 24,
-                color: Colors.white,
+              //titleSpacing: 0,
+              title: Container(
+                padding: EdgeInsets.only(top: 30.0, bottom: 20.0),
+                alignment: Alignment.center,
+                child: Text(
+                  appBarTitles[selectedIndex],
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                    color: Colors.white,
+                  ),
+                ),
               ),
-            ),
-            // pinned: true,
-            // floating: true,
-            bottom: PreferredSize(
-              preferredSize: Size.fromHeight(20),
-              child: Container(
-                height: 20,
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Text(
-                    appBarLabels[selectedIndex],
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
+              bottom: PreferredSize(
+                preferredSize: Size.fromHeight(40),
+                child: Container(
+                  height: 40,
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 5.0),
+                    child: Text(
+                      appBarLabels[selectedIndex],
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-          SliverFillRemaining(
-            child: tabs[selectedIndex],
-          ),
-          SliverToBoxAdapter(
-              child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Container(
-                height: 400,
-                color: Colors.deepPurple,
-              ),
+            SliverFillRemaining(
+              child: tabs[selectedIndex],
             ),
-          )),
-          SliverToBoxAdapter(
-              child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Container(
-                height: 400,
-                color: Color.fromARGB(255, 146, 116, 198),
+            SliverToBoxAdapter(
+                child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Container(
+                  height: 400,
+                  color: Colors.deepPurple,
+                ),
               ),
-            ),
-          )),
-        ],
+            )),
+            SliverToBoxAdapter(
+                child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Container(
+                  height: 400,
+                  color: Color.fromARGB(255, 146, 116, 198),
+                ),
+              ),
+            )),
+          ],
+        ),
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(

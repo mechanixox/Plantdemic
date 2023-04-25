@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'home_page.dart';
+import 'splash.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MaterialApp(
+    routes: {
+      '/': (context) => Splash(),
+      '/homepage': (context) => HomePage(),
+    },
+  ));
 }
 
 class MyApp extends StatelessWidget {

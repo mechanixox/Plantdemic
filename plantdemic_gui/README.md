@@ -1,6 +1,6 @@
-# flutter_dev
+# Plantdemic GUI
 
-A new Flutter project.
+a minimalistic UI for this app
 
 ## Getting Started
 

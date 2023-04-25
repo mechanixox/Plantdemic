@@ -8,6 +8,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -28,10 +29,90 @@ class _HomePageState extends State<HomePage> {
     UserRecords(),
   ];
 
+  final List<String> appBarTitles = [
+    'Delivery',
+    'Inventory',
+    'Receipt',
+    'Records',
+  ];
+
+  final List<String> appBarLabels = [
+    'Track incoming and outgoing plants',
+    'Manage your inventory',
+    'Capture a receipt',
+    'Review financial performance',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: tabs[selectedIndex],
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            backgroundColor: Color.fromRGBO(54, 145, 236, 1),
+            expandedHeight: 50,
+            pinned: true,
+            floating: true,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Container(
+                color: Color.fromRGBO(71, 173, 86, 1),
+              ),
+            ),
+            title: Text(
+              appBarTitles[selectedIndex],
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 24,
+                color: Colors.white,
+              ),
+            ),
+            // pinned: true,
+            // floating: true,
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(20),
+              child: Container(
+                height: 20,
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Text(
+                    appBarLabels[selectedIndex],
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SliverFillRemaining(
+            child: tabs[selectedIndex],
+          ),
+          SliverToBoxAdapter(
+              child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Container(
+                height: 400,
+                color: Colors.deepPurple,
+              ),
+            ),
+          )),
+          SliverToBoxAdapter(
+              child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Container(
+                height: 400,
+                color: Color.fromARGB(255, 146, 116, 198),
+              ),
+            ),
+          )),
+        ],
+      ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: Color.fromARGB(255, 241, 244, 241),

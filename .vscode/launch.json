@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "plantdemic_gui",
+            "cwd": "plantdemic_gui",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "plantdemic_gui (profile mode)",
+            "cwd": "plantdemic_gui",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "plantdemic_gui (release mode)",
+            "cwd": "plantdemic_gui",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

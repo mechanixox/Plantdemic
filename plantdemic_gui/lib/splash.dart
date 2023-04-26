@@ -44,8 +44,8 @@ class _SplashState extends State<Splash> {
             Container(
               child: Lottie.network(
                 'https://assets4.lottiefiles.com/private_files/lf30_gnkqx2xe.json',
-                height: 200,
-                width: 200,
+                height: 150,
+                width: 150,
                 fit: BoxFit.contain,
               ),
             ),
@@ -64,13 +64,13 @@ class _SplashState extends State<Splash> {
                       ).createShader(bounds);
                     },
                     child: Padding(
-                      padding: const EdgeInsets.only(bottom: 100),
+                      padding: const EdgeInsets.only(bottom: 0),
                       child: Text(
                         'Plantdemic',
                         style: TextStyle(
                           fontFamily: 'Arial',
                           fontWeight: FontWeight.bold,
-                          fontSize: 28,
+                          fontSize: 26,
                         ),
                       ),
                     ),

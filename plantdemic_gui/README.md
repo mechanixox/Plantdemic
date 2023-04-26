@@ -1,6 +1,6 @@
 # Plantdemic GUI
 
-a minimalistic UI for this app
+in progress...
 
 ## Getting Started
 

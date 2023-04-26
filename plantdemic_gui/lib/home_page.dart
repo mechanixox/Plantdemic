@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dev/tabs/delivery.dart';
-import 'package:flutter_dev/tabs/inventory.dart';
-import 'package:flutter_dev/tabs/receipt.dart';
-import 'package:flutter_dev/tabs/records.dart';
-//import 'package:flutter_dev/const.dart';
+import 'package:plantdemic/tabs/delivery.dart';
+import 'package:plantdemic/tabs/inventory.dart';
+import 'package:plantdemic/tabs/receipt.dart';
+import 'package:plantdemic/tabs/records.dart';
+
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
@@ -46,83 +46,55 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-          color: Color.fromARGB(255, 255, 255, 255),
-        ),
-        child: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              backgroundColor: Color.fromRGBO(54, 145, 236, 1),
-              expandedHeight: 80,
-              pinned: true,
-              floating: true,
-              elevation: 0,
-              flexibleSpace: FlexibleSpaceBar(
-                background: Container(
-                  color: Color.fromRGBO(71, 173, 86, 1),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            backgroundColor: Color.fromRGBO(3, 89, 86, 1),
+            expandedHeight: 80,
+            pinned: true,
+            floating: true,
+            elevation: 0,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Container(
+                color: Color.fromRGBO(71, 173, 86, 1),
+              ),
+            ),
+            title: Container(
+              padding: EdgeInsets.only(top: 30.0, bottom: 20.0),
+              alignment: Alignment.center,
+              child: Text(
+                appBarTitles[selectedIndex],
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Arial',
+                  fontSize: 24,
+                  color: Colors.white,
                 ),
               ),
-              //titleSpacing: 0,
-              title: Container(
-                padding: EdgeInsets.only(top: 30.0, bottom: 20.0),
+            ),
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(40),
+              child: Container(
+                height: 40,
                 alignment: Alignment.center,
-                child: Text(
-                  appBarTitles[selectedIndex],
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              bottom: PreferredSize(
-                preferredSize: Size.fromHeight(40),
-                child: Container(
-                  height: 40,
-                  alignment: Alignment.center,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 5.0),
-                    child: Text(
-                      appBarLabels[selectedIndex],
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 5.0),
+                  child: Text(
+                    appBarLabels[selectedIndex],
+                    style: TextStyle(
+                      fontFamily: 'Arial',
+                      fontSize: 16,
+                      color: Colors.white,
                     ),
                   ),
                 ),
               ),
             ),
-            SliverFillRemaining(
-              child: tabs[selectedIndex],
-            ),
-            SliverToBoxAdapter(
-                child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Container(
-                  height: 400,
-                  color: Colors.deepPurple,
-                ),
-              ),
-            )),
-            SliverToBoxAdapter(
-                child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Container(
-                  height: 400,
-                  color: Color.fromARGB(255, 146, 116, 198),
-                ),
-              ),
-            )),
-          ],
-        ),
+          ),
+          SliverFillRemaining(
+            child: tabs[selectedIndex],
+          ),
+        ],
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
@@ -154,21 +126,41 @@ class _HomePageState extends State<HomePage> {
                 icon: Icons.shopping_basket_outlined,
                 iconColor: Color.fromARGB(255, 111, 109, 109),
                 text: 'Delivery',
+                textStyle: TextStyle(
+                    fontFamily: 'Arial',
+                    //fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: 15),
               ),
               GButton(
                 icon: Icons.inventory_2_outlined,
                 iconColor: Color.fromARGB(255, 111, 109, 109),
                 text: 'Inventory',
+                textStyle: TextStyle(
+                    fontFamily: 'Arial',
+                    //fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: 15),
               ),
               GButton(
                 icon: Icons.receipt_outlined,
                 iconColor: Color.fromARGB(255, 111, 109, 109),
                 text: 'Receipt',
+                textStyle: TextStyle(
+                    fontFamily: 'Arial',
+                    //fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: 15),
               ),
               GButton(
                 icon: Icons.analytics_outlined,
                 iconColor: Color.fromARGB(255, 111, 109, 109),
                 text: 'Records',
+                textStyle: TextStyle(
+                    fontFamily: 'Arial',
+                    //fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: 15),
               ),
             ],
           ),

@@ -6,9 +6,10 @@ class UserReceipt extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: Text(
-      'Receipt section',
-      style: TextStyle(fontSize: 30),
-    ));
+      child: Text(
+        'Receipt section',
+        style: TextStyle(fontSize: 30),
+      ),
+    );
   }
 }

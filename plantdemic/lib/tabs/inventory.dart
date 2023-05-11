@@ -15,14 +15,6 @@ class UserInventory extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Container(
-                      height: 400,
-                      width: 300,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.lightGreen,
-                      ),
-                    ),
                     SizedBox(height: 20),
                     Container(
                       height: 250,

@@ -14,12 +14,13 @@ class UserDelivery extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                SizedBox(height: 20),
                 Container(
-                  height: 400,
-                  width: 300,
+                  height: 50,
+                  width: 600,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: Colors.lightGreen,
+                    color: Color.fromARGB(255, 255, 255, 255),
                   ),
                 ),
                 SizedBox(height: 20),
@@ -43,15 +44,6 @@ class UserDelivery extends StatelessWidget {
                         spreadRadius: 1,
                       ),
                     ],
-                  ),
-                ),
-                SizedBox(height: 20),
-                Container(
-                  height: 400,
-                  width: 300,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Color.fromARGB(255, 86, 137, 210),
                   ),
                 ),
               ],

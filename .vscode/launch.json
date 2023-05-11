@@ -9,6 +9,7 @@
             "cwd": "plantdemic_gui",
             "request": "launch",
             "type": "dart"
+
         },
         {
             "name": "plantdemic_gui (profile mode)",

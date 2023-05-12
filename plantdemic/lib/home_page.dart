@@ -48,46 +48,24 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          SliverAppBar(
-            backgroundColor: Color.fromRGBO(3, 89, 86, 1),
-            expandedHeight: 80,
-            pinned: true,
-            floating: true,
-            elevation: 0,
-            flexibleSpace: FlexibleSpaceBar(
-              background: Container(
-                color: Color.fromRGBO(71, 173, 86, 1),
+          SliverAppBar.medium(
+            backgroundColor: Color.fromRGBO(98, 124, 81, 1),
+            leading: IconButton(
+              onPressed: () {},
+              icon: Image.asset(
+                'assets/icons/leaf2.png',
+                width: 24,
+                height: 24,
               ),
             ),
-            title: Container(
-              padding: EdgeInsets.only(top: 30.0, bottom: 20.0),
-              alignment: Alignment.center,
-              child: Text(
-                appBarTitles[selectedIndex],
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Arial',
-                  fontSize: 24,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            bottom: PreferredSize(
-              preferredSize: Size.fromHeight(40),
-              child: Container(
-                height: 40,
-                alignment: Alignment.center,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 5.0),
-                  child: Text(
-                    appBarLabels[selectedIndex],
-                    style: TextStyle(
-                      fontFamily: 'Arial',
-                      fontSize: 16,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
+            centerTitle: true,
+            title: Text(
+              appBarTitles[selectedIndex],
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Arial',
+                fontSize: 24,
+                color: Colors.white,
               ),
             ),
           ),

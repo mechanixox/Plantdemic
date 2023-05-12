@@ -16,6 +16,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: HomePage());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false, 
+      home: HomePage(),
+      theme: ThemeData(
+        useMaterial3: true,
+        appBarTheme: AppBarTheme(backgroundColor: Color.fromARGB(255, 118, 133, 100),)
+      )
+      );
   }
 }

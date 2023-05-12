@@ -49,13 +49,13 @@ class _HomePageState extends State<HomePage> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar.medium(
-            backgroundColor: Color.fromRGBO(98, 124, 81, 1),
+            backgroundColor: Color.fromRGBO(106, 136, 86, 1),
             leading: IconButton(
               onPressed: () {},
               icon: Image.asset(
                 'assets/icons/leaf2.png',
-                width: 24,
-                height: 24,
+                width: 20,
+                height: 20,
               ),
             ),
             centerTitle: true,
@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Arial',
-                fontSize: 24,
+                fontSize: 20,
                 color: Colors.white,
               ),
             ),

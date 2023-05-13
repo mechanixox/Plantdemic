@@ -1,4 +1,3 @@
-// ignore: file_names
 import 'package:flutter/material.dart';
 
 class TabBarPage extends StatefulWidget {
@@ -28,50 +27,54 @@ class _TabBarPageState extends State<TabBarPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height,
-            child: Column(
-              children: [
-                SizedBox(height: 25),
-                Container(
-                  width: MediaQuery.of(context).size.height,
-                  decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 234, 234, 234),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 0, right: 0),
-                        child: TabBar(
-                          unselectedLabelColor:
-                              Color.fromARGB(255, 148, 144, 144),
-                          labelColor: Color.fromARGB(255, 255, 255, 255),
-                          indicatorColor: Colors.white,
-                          indicatorWeight: 2,
-                          indicator: BoxDecoration(
-                            color: Color.fromRGBO(124, 194, 134, 1.0),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          controller: tabController,
-                          tabs: [
-                            Tab(
-                              text: 'Incoming',
-                            ),
-                            Tab(
-                              text: 'Outgoing',
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 12),
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            children: [
+              SizedBox(height: 5),
+              Container(
+                width: MediaQuery.of(context).size.height,
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 234, 234, 234),
+                  borderRadius: BorderRadius.circular(10),
                 ),
-              ],
-            ),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 0, right: 0),
+                      child: TabBar(
+                        unselectedLabelColor:
+                            Color.fromARGB(255, 148, 144, 144),
+                        labelColor: Color.fromARGB(255, 255, 255, 255),
+                        indicatorColor: Colors.white,
+                        indicatorWeight: 2,
+                        indicator: BoxDecoration(
+                          color: Color.fromRGBO(124, 194, 134, 1.0),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        controller: tabController,
+                        tabs: [
+                          Tab(
+                            child: Text(
+                              'Incoming',
+                              style: TextStyle(fontSize: 15),
+                            ),
+                          ),
+                          Tab(
+                            child: Text(
+                              'Outgoing',
+                              style: TextStyle(fontSize: 15),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),

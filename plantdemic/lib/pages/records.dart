@@ -18,21 +18,15 @@ class _UserRecordsState extends State<UserRecords> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Records',
+              'Review financial performance',
               style: TextStyle(
-                fontSize: 28,
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.bold,
+                fontSize: 16,
                 color: Color.fromRGBO(106, 136, 86, 1),
               ),
             ),
-            Text(
-              'Review financial performance',
-              style: TextStyle(
-                fontSize: 15,
-                fontFamily: 'Inter',
-                color: Color.fromRGBO(142, 162, 129, 1),
-              ),
+            Divider(
+              thickness: 2,
+              color: Colors.grey[300],
             ),
             const SizedBox(height: 25),
           ],

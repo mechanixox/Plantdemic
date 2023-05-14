@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:plantdemic/tabBar/tab1.dart';
+import 'package:plantdemic/tabBar/tab2.dart';
 
 class TabBarPage extends StatefulWidget {
   const TabBarPage({Key? key}) : super(key: key);
@@ -74,6 +76,15 @@ class _TabBarPageState extends State<TabBarPage>
                   ],
                 ),
               ),
+              Expanded(
+                child: TabBarView(
+                  controller: tabController,
+                  children: [
+                    Tab1(),
+                    Tab2(),
+                  ],
+                ),
+              )
             ],
           ),
         ),

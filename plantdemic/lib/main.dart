@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'home_page.dart';
-import 'splash.dart';
+import 'package:plantdemic/classes/inventory.dart';
+import 'pages/home_page.dart';
+import 'components/splash.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MaterialApp(
-    routes: {
-      '/': (context) => Splash(),
-      '/homepage': (context) => HomePage(),
-    },
-  ));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -16,13 +13,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false, 
-      home: HomePage(),
-      theme: ThemeData(
-        useMaterial3: true,
-        appBarTheme: AppBarTheme(backgroundColor: Color.fromARGB(255, 118, 133, 100),)
-      )
-      );
+    return ChangeNotifierProvider(
+      create: (context) => PlantdemicInventory(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/',
+        routes: {
+          '/': (context) => Splash(),
+          '/homepage': (context) => HomePage(),
+        },
+        theme: ThemeData(
+          useMaterial3: true,
+          primarySwatch: Colors.green,
+        ),
+      ),
+    );
   }
 }

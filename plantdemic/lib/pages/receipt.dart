@@ -18,25 +18,19 @@ class _UserReceiptState extends State<UserReceipt> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Receipt',
+              'Capture an important receipt',
               style: TextStyle(
-                fontSize: 28,
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.bold,
+                fontSize: 16,
                 color: Color.fromRGBO(106, 136, 86, 1),
               ),
             ),
-            Text(
-              'Capture an important receipt',
-              style: TextStyle(
-                fontSize: 15,
-                fontFamily: 'Inter',
-                color: Color.fromRGBO(142, 162, 129, 1),
-              ),
+            Divider(
+              thickness: 2,
+              color: Colors.grey[300],
             ),
             const SizedBox(height: 25),
 
-            //below the delivery
+            //below the receipt
           ],
         ),
       ),

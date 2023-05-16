@@ -35,7 +35,7 @@ class _UserDeliverState extends State<UserDelivery> {
                         itemCount: value.outgoing.length,
                         itemBuilder: (context, index) {
                           //get individual plant from inventory
-                          Plant plant = value.inventory[index];
+                          Plant plant = value.outgoing[index];
 
                           //return plant tile
                           return PlantTile(

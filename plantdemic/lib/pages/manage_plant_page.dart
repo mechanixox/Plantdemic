@@ -18,17 +18,15 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
     //add to delivery page
     Provider.of<PlantdemicInventory>(context, listen: false)
         .addToDelivery(widget.plant);
-
     //upon clicking sell button, direct user back to inventory page
     Navigator.pop(context);
-
     //feedback
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: Column(
           children: [
-            /*Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 IconButton(
@@ -36,7 +34,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                   onPressed: () => Navigator.pop(context),
                 ),
               ],
-            ),*/
+            ),
             Icon(Icons.check_circle, size: 80, color: Colors.green),
             SizedBox(height: 10),
             Text(
@@ -83,6 +81,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                 //sell plant, will be added to outgoing
                 const SizedBox(height: 30), //sized box gives space
 
+                //Sell button
                 ClipRRect(
                   borderRadius: BorderRadius.circular(30),
                   child: Stack(children: <Widget>[

@@ -25,19 +25,30 @@ class _UserInventoryState extends State<UserInventory> {
                 )));
   }
 
-  void navigateToAddPlantPage(BuildContext context) async {
-    // Navigate to the AddPlantPage and wait for a result (the new plant)
-    final newPlant = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => AddPlantPage()),
+  void navigateToAddPlantPage() {
+    // Create a new Plant object with default values
+    Plant newPlant = Plant(
+      name: 'Default Plant',
+      price: '0',
+      quantity: '0',
+      imagePath: 'assets/icons/plant.png',
     );
-    // Check if a new plant was added
-    if (newPlant != null) {
-      // Add the new plant to the inventory
-      // ignore: use_build_context_synchronously
-      Provider.of<PlantdemicInventory>(context, listen: false)
-          .addToDelivery(newPlant);
-    }
+
+    // Navigate to the AddPlantPage and wait for a result (the new plant)
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AddPlantPage(
+          plant: newPlant,
+        ),
+      ),
+    ).then((result) {
+      // Check if a new plant was added
+      if (result != null && result is Plant) {
+        Provider.of<PlantdemicInventory>(context, listen: false)
+            .addToInventory(result);
+      }
+    });
   }
 
   @override
@@ -94,7 +105,7 @@ class _UserInventoryState extends State<UserInventory> {
                 right: 10.0,
                 child: FloatingActionButton(
                   onPressed: () {
-                    navigateToAddPlantPage(context);
+                    navigateToAddPlantPage();
                   },
                   backgroundColor: Color.fromRGBO(124, 194, 134, 1),
                   shape: CircleBorder(),

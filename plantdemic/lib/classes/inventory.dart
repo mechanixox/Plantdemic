@@ -6,6 +6,8 @@ class PlantdemicInventory extends ChangeNotifier {
   //list of plants available
   final List<Plant> _inventory = [
     //Cactus
+    /*
+    
     Plant(
         name: 'Cactus',
         price: '₱70.90',
@@ -43,6 +45,8 @@ class PlantdemicInventory extends ChangeNotifier {
         price: '₱54.95',
         quantity: '4x',
         imagePath: 'assets/icons/sunflower.png'),
+
+    */
   ];
 
   //list of plants in outgoing page
@@ -54,6 +58,14 @@ class PlantdemicInventory extends ChangeNotifier {
 
   //get outgoing plants
   List<Plant> get outgoing => _outgoing;
+
+  final List<Plant> _intoInventory = [];
+  List<Plant> get intoInventory => _intoInventory;
+
+  void addToInventory(Plant plant) {
+    _inventory.add(plant);
+    notifyListeners();
+  }
 
   //add plant to outgoing
   void addToDelivery(Plant plant) {

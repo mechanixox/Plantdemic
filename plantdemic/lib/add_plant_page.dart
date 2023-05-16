@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import '../classes/plant.dart';
 
 class AddPlantPage extends StatefulWidget {
-  const AddPlantPage({super.key});
+  final Plant plant;
+  const AddPlantPage({super.key, required this.plant});
 
   @override
   State<AddPlantPage> createState() => _AddPlantPageState();
@@ -21,6 +22,25 @@ class _AddPlantPageState extends State<AddPlantPage> {
     priceController.dispose();
     quantityController.dispose();
     super.dispose();
+  }
+
+  void addToInventory() {
+    String name = nameController.text;
+    String price = priceController.text;
+    String quantity = quantityController.text;
+    String imagePath =
+        'assets/icons/plant.png'; // Use the default image path or update it based on your requirement
+
+    // Create a new Plant object with the entered values
+    Plant newPlant = Plant(
+      name: name,
+      price: price,
+      quantity: quantity,
+      imagePath: imagePath,
+    );
+
+    // Pass the new plant back to the previous screen
+    Navigator.pop(context, newPlant);
   }
 
   @override
@@ -46,17 +66,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
               decoration: InputDecoration(labelText: 'Quantity'),
             ),
             ElevatedButton(
-              onPressed: () {
-                // Create a new Plant object with the entered information
-                Plant newPlant = Plant(
-                  name: nameController.text,
-                  price: priceController.text,
-                  quantity: quantityController.text,
-                  imagePath: 'assets/icons/plant.png', // Set the default image path
-                );
-                // Navigate back to the inventory page and pass the new plant
-                Navigator.pop(context, newPlant);
-              },
+              onPressed: () => addToInventory(),
               child: Text('Done'),
             ),
           ],

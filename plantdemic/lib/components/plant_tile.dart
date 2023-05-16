@@ -27,7 +27,7 @@ class PlantTile extends StatelessWidget {
         margin: EdgeInsets.only(bottom: 10),
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
         child: Padding(
-          padding: const EdgeInsets.only(top: 5.0, left: 0),
+          padding: const EdgeInsets.only(top: 5.0, left: 0, bottom: 5),
           child: ListTile(
             title: Text(plant.name),
             subtitle: Text(plant.price),

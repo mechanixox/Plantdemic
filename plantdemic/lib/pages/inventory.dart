@@ -74,14 +74,14 @@ class _UserInventoryState extends State<UserInventory> {
               ),
               Positioned(
                 bottom: 16.0,
-                right: 16.0,
+                right: 10.0,
                 child: FloatingActionButton(
                   onPressed: () {
                     // Add your action here
                   },
-                  backgroundColor: Colors.green,
+                  backgroundColor: Color.fromRGBO(124, 194, 134, 1),
                   shape: CircleBorder(),
-                  child: Icon(Icons.add, color: Colors.white),
+                  child: Icon(Icons.add_rounded, color: Colors.white, size: 32),
                 ),
               ),
             ],

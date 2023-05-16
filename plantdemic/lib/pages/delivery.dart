@@ -41,7 +41,7 @@ class _UserDeliverState extends State<UserDelivery> {
                           return PlantTile(
                               plant: plant,
                               onTap: () => removeFromDelivery(plant),
-                              trailing: Icon(Icons.delete));
+                              trailing: Icon(Icons.check_sharp));
                         },
                       ),
                     )

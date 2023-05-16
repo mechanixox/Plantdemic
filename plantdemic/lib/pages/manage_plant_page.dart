@@ -30,18 +30,21 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 IconButton(
-                  icon: Icon(Icons.close),
+                  icon: Icon(Icons.close_rounded),
                   onPressed: () => Navigator.pop(context),
                 ),
               ],
             ),
             Icon(Icons.check_circle, size: 80, color: Colors.green),
             SizedBox(height: 10),
-            Text(
-              'Added successfully!',
-              style: TextStyle(
-                fontSize: 16,
-                color: Color.fromRGBO(106, 136, 86, 1),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 30),
+              child: Text(
+                'Added successfully!',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Color.fromRGBO(106, 136, 86, 1),
+                ),
               ),
             ),
           ],

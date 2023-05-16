@@ -3,6 +3,7 @@ import 'package:plantdemic/pages/manage_plant_page.dart';
 import 'package:provider/provider.dart';
 import 'package:plantdemic/classes/inventory.dart';
 
+import '../add_plant_page.dart';
 import '../classes/plant.dart';
 import '../components/plant_tile.dart';
 
@@ -15,16 +16,28 @@ class UserInventory extends StatefulWidget {
 
 class _UserInventoryState extends State<UserInventory> {
   //go to manage plant page, once user selected a plant
-
   void goToManagePlantPage(Plant plant) {
-    //navigate
-
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => ManagePlantPage(
                   plant: plant,
                 )));
+  }
+
+  void navigateToAddPlantPage(BuildContext context) async {
+    // Navigate to the AddPlantPage and wait for a result (the new plant)
+    final newPlant = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AddPlantPage()),
+    );
+    // Check if a new plant was added
+    if (newPlant != null) {
+      // Add the new plant to the inventory
+      // ignore: use_build_context_synchronously
+      Provider.of<PlantdemicInventory>(context, listen: false)
+          .addToDelivery(newPlant);
+    }
   }
 
   @override
@@ -65,7 +78,11 @@ class _UserInventoryState extends State<UserInventory> {
                         return PlantTile(
                           plant: individualPlant,
                           onTap: () => goToManagePlantPage(individualPlant),
-                          trailing: Icon(Icons.arrow_forward),
+                          trailing: IconButton(
+                            icon: Icon(Icons.arrow_forward),
+                            onPressed: () =>
+                                goToManagePlantPage(individualPlant),
+                          ),
                         );
                       },
                     ),
@@ -77,7 +94,7 @@ class _UserInventoryState extends State<UserInventory> {
                 right: 10.0,
                 child: FloatingActionButton(
                   onPressed: () {
-                    // Add your action here
+                    navigateToAddPlantPage(context);
                   },
                   backgroundColor: Color.fromRGBO(124, 194, 134, 1),
                   shape: CircleBorder(),

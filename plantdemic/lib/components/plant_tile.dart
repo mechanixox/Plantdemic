@@ -9,11 +9,11 @@ class PlantTile extends StatelessWidget {
   final Widget trailing;
 
   PlantTile({
-    super.key,
+    Key? key,
     required this.plant,
     required this.onTap,
     required this.trailing,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +21,9 @@ class PlantTile extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-            color: Color.fromARGB(255, 217, 237, 233),
-            borderRadius: BorderRadius.circular(10)),
+          color: Color.fromARGB(255, 217, 237, 233),
+          borderRadius: BorderRadius.circular(10),
+        ),
         margin: EdgeInsets.only(bottom: 10),
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
         child: Padding(
@@ -38,7 +39,7 @@ class PlantTile extends StatelessWidget {
             trailing: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                trailing,
+                Expanded(child: trailing), // Wrap the Column with Expanded
                 SizedBox(height: 5),
                 Text(
                   plant.quantity,

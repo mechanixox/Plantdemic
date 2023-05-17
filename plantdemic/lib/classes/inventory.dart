@@ -6,47 +6,37 @@ class PlantdemicInventory extends ChangeNotifier {
   //list of plants available
   final List<Plant> _inventory = [
     //Cactus
-    /*
-    
+
     Plant(
         name: 'Cactus',
-        price: '₱70.90',
-        quantity: '6x',
+        price: '70.90',
+        quantity: '6',
         imagePath: 'assets/icons/cactus.png'),
     //Caladium
     Plant(
         name: 'Caladium',
-        price: '₱150.00',
-        quantity: '2x',
+        price: '150.00',
+        quantity: '2',
         imagePath: 'assets/icons/caladium.png'),
     //Monstera
     Plant(
         name: 'Monstera',
-        price: '₱300.00',
-        quantity: '3x',
+        price: '300.00',
+        quantity: '3',
         imagePath: 'assets/icons/monstera.png'),
-
-    //Tanom
-    Plant(
-        name: 'Tanom',
-        price: '₱49.50',
-        quantity: '11x',
-        imagePath: 'assets/icons/plant.png'),
 
     //Rosemary
     Plant(
         name: 'Rosemary',
-        price: '₱25.50',
-        quantity: '8x',
+        price: '25.50',
+        quantity: '8',
         imagePath: 'assets/icons/rosemary.png'),
     //Sunflower
     Plant(
         name: 'Sunflower',
-        price: '₱54.95',
-        quantity: '4x',
+        price: '54.95',
+        quantity: '4',
         imagePath: 'assets/icons/sunflower.png'),
-
-    */
   ];
 
   //list of plants in outgoing page
@@ -64,6 +54,11 @@ class PlantdemicInventory extends ChangeNotifier {
 
   void addToInventory(Plant plant) {
     _inventory.add(plant);
+    notifyListeners();
+  }
+
+   void removeFromInventory(Plant plant) {
+    _inventory.remove(plant);
     notifyListeners();
   }
 

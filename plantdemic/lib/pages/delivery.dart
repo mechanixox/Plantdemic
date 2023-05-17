@@ -45,6 +45,8 @@ class _UserDeliverState extends State<UserDelivery> {
                               icon: Icon(Icons.check_sharp),
                               onPressed: () => removeFromDelivery(plant),
                             ),
+                            deleteTapped: (context) =>
+                                removeFromDelivery(plant),
                           );
                         },
                       ),

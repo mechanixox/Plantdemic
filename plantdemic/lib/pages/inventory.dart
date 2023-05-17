@@ -3,7 +3,7 @@ import 'package:plantdemic/pages/manage_plant_page.dart';
 import 'package:provider/provider.dart';
 import 'package:plantdemic/classes/inventory.dart';
 
-import '../add_plant_page.dart';
+import 'add_plant_page.dart';
 import '../classes/plant.dart';
 import '../components/plant_tile.dart';
 
@@ -51,6 +51,11 @@ class _UserInventoryState extends State<UserInventory> {
     });
   }
 
+  void removeFromInventory(Plant plant) {
+    Provider.of<PlantdemicInventory>(context, listen: false)
+        .removeFromInventory(plant);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<PlantdemicInventory>(
@@ -94,6 +99,8 @@ class _UserInventoryState extends State<UserInventory> {
                             onPressed: () =>
                                 goToManagePlantPage(individualPlant),
                           ),
+                          deleteTapped: (context) =>
+                              removeFromInventory(individualPlant),
                         );
                       },
                     ),
@@ -107,7 +114,7 @@ class _UserInventoryState extends State<UserInventory> {
                   onPressed: () {
                     navigateToAddPlantPage();
                   },
-                  backgroundColor: Color.fromRGBO(124, 194, 134, 1),
+                  backgroundColor: Color.fromRGBO(86, 180, 100, 1),
                   shape: CircleBorder(),
                   child: Icon(Icons.add_rounded, color: Colors.white, size: 32),
                 ),

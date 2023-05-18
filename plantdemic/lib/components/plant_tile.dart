@@ -24,6 +24,7 @@ class PlantTile extends StatelessWidget {
       onTap: onTap,
       child: Slidable(
         endActionPane: ActionPane(
+          extentRatio: 0.4,
           motion: Padding(
             padding:
                 const EdgeInsets.only(bottom: 20, top: 10, left: 10, right: 10),

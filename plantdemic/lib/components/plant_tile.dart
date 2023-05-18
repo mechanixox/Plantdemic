@@ -24,7 +24,11 @@ class PlantTile extends StatelessWidget {
       onTap: onTap,
       child: Slidable(
         endActionPane: ActionPane(
-          motion: StretchMotion(),
+          motion: Padding(
+            padding:
+                const EdgeInsets.only(bottom: 20, top: 10, left: 10, right: 10),
+            child: StretchMotion(),
+          ),
           children: [
             //delete tile
             SlidableAction(
@@ -43,7 +47,7 @@ class PlantTile extends StatelessWidget {
           margin: EdgeInsets.only(bottom: 10),
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
           child: Padding(
-            padding: const EdgeInsets.only(top: 5.0, left: 0, bottom: 5),
+            padding: const EdgeInsets.only(top: 5.0, left: 0, bottom: 10),
             child: ListTile(
               title: Text(plant.name),
               subtitle: Text(

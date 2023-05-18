@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:plantdemic/classes/inventory.dart';
 import 'package:provider/provider.dart';
@@ -23,33 +25,43 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
     //feedback
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.close_rounded),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ],
-            ),
-            Icon(Icons.check_circle, size: 80, color: Colors.green),
-            SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 30),
-              child: Text(
-                'Added successfully!',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Color.fromRGBO(106, 136, 86, 1),
+      builder: (context) {
+        Timer(Duration(seconds: 2), () {
+          Navigator.of(context).pop();
+        });
+
+        return AlertDialog(
+          backgroundColor: Colors.white.withOpacity(0.93),
+          title: Column(
+            children: [
+              /*
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.close_rounded),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              ),
+              */
+              SizedBox(height: 10),
+              Icon(Icons.check_circle, size: 80, color: Colors.green),
+              SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 30),
+                child: Text(
+                  'Added successfully!',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Color.fromRGBO(106, 136, 86, 1),
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -78,7 +90,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                 //TASK: display plant information
                 //code here
 
-                //TASK: edit plant information
+                //TASK: option to edit plant information
                 //code here
 
                 //sell plant, will be added to outgoing

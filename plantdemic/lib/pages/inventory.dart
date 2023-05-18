@@ -114,7 +114,7 @@ class _UserInventoryState extends State<UserInventory> {
                   onPressed: () {
                     navigateToAddPlantPage();
                   },
-                  backgroundColor: Color.fromRGBO(86, 180, 100, 1),
+                  backgroundColor: Colors.green.shade400,
                   shape: CircleBorder(),
                   child: Icon(Icons.add_rounded, color: Colors.white, size: 32),
                 ),

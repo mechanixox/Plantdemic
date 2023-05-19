@@ -37,6 +37,16 @@ class PlantdemicInventory extends ChangeNotifier {
         price: '54.95',
         quantity: '4',
         imagePath: 'assets/icons/sunflower.png'),
+    Plant(
+        name: 'Plant Asd',
+        price: '124.95',
+        quantity: '4',
+        imagePath: 'assets/icons/plant.png'),
+    Plant(
+        name: 'Plant Hfdsa',
+        price: '254.95',
+        quantity: '4',
+        imagePath: 'assets/icons/plant.png'),
   ];
 
   //list of plants in outgoing page
@@ -52,12 +62,14 @@ class PlantdemicInventory extends ChangeNotifier {
   final List<Plant> _intoInventory = [];
   List<Plant> get intoInventory => _intoInventory;
 
+  get isScrolled => null;
+
   void addToInventory(Plant plant) {
     _inventory.add(plant);
     notifyListeners();
   }
 
-   void removeFromInventory(Plant plant) {
+  void removeFromInventory(Plant plant) {
     _inventory.remove(plant);
     notifyListeners();
   }
@@ -73,4 +85,5 @@ class PlantdemicInventory extends ChangeNotifier {
     _outgoing.remove(plant);
     notifyListeners();
   }
+  
 }

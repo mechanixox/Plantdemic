@@ -19,6 +19,8 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
   void addToDelivery() {
     Provider.of<PlantdemicInventory>(context, listen: false)
         .addToDelivery(widget.plant);
+    widget.plant.decrementQuantity();
+
     Navigator.pop(context);
     showDialog(
       context: context,

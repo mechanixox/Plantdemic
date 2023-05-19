@@ -81,10 +81,11 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
           backgroundColor: Colors.green.shade50.withOpacity(0.90),
           title: Row(
             children: [
+              Icon(Icons.edit, color: Colors.grey),
               Text(
-                'Edit Plant',
+                ' Edit',
                 style: TextStyle(
-                  color: Colors.green.shade800,
+                  color: Colors.grey.shade800,
                   fontWeight: FontWeight.bold,
                 ),
               ),

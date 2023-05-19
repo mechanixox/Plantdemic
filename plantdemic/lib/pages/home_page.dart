@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:plantdemic/components/bottom_nav_bar.dart';
-import 'package:plantdemic/pages/delivery.dart';
-import 'package:plantdemic/pages/inventory.dart';
-import 'package:plantdemic/pages/receipt.dart';
-import 'package:plantdemic/pages/records.dart';
+import 'package:plantdemic/pages/delivery_page.dart';
+import 'package:plantdemic/pages/inventory_page.dart';
+import 'package:plantdemic/pages/receipt_page.dart';
+import 'package:plantdemic/pages/records_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

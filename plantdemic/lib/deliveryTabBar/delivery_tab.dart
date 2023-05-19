@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:plantdemic/tabBar/tab1.dart';
-import 'package:plantdemic/tabBar/tab2.dart';
+import 'package:plantdemic/deliveryTabBar/tab1.dart';
+import 'package:plantdemic/deliveryTabBar/tab2.dart';
 
 class TabBarPage extends StatefulWidget {
   const TabBarPage({Key? key}) : super(key: key);

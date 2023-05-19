@@ -22,7 +22,7 @@ class PlantInfoTile extends StatelessWidget {
           extentRatio: 0.4,
           motion: Padding(
             padding:
-                const EdgeInsets.only(bottom: 15, top: 35, left: 10, right: 30),
+                const EdgeInsets.only(bottom: 10, top: 30, left: 0, right: 30),
             child: StretchMotion(),
           ),
           children: [

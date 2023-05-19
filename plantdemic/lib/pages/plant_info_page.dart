@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../classes/plant.dart';
 import '../components/plant_info_tile.dart';
+import 'package:plantdemic/textfield_utility/animated_textfield.dart';
 
 class ManagePlantPage extends StatefulWidget {
   final Plant plant;
@@ -16,6 +17,26 @@ class ManagePlantPage extends StatefulWidget {
 }
 
 class _ManagePlantPageState extends State<ManagePlantPage> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _priceController = TextEditingController();
+  final TextEditingController _quantityController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController.text = widget.plant.name;
+    _priceController.text = widget.plant.price;
+    _quantityController.text = widget.plant.quantity;
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _priceController.dispose();
+    _quantityController.dispose();
+    super.dispose();
+  }
+
   void addToDelivery() {
     Provider.of<PlantdemicInventory>(context, listen: false)
         .addToDelivery(widget.plant);
@@ -52,7 +73,74 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
     );
   }
 
-  void editPlantInfo(Plant individualPlant) {}
+  void editPlantInfo(Plant individualPlant) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Colors.green.shade50.withOpacity(0.90),
+          title: Text(
+            'Edit Plant',
+            //textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.green.shade800,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AnimatedTextField(
+                label: "Name",
+                suffix: null,
+                controller: _nameController,
+                keyboardType: TextInputType.text,
+              ),
+              SizedBox(height: 10),
+              AnimatedTextField(
+                label: "Price",
+                suffix: null,
+                controller: _priceController,
+                keyboardType: TextInputType.number,
+              ),
+              SizedBox(height: 10),
+              AnimatedTextField(
+                label: "Quantity",
+                suffix: null,
+                controller: _quantityController,
+                keyboardType: TextInputType.number,
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context), // Cancel
+              child: Text(
+                'Cancel',
+                style: TextStyle(fontSize: 16, color: Colors.red.shade400),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  individualPlant.name = _nameController.text;
+                  individualPlant.price = _priceController.text;
+                  individualPlant.quantity = _quantityController.text;
+                });
+                Provider.of<PlantdemicInventory>(context, listen: false)
+                    .notifyListeners(); // Notify listeners of the changes
+                Navigator.pop(context); // Done
+              },
+              child: Text(
+                'Save',
+                style: TextStyle(fontSize: 16, color: Colors.blue.shade400),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +154,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
               color: Colors.black,
             ),
           ),
+          centerTitle: true, // Add this line to center-align the title
           backgroundColor: Color.fromARGB(255, 216, 248, 216),
         ),
         body: SingleChildScrollView(

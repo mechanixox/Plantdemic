@@ -48,21 +48,16 @@ class PlantdemicInventory extends ChangeNotifier {
         quantity: '4',
         imagePath: 'assets/icons/plant.png'),
   ];
-
-  //list of plants in outgoing page
-
-  final List<Plant> _outgoing = [];
+  @override
+  void notifyListeners() {
+    super.notifyListeners();
+  }
 
   //get plants for sale
   List<Plant> get inventory => _inventory;
 
-  //get outgoing plants
-  List<Plant> get outgoing => _outgoing;
-
-  final List<Plant> _intoInventory = [];
-  List<Plant> get intoInventory => _intoInventory;
-
-  get isScrolled => null;
+  /*final List<Plant> _intoInventory = [];
+  List<Plant> get intoInventory => _intoInventory;*/
 
   void addToInventory(Plant plant) {
     _inventory.add(plant);
@@ -74,16 +69,21 @@ class PlantdemicInventory extends ChangeNotifier {
     notifyListeners();
   }
 
-  //add plant to outgoing
+  //list of plants in delivery page
+  final List<Plant> _delivery = [];
+
+  //get to deliver plants
+  List<Plant> get delivery => _delivery;
+
+  //add plant to delivery
   void addToDelivery(Plant plant) {
-    _outgoing.add(plant);
+    _delivery.add(plant);
     notifyListeners();
   }
 
-  //remove plant from outgoing
+  //remove plant from delivery
   void removeFromDelivery(Plant plant) {
-    _outgoing.remove(plant);
+    _delivery.remove(plant);
     notifyListeners();
   }
-  
 }

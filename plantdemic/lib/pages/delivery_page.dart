@@ -42,10 +42,10 @@ class _UserDeliverState extends State<UserDelivery> {
                     //list of plant(s)
                     Expanded(
                       child: ListView.builder(
-                        itemCount: value.outgoing.length,
+                        itemCount: value.delivery.length,
                         itemBuilder: (context, index) {
                           //get individual plant from inventory
-                          Plant plant = value.outgoing[index];
+                          Plant plant = value.delivery[index];
 
                           //return plant tile
                           return PlantTile(

@@ -79,13 +79,35 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
       builder: (context) {
         return AlertDialog(
           backgroundColor: Colors.green.shade50.withOpacity(0.90),
-          title: Text(
-            'Edit Plant',
-            //textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.green.shade800,
-              fontWeight: FontWeight.bold,
-            ),
+          title: Row(
+            children: [
+              Text(
+                'Edit Plant',
+                style: TextStyle(
+                  color: Colors.green.shade800,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        _nameController.clear();
+                        _priceController.clear();
+                        _quantityController.clear();
+                      },
+                      child: Text(
+                        'Clear all',
+                        style:
+                            TextStyle(fontSize: 14, color: Colors.red.shade400),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
@@ -114,7 +136,12 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
           ),
           actions: [
             TextButton(
-              onPressed: () => Navigator.pop(context), // Cancel
+              onPressed: () {
+                _nameController.text = widget.plant.name;
+                _priceController.text = widget.plant.price;
+                _quantityController.text = widget.plant.quantity;
+                Navigator.pop(context);
+              }, // Cancel
               child: Text(
                 'Cancel',
                 style: TextStyle(fontSize: 16, color: Colors.red.shade400),

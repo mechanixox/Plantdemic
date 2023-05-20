@@ -18,7 +18,7 @@ class _SplashState extends State<Splash> {
   }
 
   startTimer() {
-    var duration = Duration(seconds: 8);
+    var duration = Duration(seconds: 7);
     return Timer(duration, route);
   }
 
@@ -36,14 +36,14 @@ class _SplashState extends State<Splash> {
 
   Widget content() {
     return Padding(
-      padding: const EdgeInsets.only(left: 1),
+      padding: const EdgeInsets.only(bottom: 0),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              child: Lottie.network(
-                'https://assets4.lottiefiles.com/private_files/lf30_gnkqx2xe.json',
+              child: Lottie.asset(
+                'assets/icons/loading.json',
                 height: 150,
                 width: 150,
                 fit: BoxFit.contain,
@@ -51,10 +51,10 @@ class _SplashState extends State<Splash> {
             ),
             SizedBox(height: 0),
             FutureBuilder(
-              future: Future.delayed(Duration(seconds: 1)),
+              future: Future.delayed(Duration(seconds: 0)),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Container(); // You can return a loading spinner or something else here
+                  return Container();
                 } else {
                   return ShaderMask(
                     blendMode: BlendMode.srcIn,
@@ -64,7 +64,7 @@ class _SplashState extends State<Splash> {
                       ).createShader(bounds);
                     },
                     child: Padding(
-                      padding: const EdgeInsets.only(bottom: 0),
+                      padding: const EdgeInsets.only(bottom: 80),
                       child: Text(
                         'Plantdemic',
                         style: TextStyle(

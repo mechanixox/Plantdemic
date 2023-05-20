@@ -26,7 +26,7 @@ class PlantInfoTile extends StatelessWidget {
             child: StretchMotion(),
           ),
           children: [
-            // delete tile
+            // edit tile
             SlidableAction(
               onPressed: editTapped,
               backgroundColor: Colors.green.shade400,

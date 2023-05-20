@@ -6,12 +6,14 @@ class AnimatedTextField extends StatefulWidget {
   final Widget? suffix;
   final TextEditingController controller;
   final TextInputType keyboardType;
+  final TextInputAction inputAction;
   const AnimatedTextField({
     Key? key,
     required this.label,
     required this.suffix,
     required this.controller,
     required this.keyboardType,
+    required this.inputAction,
   }) : super(key: key);
 
   @override
@@ -73,6 +75,7 @@ class _AnimatedTextFieldState extends State<AnimatedTextField>
             focusNode: focusNode,
             controller: widget.controller,
             keyboardType: widget.keyboardType,
+            textInputAction: widget.inputAction,
             decoration: InputDecoration(
               labelText: widget.label,
               border: InputBorder.none,

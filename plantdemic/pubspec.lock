@@ -163,6 +163,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  logger:
+    dependency: "direct main"
+    description:
+      name: logger
+      sha256: "040cdfa92433f61ed43e3972aa83ac5acf5e1c68391c94a66157df9744801899"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.4"
   lottie:
     dependency: "direct main"
     description:

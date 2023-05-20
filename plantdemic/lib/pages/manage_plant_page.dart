@@ -12,8 +12,7 @@ class ManagePlantPage extends StatefulWidget {
   const ManagePlantPage({Key? key, required this.plant}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
-  _ManagePlantPageState createState() => _ManagePlantPageState();
+  State<ManagePlantPage> createState() => _ManagePlantPageState();
 }
 
 class _ManagePlantPageState extends State<ManagePlantPage> {
@@ -82,6 +81,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                 suffix: null,
                 controller: _nameController,
                 keyboardType: TextInputType.text,
+                inputAction: TextInputAction.next,
               ),
               SizedBox(height: 15),
               AnimatedTextField(
@@ -89,6 +89,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                 suffix: null,
                 controller: _priceController,
                 keyboardType: TextInputType.number,
+                inputAction: TextInputAction.next,
               ),
               SizedBox(height: 15),
               AnimatedTextField(
@@ -96,6 +97,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                 suffix: null,
                 controller: _quantityController,
                 keyboardType: TextInputType.number,
+                inputAction: TextInputAction.next,
               ),
             ],
           ),
@@ -139,7 +141,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
       name: widget.plant.name,
       price: widget.plant.price,
       quantity: widget.plant.quantity,
-      imagePath: 'assets/icons/plant.png',
+      imagePath: widget.plant.imagePath,
     );
 
     Navigator.push(
@@ -167,9 +169,12 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
               color: Colors.black,
             ),
           ),
-          centerTitle: true, // Add this line to center-align the title
+          centerTitle: true,
           backgroundColor: Color.fromARGB(255, 216, 248, 216),
         ),
+        //
+        //
+        //
         body: SingleChildScrollView(
           child: Center(
             child: Padding(
@@ -184,7 +189,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                   ),
                   const SizedBox(height: 10),
                   //
-                  //
+                  // plant information tile
                   //
                   PlantInfoTile(
                     plant: widget.plant,
@@ -195,7 +200,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                   //
                   //
                   Padding(
-                    padding: const EdgeInsets.only(left: 50.0, right: 50),
+                    padding: const EdgeInsets.only(left: 70.0, right: 70),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(30),
                       child: Stack(
@@ -216,14 +221,15 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                           TextButton(
                             style: TextButton.styleFrom(
                               foregroundColor: Colors.white,
-                              padding: const EdgeInsets.all(15),
+                              padding: const EdgeInsets.only(
+                                  top: 20, bottom: 20, left: 10, right: 10),
                               textStyle: const TextStyle(fontSize: 16),
                             ),
                             onPressed: () => navigateToSellInfoPage(),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Text('Go to sell information   ',
+                                const Text(' Sell plant   ',
                                     style: TextStyle(fontSize: 18)),
                                 Icon(Icons.arrow_forward)
                               ],

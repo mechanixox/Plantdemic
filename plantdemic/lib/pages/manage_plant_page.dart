@@ -1,6 +1,6 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:plantdemic/classes/inventory.dart';
+import 'package:plantdemic/pages/sell_info_page.dart';
 import 'package:provider/provider.dart';
 
 import '../classes/plant.dart';
@@ -37,42 +37,6 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
     super.dispose();
   }
 
-  void addToDelivery() {
-    Provider.of<PlantdemicInventory>(context, listen: false)
-        .addToDelivery(widget.plant);
-    widget.plant.decrementQuantity();
-
-    Navigator.pop(context);
-    showDialog(
-      context: context,
-      builder: (context) {
-        Timer(Duration(seconds: 1), () {
-          Navigator.of(context).pop();
-        });
-        return AlertDialog(
-          backgroundColor: Color.fromARGB(255, 255, 255, 255).withOpacity(0.90),
-          title: Column(
-            children: [
-              SizedBox(height: 5),
-              Icon(Icons.check_circle, size: 80, color: Colors.green),
-              SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 15),
-                child: Text(
-                  'Added successfully!',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Color.fromRGBO(106, 136, 86, 1),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
   void editPlantInfo(Plant individualPlant) {
     showDialog(
       context: context,
@@ -81,7 +45,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
           backgroundColor: Colors.green.shade50.withOpacity(0.90),
           title: Row(
             children: [
-              Icon(Icons.edit, color: Colors.grey),
+              Icon(Icons.edit, color: Colors.grey.shade600),
               Text(
                 ' Edit',
                 style: TextStyle(
@@ -102,7 +66,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                       child: Text(
                         'Clear all',
                         style:
-                            TextStyle(fontSize: 14, color: Colors.red.shade400),
+                            TextStyle(fontSize: 15, color: Colors.red.shade400),
                       ),
                     ),
                   ],
@@ -119,14 +83,14 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                 controller: _nameController,
                 keyboardType: TextInputType.text,
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 15),
               AnimatedTextField(
                 label: "Price",
                 suffix: null,
                 controller: _priceController,
                 keyboardType: TextInputType.number,
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 15),
               AnimatedTextField(
                 label: "Quantity",
                 suffix: null,
@@ -170,6 +134,27 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
     );
   }
 
+  void navigateToSellInfoPage() {
+    Plant sellPlant = Plant(
+      name: widget.plant.name,
+      price: widget.plant.price,
+      quantity: widget.plant.quantity,
+      imagePath: 'assets/icons/plant.png',
+    );
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SellInfoPage(plant: sellPlant),
+      ),
+    ).then((result) {
+      if (result != null && result is Plant) {
+        Provider.of<PlantdemicInventory>(context, listen: false)
+            .addToDelivery(result);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<PlantdemicInventory>(
@@ -198,38 +183,54 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                     height: 200,
                   ),
                   const SizedBox(height: 10),
+                  //
+                  //
+                  //
                   PlantInfoTile(
                     plant: widget.plant,
                     editTapped: (context) => editPlantInfo(widget.plant),
                   ),
                   const SizedBox(height: 60),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: Stack(
-                      children: <Widget>[
-                        Positioned.fill(
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: <Color>[
-                                  Color.fromRGBO(127, 159, 88, 1),
-                                  Color.fromRGBO(145, 177, 106, 1),
-                                  Color.fromRGBO(157, 189, 117, 1),
-                                ],
+                  //
+                  //
+                  //
+                  Padding(
+                    padding: const EdgeInsets.only(left: 50.0, right: 50),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: Stack(
+                        children: <Widget>[
+                          Positioned.fill(
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: <Color>[
+                                    Color.fromRGBO(127, 159, 88, 1),
+                                    Color.fromRGBO(145, 177, 106, 1),
+                                    Color.fromRGBO(157, 189, 117, 1),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.all(15),
-                            textStyle: const TextStyle(fontSize: 16),
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.all(15),
+                              textStyle: const TextStyle(fontSize: 16),
+                            ),
+                            onPressed: () => navigateToSellInfoPage(),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text('Go to sell information   ',
+                                    style: TextStyle(fontSize: 18)),
+                                Icon(Icons.arrow_forward)
+                              ],
+                            ),
                           ),
-                          onPressed: () => addToDelivery(),
-                          child: const Text('         Sell         '),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ],

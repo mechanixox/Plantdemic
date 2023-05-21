@@ -456,6 +456,23 @@ class _SellInfoPageState extends State<SellInfoPage> {
         body: CustomScrollView(
           slivers: [
             SliverAppBar(
+              toolbarHeight: 70,
+              title: Row(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 5.0),
+                      child: Icon(
+                        Icons.arrow_back_ios_new_rounded,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               bottom: PreferredSize(
                 preferredSize: Size.fromHeight(20),
                 child: Container(

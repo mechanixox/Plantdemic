@@ -52,11 +52,11 @@ class PlantInfoTile extends StatelessWidget {
                   leading: Text(
                     'Name:',
                     style: TextStyle(
-                      fontSize: 16, // Adjust the font size as desired
+                      fontSize: 18, // Adjust the font size as desired
                       fontWeight: FontWeight.bold, // Make the text bold
                     ),
                   ),
-                  title: Text(plant.name),
+                  title: Text(plant.name, style: TextStyle(fontSize: 17)),
                 ),
               ),
             ),
@@ -77,13 +77,12 @@ class PlantInfoTile extends StatelessWidget {
                   leading: Text(
                     'Price:',
                     style: TextStyle(
-                      fontSize: 16, // Adjust the font size as desired
+                      fontSize: 18, // Adjust the font size as desired
                       fontWeight: FontWeight.bold, // Make the text bold
                     ),
                   ),
-                  title: Text(
-                    '₱${plant.price}',
-                  ),
+                  title:
+                      Text('₱${plant.price}', style: TextStyle(fontSize: 17)),
                 ),
               ),
             ),
@@ -104,13 +103,12 @@ class PlantInfoTile extends StatelessWidget {
                   leading: Text(
                     'Quantity:',
                     style: TextStyle(
-                      fontSize: 16, // Adjust the font size as desired
+                      fontSize: 18, // Adjust the font size as desired
                       fontWeight: FontWeight.bold, // Make the text bold
                     ),
                   ),
-                  title: Text(
-                    '${plant.quantity}x',
-                  ),
+                  title: Text('${plant.quantity}x',
+                      style: TextStyle(fontSize: 17)),
                 ),
               ),
             ),

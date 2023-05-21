@@ -48,7 +48,7 @@ class DeliveryTile extends StatelessWidget {
           margin: EdgeInsets.only(bottom: 12),
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 3),
           child: Padding(
-            padding: const EdgeInsets.only(top: 5.0, left: 0, bottom: 5),
+            padding: const EdgeInsets.only(top: 5.0, left: 0, bottom: 10),
             child: ListTile(
               contentPadding: EdgeInsets.only(right: 10, left: 13),
               title: Text(

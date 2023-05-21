@@ -158,14 +158,30 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
       builder: (context, value, child) => Scaffold(
         backgroundColor: Color.fromARGB(255, 216, 248, 216),
         appBar: AppBar(
-          title: Text(
-            widget.plant.name,
-            style: TextStyle(
-              color: Colors.black,
+          automaticallyImplyLeading: false,
+          title: Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: Text(
+              ' Plant information',
+              style: TextStyle(
+                color: Colors.black,
+              ),
             ),
           ),
           centerTitle: true,
           backgroundColor: Color.fromARGB(255, 216, 248, 216),
+          leading: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8.0, top: 10),
+              child: Icon(
+                Icons.arrow_back_ios_new_rounded,
+                color: Colors.grey.shade700,
+              ),
+            ),
+          ),
         ),
         //
         //

@@ -365,7 +365,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
                                             ),
                                           ]),
                                         ),
-                                        SizedBox(width: 20),
+                                        SizedBox(width: 30),
                                         //
                                         //add button
                                         //

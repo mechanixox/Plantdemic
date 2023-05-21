@@ -1,4 +1,8 @@
+import 'dart:async';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:plantdemic/classes/plant.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +18,49 @@ class ManageDeliveryPage extends StatefulWidget {
 }
 
 class _ManageDeliveryPageState extends State<ManageDeliveryPage> {
-  void addToRecords() {}
+  void addToRecords() {
+    Provider.of<PlantdemicInventory>(context, listen: false)
+        .removeFromDelivery(widget.plant);
+    Navigator.pop(context);
+    showDialog(
+      context: context,
+      builder: (context) {
+        Timer(Duration(seconds: 1), () {
+          Navigator.of(context).pop();
+        });
+        return BackdropFilter(
+          filter:
+              ImageFilter.blur(sigmaX: 0.2, sigmaY: 0.2), // Apply blur effect
+          child: AlertDialog(
+            backgroundColor:
+                Color.fromARGB(255, 255, 255, 255).withOpacity(0.90),
+            title: Column(
+              children: [
+                SizedBox(height: 0),
+                Lottie.asset(
+                  'assets/icons/sold.json',
+                  height: 170,
+                  width: 170,
+                ),
+                SizedBox(height: 0),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 15),
+                  child: Text(
+                    'Transaction recorded!',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.grey.shade800,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 15),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

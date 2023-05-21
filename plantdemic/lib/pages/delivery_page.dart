@@ -1,4 +1,8 @@
+import 'dart:async';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:plantdemic/classes/inventory.dart';
 //import 'package:plantdemic/deliveryTabBar/delivery_tab.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +22,49 @@ class _UserDeliverState extends State<UserDelivery> {
   void removeFromDelivery(Plant plant) {
     Provider.of<PlantdemicInventory>(context, listen: false)
         .removeFromDelivery(plant);
+  }
+
+  void addToRecordsWhenCheckPressed(Plant plant) {
+    Provider.of<PlantdemicInventory>(context, listen: false)
+        .removeFromDelivery(plant);
+    showDialog(
+      context: context,
+      builder: (context) {
+        Timer(Duration(seconds: 1), () {
+          Navigator.of(context).pop();
+        });
+        return BackdropFilter(
+          filter:
+              ImageFilter.blur(sigmaX: 0.2, sigmaY: 0.2), // Apply blur effect
+          child: AlertDialog(
+            backgroundColor:
+                Color.fromARGB(255, 255, 255, 255).withOpacity(0.90),
+            title: Column(
+              children: [
+                SizedBox(height: 0),
+                Lottie.asset(
+                  'assets/icons/sold.json',
+                  height: 170,
+                  width: 170,
+                ),
+                SizedBox(height: 0),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 15),
+                  child: Text(
+                    'Transaction recorded!',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.grey.shade800,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 15),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   void goToManageDeliveryInfoPage(Plant plant) {
@@ -57,7 +104,7 @@ class _UserDeliverState extends State<UserDelivery> {
                         trailing: IconButton(
                           icon: Icon(Icons.check_rounded,
                               size: 30, color: Colors.green.shade300),
-                          onPressed: () => removeFromDelivery(plant),
+                          onPressed: () => addToRecordsWhenCheckPressed(plant),
                         ),
                         deleteTapped: (context) => removeFromDelivery(plant),
                       );

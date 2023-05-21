@@ -184,8 +184,8 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                 children: [
                   Image.asset(
                     widget.plant.imagePath,
-                    width: 200,
-                    height: 200,
+                    width: 150,
+                    height: 150,
                   ),
                   const SizedBox(height: 10),
                   //
@@ -195,9 +195,9 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                     plant: widget.plant,
                     editTapped: (context) => editPlantInfo(widget.plant),
                   ),
-                  const SizedBox(height: 60),
+                  const SizedBox(height: 80),
                   //
-                  //
+                  // sell plant -> button
                   //
                   Padding(
                     padding: const EdgeInsets.only(left: 70.0, right: 70),

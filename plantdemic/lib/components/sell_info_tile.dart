@@ -139,7 +139,7 @@ class SellInfoTile extends StatelessWidget {
                 ),
                 title: Text(plant.deliveryDate ?? ''),
                 trailing: IconButton(
-                  icon: Icon(Icons.calendar_month_rounded),
+                  icon: Icon(Icons.edit_rounded),
                   onPressed: () => editDateTapped!(context),
                 ),
               ),

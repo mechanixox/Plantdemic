@@ -5,7 +5,7 @@ class AnimatedTextField extends StatefulWidget {
   final String label;
   final Widget? suffix;
   final TextEditingController controller;
-  final TextInputType keyboardType;
+  final TextInputType? keyboardType;
   final TextInputAction inputAction;
   const AnimatedTextField({
     Key? key,

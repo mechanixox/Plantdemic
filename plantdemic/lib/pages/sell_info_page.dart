@@ -320,7 +320,105 @@ class _SellInfoPageState extends State<SellInfoPage> {
     showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog();
+        DateTime selectedDate = DateTime.now();
+
+        Future<void> selectDate() async {
+          final DateTime? picked = await showDatePicker(
+            context: context,
+            initialDate: selectedDate,
+            firstDate: DateTime(2021), 
+            lastDate: DateTime(2024),
+          );
+          if (picked != null && picked != selectedDate) {
+            setState(() {
+              selectedDate = picked;
+              _dateController.text =
+                  "${selectedDate.month}/${selectedDate.day}/${selectedDate.year}";
+            });
+          }
+        }
+
+        return AlertDialog(
+          backgroundColor: Colors.green.shade50.withOpacity(0.90),
+          title: Row(
+            children: [
+              Icon(Icons.calendar_today_outlined, color: Colors.grey.shade600),
+              Text(
+                ' Date',
+                style: TextStyle(
+                  color: Colors.grey.shade800,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        _dateController.clear();
+                      },
+                      child: Text(
+                        ' Clear',
+                        style:
+                            TextStyle(fontSize: 15, color: Colors.red.shade400),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              InkWell(
+                onTap: () {
+                  selectDate();
+                },
+                child: AnimatedTextField(
+                  label: "MM/DD/YYYY",
+                  suffix: IconButton(
+                    icon: Icon(Icons.calendar_today_outlined),
+                    onPressed: () {
+                      selectDate();
+                    },
+                  ),
+                  controller: _dateController,
+                  keyboardType: null,
+                  inputAction: TextInputAction.next,
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                _dateController.text = widget.plant.deliveryDate!;
+                Navigator.pop(context);
+              }, // Cancel
+              child: Text(
+                'Cancel',
+                style: TextStyle(fontSize: 16, color: Colors.red.shade400),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  individualPlant.deliveryDate = _dateController.text;
+                });
+                Provider.of<PlantdemicInventory>(context, listen: false)
+                    .notifyListeners(); // Notify listeners of the changes
+                Navigator.pop(context); // Done
+              },
+              child: Text(
+                'Save',
+                style: TextStyle(fontSize: 16, color: Colors.blue.shade400),
+              ),
+            ),
+          ],
+        );
       },
     );
   }

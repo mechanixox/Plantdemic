@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import '../../classes/plant.dart';
 
@@ -15,11 +17,13 @@ class _AddPlantPageState extends State<AddPlantPage> {
   final TextEditingController priceController = TextEditingController();
   final TextEditingController quantityController = TextEditingController();
 
-  //track if the text fields are empty
-
+  // track if the text fields are empty
   bool isNameEmpty = false;
   bool isPriceEmpty = false;
   bool isQuantityEmpty = false;
+
+  // control the visibility and opacity of the warning icon
+  bool showWarningIcon = false;
 
   @override
   void dispose() {
@@ -54,7 +58,25 @@ class _AddPlantPageState extends State<AddPlantPage> {
 
     // If any field is empty, show the warning icon and return
     if (isNameEmpty || isPriceEmpty || isQuantityEmpty) {
-      setState(() {}); // Update the UI to display the warning icons
+      setState(() {
+        showWarningIcon = true;
+      });
+
+      // Blink the warning icon several times
+      Timer.periodic(Duration(milliseconds: 500), (timer) {
+        setState(() {
+          showWarningIcon = !showWarningIcon;
+        });
+
+        // Stop blinking after a certain number of times
+        if (timer.tick >= 5) {
+          setState(() {
+            showWarningIcon = false;
+          });
+          timer.cancel();
+        }
+      });
+
       return;
     }
 
@@ -151,9 +173,15 @@ class _AddPlantPageState extends State<AddPlantPage> {
                                       textInputAction: TextInputAction.next,
                                       decoration: InputDecoration(
                                         suffixIcon: isNameEmpty
-                                            ? Icon(
-                                                Icons.warning_rounded,
-                                                color: Colors.red,
+                                            ? AnimatedOpacity(
+                                                opacity:
+                                                    showWarningIcon ? 1.0 : 0.0,
+                                                duration:
+                                                    Duration(milliseconds: 500),
+                                                child: Icon(
+                                                  Icons.warning_rounded,
+                                                  color: Colors.red.shade400,
+                                                ),
                                               )
                                             : null,
                                         icon: Icon(
@@ -206,9 +234,15 @@ class _AddPlantPageState extends State<AddPlantPage> {
                                       keyboardType: TextInputType.number,
                                       decoration: InputDecoration(
                                         suffixIcon: isPriceEmpty
-                                            ? Icon(
-                                                Icons.warning_rounded,
-                                                color: Colors.red,
+                                            ? AnimatedOpacity(
+                                                opacity:
+                                                    showWarningIcon ? 1.0 : 0.0,
+                                                duration:
+                                                    Duration(milliseconds: 500),
+                                                child: Icon(
+                                                  Icons.warning_rounded,
+                                                  color: Colors.red.shade400,
+                                                ),
                                               )
                                             : null,
                                         icon: Icon(
@@ -261,9 +295,15 @@ class _AddPlantPageState extends State<AddPlantPage> {
                                       keyboardType: TextInputType.number,
                                       decoration: InputDecoration(
                                         suffixIcon: isQuantityEmpty
-                                            ? Icon(
-                                                Icons.warning_rounded,
-                                                color: Colors.red,
+                                            ? AnimatedOpacity(
+                                                opacity:
+                                                    showWarningIcon ? 1.0 : 0.0,
+                                                duration:
+                                                    Duration(milliseconds: 500),
+                                                child: Icon(
+                                                  Icons.warning_rounded,
+                                                  color: Colors.red.shade400,
+                                                ),
                                               )
                                             : null,
                                         icon: Icon(

@@ -88,18 +88,34 @@ class PlantdemicInventory extends ChangeNotifier {
   }
 
   void decrementQuantity(Plant plant, int quantity) {
-  int index = inventory.indexOf(plant);
+    int index = _inventory.indexOf(plant);
+    if (index != -1) {
+      Plant existingPlant = _inventory[index];
+      int currentQuantity = int.parse(existingPlant.quantity);
+      int newQuantity = currentQuantity - quantity;
+      if (newQuantity <= 0) {
+        _inventory.removeAt(index);
+      } else {
+        existingPlant.quantity = newQuantity.toString();
+      }
+      notifyListeners();
+    }
+  }
+/*
+  void addToDelivery(Plant plant, int quantity) {
+  int index = _inventory.indexOf(plant);
   if (index != -1) {
-    Plant existingPlant = inventory[index];
-    int currentQuantity = int.parse(existingPlant.quantity);
+    Plant existingPlant = _inventory[index];
+    int currentQuantity = int.tryParse(existingPlant.quantity) ?? 0;
     int newQuantity = currentQuantity - quantity;
     if (newQuantity < 0) {
       newQuantity = 0;
     }
     existingPlant.quantity = newQuantity.toString();
+    notifyListeners();
   }
 }
-
+*/
 /*void decrementQuantity(Plant plant, int quantity) {
     final plantIndex = inventory.indexWhere((p) => p.name == plant.name);
 

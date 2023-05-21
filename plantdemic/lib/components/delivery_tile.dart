@@ -42,32 +42,52 @@ class DeliveryTile extends StatelessWidget {
         ),
         child: Container(
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 217, 237, 233),
+            color: Colors.grey.shade200,
             borderRadius: BorderRadius.circular(10),
           ),
-          margin: EdgeInsets.only(bottom: 10),
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+          margin: EdgeInsets.only(bottom: 12),
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 3),
           child: Padding(
-            padding: const EdgeInsets.only(top: 5.0, left: 0, bottom: 10),
+            padding: const EdgeInsets.only(top: 5.0, left: 0, bottom: 5),
             child: ListTile(
-              title: Text(plant.name),
-              subtitle: Text(
-                '${plant.deliveryDate}',
+              contentPadding: EdgeInsets.only(right: 10, left: 13),
+              title: Text(
+                plant.name,
+                style: TextStyle(fontSize: 18),
+              ),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        '₱${plant.price}  |',
+                        style: TextStyle(fontSize: 14),
+                      ),
+                      SizedBox(
+                          width:
+                              5), // Add some spacing between price and quantity
+                      Text(
+                        ' ${plant.quantity}x',
+                        style: TextStyle(fontSize: 14),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    '${plant.deliveryDate}',
+                  ),
+                ],
               ),
               leading: Image.asset(
                 plant.imagePath,
-                width: 50,
-                height: 50,
+                width: 60,
+                height: 60,
               ),
               trailing: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Expanded(child: trailing), // Wrap the Column with Expanded
-                  SizedBox(height: 5),
-                  Text(
-                    '${plant.quantity}x',
-                    style: TextStyle(fontSize: 14),
-                  ),
+                  Expanded(child: trailing),
+                  //SizedBox(height: 20),
                 ],
               ),
             ),

@@ -42,22 +42,25 @@ class PlantTile extends StatelessWidget {
         ),
         child: Container(
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 217, 237, 233),
+            color: Colors.grey.shade200,
             borderRadius: BorderRadius.circular(10),
           ),
-          margin: EdgeInsets.only(bottom: 10),
+          margin: EdgeInsets.only(bottom: 12),
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
           child: Padding(
             padding: const EdgeInsets.only(top: 5.0, left: 0, bottom: 10),
             child: ListTile(
-              title: Text(plant.name),
+              title: Text(
+                plant.name,
+                style: TextStyle(fontSize: 18),
+              ),
               subtitle: Text(
                 '₱${plant.price}',
               ),
               leading: Image.asset(
                 plant.imagePath,
-                width: 50,
-                height: 50,
+                width: 60,
+                height: 60,
               ),
               trailing: Column(
                 mainAxisSize: MainAxisSize.min,

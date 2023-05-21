@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -22,6 +23,11 @@ class _SellInfoPageState extends State<SellInfoPage> {
     Provider.of<PlantdemicInventory>(context, listen: false)
         .addToDelivery(widget.plant);
 
+    //widget.plant.decrementQuantity();
+
+    /* Provider.of<PlantdemicInventory>(context, listen: false)
+        .decrementQuantity(widget.plant, quantity);*/
+
     Navigator.pop(context);
     Navigator.pop(context);
     showDialog(
@@ -30,30 +36,34 @@ class _SellInfoPageState extends State<SellInfoPage> {
         Timer(Duration(seconds: 2), () {
           Navigator.of(context).pop();
         });
-        return AlertDialog(
-          backgroundColor: Color.fromARGB(255, 255, 255, 255).withOpacity(0.90),
-          title: Column(
-            children: [
-              SizedBox(height: 0),
-              Lottie.asset(
-                'assets/icons/send.json',
-                height: 150,
-                width: 150,
-                //fit: BoxFit.contain,
-              ),
-              SizedBox(height: 0),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 15),
-                child: Text(
-                  'Added to delivery!',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.grey.shade800,
+        return BackdropFilter(
+          filter:
+              ImageFilter.blur(sigmaX: 0.2, sigmaY: 0.2), // Apply blur effect
+          child: AlertDialog(
+            backgroundColor:
+                Color.fromARGB(255, 255, 255, 255).withOpacity(0.90),
+            title: Column(
+              children: [
+                SizedBox(height: 0),
+                Lottie.asset(
+                  'assets/icons/send.json',
+                  height: 150,
+                  width: 150,
+                ),
+                SizedBox(height: 0),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 15),
+                  child: Text(
+                    'Added to delivery!',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.grey.shade800,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: 5),
-            ],
+                SizedBox(height: 5),
+              ],
+            ),
           ),
         );
       },
@@ -64,14 +74,23 @@ class _SellInfoPageState extends State<SellInfoPage> {
   final TextEditingController _quantityController = TextEditingController();
   final TextEditingController _buyerController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
-
+  int price = 0;
+  int quantity = 0;
   @override
   void initState() {
     super.initState();
-    _priceController.text = widget.plant.price;
-    _quantityController.text = widget.plant.quantity;
+
     _buyerController.text = widget.plant.buyer ?? '';
     _dateController.text = widget.plant.deliveryDate ?? '';
+
+    int initialQuantity = int.tryParse(widget.plant.quantity) ?? 0;
+    setState(() {
+      quantity = initialQuantity;
+    });
+    int initialPrice = int.tryParse(widget.plant.price) ?? 0;
+    setState(() {
+      price = initialPrice;
+    });
   }
 
   @override
@@ -149,8 +168,8 @@ class _SellInfoPageState extends State<SellInfoPage> {
                   individualPlant.price = _priceController.text;
                 });
                 Provider.of<PlantdemicInventory>(context, listen: false)
-                    .notifyListeners(); // Notify listeners of the changes
-                Navigator.pop(context); // Done
+                    .notifyListeners();
+                Navigator.pop(context);
               },
               child: Text(
                 'Save',
@@ -229,8 +248,8 @@ class _SellInfoPageState extends State<SellInfoPage> {
                   individualPlant.quantity = _quantityController.text;
                 });
                 Provider.of<PlantdemicInventory>(context, listen: false)
-                    .notifyListeners(); // Notify listeners of the changes
-                Navigator.pop(context); // Done
+                    .notifyListeners();
+                Navigator.pop(context);
               },
               child: Text(
                 'Save',
@@ -294,7 +313,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
           actions: [
             TextButton(
               onPressed: () {
-                _buyerController.text = widget.plant.buyer!;
+                _buyerController.text = widget.plant.buyer ?? '';
 
                 Navigator.pop(context);
               }, // Cancel
@@ -402,7 +421,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
           actions: [
             TextButton(
               onPressed: () {
-                _dateController.text = widget.plant.deliveryDate!;
+                _dateController.text = widget.plant.deliveryDate ?? '';
                 Navigator.pop(context);
               }, // Cancel
               child: Text(

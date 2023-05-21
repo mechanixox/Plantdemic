@@ -149,12 +149,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
       MaterialPageRoute(
         builder: (context) => SellInfoPage(plant: sellPlant),
       ),
-    ).then((result) {
-      if (result != null && result is Plant) {
-        Provider.of<PlantdemicInventory>(context, listen: false)
-            .addToDelivery(result);
-      }
-    });
+    );
   }
 
   @override

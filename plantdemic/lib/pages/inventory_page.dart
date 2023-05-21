@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plantdemic/classes/inventory.dart';
-import 'package:plantdemic/components/plant_tile.dart';
+import 'package:plantdemic/components/inventory_tile.dart';
 import 'package:provider/provider.dart';
 
 import '../classes/plant.dart';

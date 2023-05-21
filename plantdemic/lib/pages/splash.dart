@@ -64,7 +64,7 @@ class _SplashState extends State<Splash> {
                       ).createShader(bounds);
                     },
                     child: Padding(
-                      padding: const EdgeInsets.only(bottom: 80),
+                      padding: const EdgeInsets.only(bottom: 30),
                       child: Text(
                         'Plantdemic',
                         style: TextStyle(

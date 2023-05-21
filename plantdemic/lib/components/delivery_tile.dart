@@ -4,13 +4,13 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import '../classes/plant.dart';
 
 // ignore: must_be_immutable
-class PlantTile extends StatelessWidget {
+class DeliveryTile extends StatelessWidget {
   final Plant plant;
   void Function()? onTap;
   final Widget trailing;
   final Function(BuildContext)? deleteTapped;
 
-  PlantTile({
+  DeliveryTile({
     Key? key,
     required this.plant,
     required this.onTap,
@@ -52,7 +52,7 @@ class PlantTile extends StatelessWidget {
             child: ListTile(
               title: Text(plant.name),
               subtitle: Text(
-                '₱${plant.price}',
+                '${plant.deliveryDate}',
               ),
               leading: Image.asset(
                 plant.imagePath,

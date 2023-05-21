@@ -200,7 +200,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                   // sell plant -> button
                   //
                   Padding(
-                    padding: const EdgeInsets.only(left: 70.0, right: 70),
+                    padding: const EdgeInsets.only(left: 90.0, right: 90),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(30),
                       child: Stack(
@@ -222,7 +222,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                             style: TextButton.styleFrom(
                               foregroundColor: Colors.white,
                               padding: const EdgeInsets.only(
-                                  top: 20, bottom: 20, left: 10, right: 10),
+                                  top: 15, bottom: 15, left: 5, right: 5),
                               textStyle: const TextStyle(fontSize: 16),
                             ),
                             onPressed: () => navigateToSellInfoPage(),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:plantdemic/classes/inventory.dart';
 //import 'package:plantdemic/components/delivery_tab.dart';
-import 'package:plantdemic/components/plant_tile.dart';
 import 'package:provider/provider.dart';
 
 import '../classes/plant.dart';
+import '../components/delivery_tile.dart';
 import 'delivery_info_page.dart';
 
 class UserDelivery extends StatefulWidget {
@@ -48,7 +48,7 @@ class _UserDeliverState extends State<UserDelivery> {
                           Plant plant = value.delivery[index];
 
                           //return plant tile
-                          return PlantTile(
+                          return DeliveryTile(
                             plant: plant,
                             onTap: () => goToManageDeliveryInfoPage(
                                 plant), //go to delivery info page

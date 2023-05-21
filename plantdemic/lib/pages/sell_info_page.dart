@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:plantdemic/components/sell_info_tile.dart';
 import 'package:provider/provider.dart';
 
@@ -20,32 +21,38 @@ class _SellInfoPageState extends State<SellInfoPage> {
   void addToDelivery() {
     Provider.of<PlantdemicInventory>(context, listen: false)
         .addToDelivery(widget.plant);
-    widget.plant.decrementQuantity();
 
+    Navigator.pop(context);
     Navigator.pop(context);
     showDialog(
       context: context,
       builder: (context) {
-        Timer(Duration(seconds: 1), () {
+        Timer(Duration(seconds: 2), () {
           Navigator.of(context).pop();
         });
         return AlertDialog(
           backgroundColor: Color.fromARGB(255, 255, 255, 255).withOpacity(0.90),
           title: Column(
             children: [
-              SizedBox(height: 5),
-              Icon(Icons.check_circle, size: 80, color: Colors.green),
-              SizedBox(height: 10),
+              SizedBox(height: 0),
+              Lottie.asset(
+                'assets/icons/send.json',
+                height: 150,
+                width: 150,
+                //fit: BoxFit.contain,
+              ),
+              SizedBox(height: 0),
               Padding(
                 padding: const EdgeInsets.only(bottom: 15),
                 child: Text(
-                  'Added successfully!',
+                  'Added to delivery!',
                   style: TextStyle(
-                    fontSize: 16,
-                    color: Color.fromRGBO(106, 136, 86, 1),
+                    fontSize: 18,
+                    color: Colors.grey.shade800,
                   ),
                 ),
               ),
+              SizedBox(height: 5),
             ],
           ),
         );
@@ -326,7 +333,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
           final DateTime? picked = await showDatePicker(
             context: context,
             initialDate: selectedDate,
-            firstDate: DateTime(2021), 
+            firstDate: DateTime(2021),
             lastDate: DateTime(2024),
           );
           if (picked != null && picked != selectedDate) {
@@ -495,7 +502,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
                     editDateTapped: (context) => editDateInfo(widget.plant),
                   ),
                   //
-                  // sell button
+                  // add to delivery button
                   //
                   SizedBox(height: 50),
                   Padding(
@@ -522,12 +529,14 @@ class _SellInfoPageState extends State<SellInfoPage> {
                             style: TextButton.styleFrom(
                               foregroundColor: Colors.white,
                               padding:
-                                  const EdgeInsets.only(top: 20, bottom: 20),
+                                  const EdgeInsets.only(top: 17, bottom: 17),
                               textStyle: const TextStyle(fontSize: 16),
                             ),
                             onPressed: () => addToDelivery(),
                             child: const Text(
-                                '          Add to delivery          '),
+                              '          Add to delivery          ',
+                              style: TextStyle(fontSize: 17),
+                            ),
                           ),
                         ],
                       ),

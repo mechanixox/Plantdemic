@@ -54,45 +54,43 @@ class _UserInventoryState extends State<UserInventory> {
   Widget build(BuildContext context) {
     return Consumer<PlantdemicInventory>(
       builder: (context, value, child) => Scaffold(
-        body: SafeArea(
-          child: CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                title: Text(
-                  'Manage your plants',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Color.fromRGBO(106, 136, 86, 1),
-                  ),
+        body: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              title: Text(
+                'Manage your plants',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Color.fromRGBO(106, 136, 86, 1),
                 ),
-                floating: true,
-                snap: true,
-                backgroundColor: Colors.white,
-                elevation: 0,
               ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    Plant individualPlant = value.inventory[index];
-                    return Padding(
-                      padding: const EdgeInsets.only(left: 15.0, right: 15),
-                      child: PlantTile(
-                        plant: individualPlant,
-                        onTap: () => goToManagePlantPage(individualPlant),
-                        trailing: IconButton(
-                          icon: Icon(Icons.arrow_forward),
-                          onPressed: () => goToManagePlantPage(individualPlant),
-                        ),
-                        deleteTapped: (context) =>
-                            removeFromInventory(individualPlant),
+              floating: true,
+              snap: true,
+              backgroundColor: Colors.white,
+              elevation: 0,
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  Plant individualPlant = value.inventory[index];
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 15.0, right: 15),
+                    child: PlantTile(
+                      plant: individualPlant,
+                      onTap: () => goToManagePlantPage(individualPlant),
+                      trailing: IconButton(
+                        icon: Icon(Icons.arrow_forward),
+                        onPressed: () => goToManagePlantPage(individualPlant),
                       ),
-                    );
-                  },
-                  childCount: value.inventory.length,
-                ),
+                      deleteTapped: (context) =>
+                          removeFromInventory(individualPlant),
+                    ),
+                  );
+                },
+                childCount: value.inventory.length,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () => navigateToAddPlantPage(),

@@ -185,7 +185,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
                                               )
                                             : null,
                                         icon: Icon(
-                                          Icons.energy_savings_leaf_rounded,
+                                          Icons.energy_savings_leaf_outlined,
                                           color:
                                               Color.fromARGB(255, 84, 153, 86),
                                         ),

@@ -78,7 +78,8 @@ class _ManageDeliveryPageState extends State<ManageDeliveryPage> {
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(left: 5.0),
-                      child: Icon(Icons.arrow_back_ios_new_rounded),
+                      child: Icon(Icons.arrow_back_ios_new_rounded,
+                          color: Colors.grey.shade700),
                     ),
                   ),
                 ],

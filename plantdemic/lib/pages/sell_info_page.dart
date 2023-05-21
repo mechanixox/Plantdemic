@@ -412,7 +412,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
                     },
                   ),
                   controller: _dateController,
-                  keyboardType: null,
+                  keyboardType: TextInputType.number,
                   inputAction: TextInputAction.next,
                 ),
               ),

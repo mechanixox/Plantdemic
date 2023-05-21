@@ -78,23 +78,32 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
             children: [
               AnimatedTextField(
                 label: "Name",
-                suffix: null,
+                suffix: Icon(
+                  Icons.energy_savings_leaf_outlined,
+                  size: 20,
+                ),
                 controller: _nameController,
                 keyboardType: TextInputType.text,
                 inputAction: TextInputAction.next,
               ),
-              SizedBox(height: 15),
+              SizedBox(height: 10),
               AnimatedTextField(
                 label: "Price",
-                suffix: null,
+                suffix: Icon(
+                  Icons.attach_money_rounded,
+                  size: 20,
+                ),
                 controller: _priceController,
                 keyboardType: TextInputType.number,
                 inputAction: TextInputAction.next,
               ),
-              SizedBox(height: 15),
+              SizedBox(height: 10),
               AnimatedTextField(
                 label: "Quantity",
-                suffix: null,
+                suffix: Icon(
+                  Icons.numbers_rounded,
+                  size: 20,
+                ),
                 controller: _quantityController,
                 keyboardType: TextInputType.number,
                 inputAction: TextInputAction.next,
@@ -122,8 +131,8 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                   individualPlant.quantity = _quantityController.text;
                 });
                 Provider.of<PlantdemicInventory>(context, listen: false)
-                    .notifyListeners(); // Notify listeners of the changes
-                Navigator.pop(context); // Done
+                    .notifyListeners();
+                Navigator.pop(context);
               },
               child: Text(
                 'Save',

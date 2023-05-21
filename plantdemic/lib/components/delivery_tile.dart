@@ -61,14 +61,14 @@ class DeliveryTile extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        '₱${plant.price}  |',
+                        '₱${plant.price}•',
                         style: TextStyle(fontSize: 14),
                       ),
                       SizedBox(
                           width:
-                              5), // Add some spacing between price and quantity
+                              0), // Add some spacing between price and quantity
                       Text(
-                        ' ${plant.quantity}x',
+                        '${plant.quantity}x',
                         style: TextStyle(fontSize: 14),
                       ),
                     ],

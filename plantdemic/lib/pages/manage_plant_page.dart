@@ -148,6 +148,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
   void navigateToSellInfoPage() {
     Plant sellPlant = Plant(
       name: widget.plant.name,
+      cost: widget.plant.cost,
       price: widget.plant.price,
       quantity: widget.plant.quantity,
       imagePath: widget.plant.imagePath,
@@ -165,7 +166,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
   Widget build(BuildContext context) {
     return Consumer<PlantdemicInventory>(
       builder: (context, value, child) => Scaffold(
-        backgroundColor: Color.fromARGB(255, 216, 248, 216),
+        backgroundColor: Color.fromARGB(255, 236, 241, 236),
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Padding(
@@ -178,7 +179,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
             ),
           ),
           centerTitle: true,
-          backgroundColor: Color.fromARGB(255, 216, 248, 216),
+          backgroundColor: Color.fromARGB(255, 236, 241, 236),
           leading: InkWell(
             onTap: () {
               Navigator.pop(context);
@@ -215,10 +216,10 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                     plant: widget.plant,
                     editTapped: (context) => editPlantInfo(widget.plant),
                   ),
-                  const SizedBox(height: 80),
                   //
                   // sell plant -> button
                   //
+                  const SizedBox(height: 45), // space
                   Padding(
                     padding: const EdgeInsets.only(left: 90.0, right: 90),
                     child: ClipRRect(

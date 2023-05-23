@@ -9,18 +9,21 @@ class PlantdemicInventory extends ChangeNotifier {
 
     Plant(
         name: 'Cactus',
+        cost: '50.00',
         price: '70.90',
         quantity: '6',
         imagePath: 'assets/icons/cactus.png'),
     //Caladium
     Plant(
         name: 'Caladium',
+        cost: '50.00',
         price: '150.00',
         quantity: '2',
         imagePath: 'assets/icons/caladium.png'),
     //Monstera
     Plant(
         name: 'Monstera',
+        cost: '50.00',
         price: '300.00',
         quantity: '3',
         imagePath: 'assets/icons/monstera.png'),
@@ -28,23 +31,21 @@ class PlantdemicInventory extends ChangeNotifier {
     //Rosemary
     Plant(
         name: 'Rosemary',
+        cost: '232.00',
         price: '25.50',
         quantity: '8',
         imagePath: 'assets/icons/rosemary.png'),
     //Sunflower
     Plant(
         name: 'Sunflower',
+        cost: '50.00',
         price: '54.95',
         quantity: '4',
         imagePath: 'assets/icons/sunflower.png'),
     Plant(
-        name: 'Plant Asd',
+        name: 'Tanom',
+        cost: '50.00',
         price: '124.95',
-        quantity: '4',
-        imagePath: 'assets/icons/plant.png'),
-    Plant(
-        name: 'Plant Hfdsa',
-        price: '254.95',
         quantity: '4',
         imagePath: 'assets/icons/plant.png'),
   ];
@@ -87,45 +88,12 @@ class PlantdemicInventory extends ChangeNotifier {
     notifyListeners();
   }
 
-  void decrementQuantity(Plant plant, int quantity) {
-    int index = _inventory.indexOf(plant);
-    if (index != -1) {
-      Plant existingPlant = _inventory[index];
-      int currentQuantity = int.parse(existingPlant.quantity);
+  void decrementQuantity(int quantity) {
+    for (var plant in _inventory) {
+      int currentQuantity = int.tryParse(plant.quantity) ?? 0;
       int newQuantity = currentQuantity - quantity;
-      if (newQuantity <= 0) {
-        _inventory.removeAt(index);
-      } else {
-        existingPlant.quantity = newQuantity.toString();
-      }
-      notifyListeners();
+      plant.quantity = newQuantity.toString();
     }
-  }
-/*
-  void addToDelivery(Plant plant, int quantity) {
-  int index = _inventory.indexOf(plant);
-  if (index != -1) {
-    Plant existingPlant = _inventory[index];
-    int currentQuantity = int.tryParse(existingPlant.quantity) ?? 0;
-    int newQuantity = currentQuantity - quantity;
-    if (newQuantity < 0) {
-      newQuantity = 0;
-    }
-    existingPlant.quantity = newQuantity.toString();
     notifyListeners();
   }
-}
-*/
-/*void decrementQuantity(Plant plant, int quantity) {
-    final plantIndex = inventory.indexWhere((p) => p.name == plant.name);
-
-    if (plantIndex != -1) {
-      if (inventory[plantIndex].quantity >= quantity) {
-        inventory[plantIndex].quantity -= quantity;
-        notifyListeners();
-      } else {
-        throw Exception('Insufficient quantity in inventory.');
-      }
-    }
-  }*/
 }

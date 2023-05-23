@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import '../../classes/plant.dart';
@@ -14,11 +15,13 @@ class AddPlantPage extends StatefulWidget {
 class _AddPlantPageState extends State<AddPlantPage> {
   // create TextEditingController for text input fields
   final TextEditingController nameController = TextEditingController();
+  final TextEditingController costController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController quantityController = TextEditingController();
 
   // track if the text fields are empty
   bool isNameEmpty = false;
+  bool isCostEmpty = false;
   bool isPriceEmpty = false;
   bool isQuantityEmpty = false;
 
@@ -29,6 +32,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
   void dispose() {
     // dispose of the text editing controllers when the widget is disposed
     nameController.dispose();
+    costController.dispose();
     priceController.dispose();
     quantityController.dispose();
     super.dispose();
@@ -36,18 +40,23 @@ class _AddPlantPageState extends State<AddPlantPage> {
 
   void addToInventory() {
     String name = nameController.text;
+    String cost = costController.text;
     String price = priceController.text;
     String quantity = quantityController.text;
     String imagePath = 'assets/icons/plant.png';
 
     // Reset the boolean variables
     isNameEmpty = false;
+    isCostEmpty = false;
     isPriceEmpty = false;
     isQuantityEmpty = false;
 
     // Check if any text field is empty
     if (name.isEmpty) {
       isNameEmpty = true;
+    }
+    if (cost.isEmpty) {
+      isCostEmpty = true;
     }
     if (price.isEmpty) {
       isPriceEmpty = true;
@@ -56,14 +65,16 @@ class _AddPlantPageState extends State<AddPlantPage> {
       isQuantityEmpty = true;
     }
 
-    // If any field is empty, show the warning icon and return
-    if (isNameEmpty || isPriceEmpty || isQuantityEmpty) {
+    // If any field is empty, show the warning icon and dialog box
+    if (isNameEmpty || isCostEmpty || isPriceEmpty || isQuantityEmpty) {
       setState(() {
         showWarningIcon = true;
       });
-
+      if (isNameEmpty && showWarningIcon) {
+        fillFields(widget.plant);
+      }
       // Blink the warning icon several times
-      Timer.periodic(Duration(milliseconds: 500), (timer) {
+      Timer.periodic(Duration(milliseconds: 300), (timer) {
         setState(() {
           showWarningIcon = !showWarningIcon;
         });
@@ -83,6 +94,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
     // Create a new Plant object with the entered values
     Plant newPlant = Plant(
       name: name,
+      cost: cost,
       price: price,
       quantity: quantity,
       imagePath: imagePath,
@@ -92,6 +104,53 @@ class _AddPlantPageState extends State<AddPlantPage> {
     Navigator.pop(context, newPlant);
   }
 
+  void fillFields(Plant plant) {
+    showDialog(
+      useSafeArea: true,
+      context: context,
+      builder: (context) {
+        Timer(Duration(seconds: 1), () {
+          Navigator.of(context).pop();
+        });
+        return BackdropFilter(
+          filter:
+              ImageFilter.blur(sigmaX: 0.2, sigmaY: 0.2), // Apply blur effect
+          child: AlertDialog(
+            contentPadding: EdgeInsets.only(
+                bottom: 14), // Remove the default content padding
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            backgroundColor: Colors.green.shade50.withOpacity(0.80),
+            content: Container(
+              height: MediaQuery.of(context).size.width / 5,
+              width: MediaQuery.of(context).size.height / 6,
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 0),
+                    child: Text(
+                      'All fields must be filled!',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey.shade800,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  //
+  //
+  //
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -177,7 +236,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
                                                 opacity:
                                                     showWarningIcon ? 1.0 : 0.0,
                                                 duration:
-                                                    Duration(milliseconds: 500),
+                                                    Duration(milliseconds: 100),
                                                 child: Icon(
                                                   Icons.warning_rounded,
                                                   color: Colors.red.shade400,
@@ -198,6 +257,68 @@ class _AddPlantPageState extends State<AddPlantPage> {
                                       controller: nameController,
                                     ),
                                   ),
+                                  //
+                                  // enter cost box
+                                  //
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width / 1.2,
+                                    //height: 50,
+                                    padding: EdgeInsets.only(
+                                        left: 15, right: 20, top: 7, bottom: 7),
+                                    margin: EdgeInsets.only(top: 25),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color:
+                                            Color.fromARGB(255, 239, 239, 239),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Color.fromARGB(
+                                                255, 191, 191, 191),
+                                            offset: Offset(2.0, 2.0),
+                                            blurRadius: 10,
+                                            spreadRadius: 0,
+                                          ),
+                                          BoxShadow(
+                                            color: Color.fromARGB(
+                                                255, 255, 255, 255),
+                                            offset: Offset(-4.0, -4.0),
+                                            blurRadius: 15,
+                                            spreadRadius: 1,
+                                          ),
+                                        ]),
+                                    child: TextField(
+                                      cursorColor: Colors.grey[800],
+                                      textInputAction: TextInputAction.next,
+                                      keyboardType: TextInputType.number,
+                                      decoration: InputDecoration(
+                                        suffixIcon: isCostEmpty
+                                            ? AnimatedOpacity(
+                                                opacity:
+                                                    showWarningIcon ? 1.0 : 0.0,
+                                                duration:
+                                                    Duration(milliseconds: 100),
+                                                child: Icon(
+                                                  Icons.warning_rounded,
+                                                  color: Colors.red.shade400,
+                                                ),
+                                              )
+                                            : null,
+                                        icon: Icon(
+                                          Icons.money_outlined,
+                                          color:
+                                              Color.fromARGB(255, 84, 153, 86),
+                                        ),
+                                        border: InputBorder.none,
+                                        hintText: 'Enter cost',
+                                        hintStyle: TextStyle(
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      controller: costController,
+                                    ),
+                                  ),
+                                  //
                                   //
                                   // enter amount box
                                   //
@@ -238,7 +359,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
                                                 opacity:
                                                     showWarningIcon ? 1.0 : 0.0,
                                                 duration:
-                                                    Duration(milliseconds: 500),
+                                                    Duration(milliseconds: 100),
                                                 child: Icon(
                                                   Icons.warning_rounded,
                                                   color: Colors.red.shade400,
@@ -299,7 +420,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
                                                 opacity:
                                                     showWarningIcon ? 1.0 : 0.0,
                                                 duration:
-                                                    Duration(milliseconds: 500),
+                                                    Duration(milliseconds: 100),
                                                 child: Icon(
                                                   Icons.warning_rounded,
                                                   color: Colors.red.shade400,
@@ -325,7 +446,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
                                   //
                                   //SizedBox(height: 180), // add space below text fields
                                   Padding(
-                                    padding: const EdgeInsets.only(top: 190),
+                                    padding: const EdgeInsets.only(top: 100),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,

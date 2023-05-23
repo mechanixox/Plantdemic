@@ -17,6 +17,13 @@ class DeliveryInfoTile extends StatelessWidget {
     return price * quantity;
   }
 
+  double calculateProfit() {
+    final double price = double.parse(plant.price);
+    final double cost = double.parse(plant.cost);
+    final int quantity = int.parse(plant.quantity);
+    return (price - cost) * quantity;
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -77,34 +84,7 @@ class DeliveryInfoTile extends StatelessWidget {
               ),
             ),
           ),
-          //
-          //total
-          //
-          Container(
-            decoration: BoxDecoration(
-              color: Color.fromARGB(255, 229, 233, 229),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            margin: EdgeInsets.only(top: 2, bottom: 10, left: 20, right: 20),
-            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
-            child: Padding(
-              padding:
-                  const EdgeInsets.only(top: 0, left: 10, bottom: 0, right: 0),
-              child: ListTile(
-                leading: Text(
-                  'Total:',
-                  style: TextStyle(
-                    fontSize: 16, // Adjust the font size as desired
-                    fontWeight: FontWeight.bold, // Make the text bold
-                  ),
-                ),
-                title: Text(
-                  // ignore: unrelated_type_equality_checks
-                  '₱${calculateSellTotal().toStringAsFixed(2)}',
-                ),
-              ),
-            ),
-          ),
+
           //
           // buyer info
           //
@@ -152,6 +132,70 @@ class DeliveryInfoTile extends StatelessWidget {
                   ),
                 ),
                 title: Text(plant.deliveryDate ?? ''),
+              ),
+            ),
+          ),
+          Padding(
+            padding:
+                const EdgeInsets.only(left: 20.0, right: 20, bottom: 4, top: 2),
+            child: Divider(
+              thickness: 2,
+              color: Colors.grey[300],
+            ),
+          ),
+          //
+          //total
+          //
+          Container(
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 229, 233, 229),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            margin: EdgeInsets.only(top: 2, bottom: 10, left: 20, right: 20),
+            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
+            child: Padding(
+              padding:
+                  const EdgeInsets.only(top: 0, left: 10, bottom: 0, right: 0),
+              child: ListTile(
+                leading: Text(
+                  'Total:',
+                  style: TextStyle(
+                    fontSize: 16, // Adjust the font size as desired
+                    fontWeight: FontWeight.bold, // Make the text bold
+                  ),
+                ),
+                title: Text(
+                  // ignore: unrelated_type_equality_checks
+                  '₱${calculateSellTotal().toStringAsFixed(2)}',
+                ),
+              ),
+            ),
+          ),
+          //
+          //profit
+          //
+          Container(
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 229, 233, 229),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            margin: EdgeInsets.only(top: 2, bottom: 10, left: 20, right: 20),
+            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
+            child: Padding(
+              padding:
+                  const EdgeInsets.only(top: 0, left: 10, bottom: 0, right: 0),
+              child: ListTile(
+                leading: Text(
+                  'Profit:',
+                  style: TextStyle(
+                    fontSize: 16, // Adjust the font size as desired
+                    fontWeight: FontWeight.bold, // Make the text bold
+                  ),
+                ),
+                title: Text(
+                  // ignore: unrelated_type_equality_checks
+                  '₱${calculateProfit().toStringAsFixed(2)}',
+                ),
               ),
             ),
           ),

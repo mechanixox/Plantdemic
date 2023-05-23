@@ -38,9 +38,12 @@ class PlantInfoTile extends StatelessWidget {
         ),
         child: Column(
           children: [
+            //
+            //name
+            //
             Container(
               decoration: BoxDecoration(
-                color: Colors.green.shade200,
+                color: Color.fromRGBO(252, 252, 252, 1),
                 borderRadius: BorderRadius.circular(10),
               ),
               margin: EdgeInsets.only(top: 30, bottom: 10, left: 20, right: 20),
@@ -61,11 +64,36 @@ class PlantInfoTile extends StatelessWidget {
               ),
             ),
             //
-            //
+            //cost
             //
             Container(
               decoration: BoxDecoration(
-                color: Colors.green.shade200,
+                color: Color.fromRGBO(252, 252, 252, 1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              margin: EdgeInsets.only(top: 2, bottom: 10, left: 20, right: 20),
+              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    top: 0, left: 10, bottom: 0, right: 10),
+                child: ListTile(
+                  leading: Text(
+                    'Cost:',
+                    style: TextStyle(
+                      fontSize: 18, // Adjust the font size as desired
+                      fontWeight: FontWeight.bold, // Make the text bold
+                    ),
+                  ),
+                  title: Text('₱${plant.cost}', style: TextStyle(fontSize: 17)),
+                ),
+              ),
+            ),
+            //
+            //price
+            //
+            Container(
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(252, 252, 252, 1),
                 borderRadius: BorderRadius.circular(10),
               ),
               margin: EdgeInsets.only(top: 2, bottom: 10, left: 20, right: 20),
@@ -87,11 +115,11 @@ class PlantInfoTile extends StatelessWidget {
               ),
             ),
             //
-            //
+            //quantity
             //
             Container(
               decoration: BoxDecoration(
-                color: Colors.green.shade200,
+                color: Color.fromRGBO(252, 252, 252, 1),
                 borderRadius: BorderRadius.circular(10),
               ),
               margin: EdgeInsets.only(top: 2, bottom: 10, left: 20, right: 20),

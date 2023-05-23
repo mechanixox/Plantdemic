@@ -27,6 +27,7 @@ class _UserInventoryState extends State<UserInventory> {
   void navigateToAddPlantPage() {
     Plant newPlant = Plant(
       name: 'Default Plant',
+      cost: '0',
       price: '0',
       quantity: '0',
       imagePath: 'assets/icons/plant.png',

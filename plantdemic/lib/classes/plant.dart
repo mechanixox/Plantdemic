@@ -1,5 +1,6 @@
 class Plant {
   String name;
+  String cost;
   String price;
   String quantity;
   String imagePath;
@@ -8,13 +9,13 @@ class Plant {
 
   Plant({
     required this.name,
+    required this.cost,
     required this.price,
     required this.quantity,
     required this.imagePath,
     this.buyer,
     this.deliveryDate,
   });
-  
 
   void decrementQuantity() {
     int currentQuantity = int.tryParse(quantity) ?? 0;

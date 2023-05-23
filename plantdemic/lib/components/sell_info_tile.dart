@@ -29,7 +29,7 @@ class SellInfoTile extends StatelessWidget {
           //
           Container(
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 229, 233, 229),
+              color: Color.fromRGBO(248, 237, 235, 1),
               borderRadius: BorderRadius.circular(10),
             ),
             margin: EdgeInsets.only(top: 20, bottom: 10, left: 20, right: 20),
@@ -49,7 +49,11 @@ class SellInfoTile extends StatelessWidget {
                   '₱${plant.price}',
                 ),
                 trailing: IconButton(
-                  icon: Icon(Icons.edit_rounded),
+                  icon: Icon(
+                    Icons.edit_rounded,
+                    color: Color.fromRGBO(138, 158, 127, 0.7),
+                    size: 22,
+                  ),
                   onPressed: () => editPriceTapped!(context),
                 ),
               ),
@@ -60,7 +64,7 @@ class SellInfoTile extends StatelessWidget {
           //
           Container(
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 229, 233, 229),
+              color: Color.fromRGBO(248, 237, 235, 1),
               borderRadius: BorderRadius.circular(10),
             ),
             margin: EdgeInsets.only(top: 2, bottom: 10, left: 20, right: 20),
@@ -81,7 +85,11 @@ class SellInfoTile extends StatelessWidget {
                   '${plant.quantity}x',
                 ),
                 trailing: IconButton(
-                  icon: Icon(Icons.edit_rounded),
+                  icon: Icon(
+                    Icons.edit_rounded,
+                    color: Color.fromRGBO(138, 158, 127, 0.7),
+                    size: 22,
+                  ),
                   onPressed: () => editQuantityTapped!(context),
                 ),
               ),
@@ -92,7 +100,7 @@ class SellInfoTile extends StatelessWidget {
           //
           Container(
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 229, 233, 229),
+              color: Color.fromRGBO(248, 237, 235, 1),
               borderRadius: BorderRadius.circular(10),
             ),
             margin: EdgeInsets.only(top: 2, bottom: 10, left: 20, right: 20),
@@ -110,7 +118,11 @@ class SellInfoTile extends StatelessWidget {
                 ),
                 title: Text(plant.buyer ?? ''),
                 trailing: IconButton(
-                  icon: Icon(Icons.edit_rounded),
+                  icon: Icon(
+                    Icons.edit_rounded,
+                    color: Color.fromRGBO(138, 158, 127, 0.7),
+                    size: 22,
+                  ),
                   onPressed: () => editBuyerTapped!(context),
                 ),
               ),
@@ -121,7 +133,7 @@ class SellInfoTile extends StatelessWidget {
           //
           Container(
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 229, 233, 229),
+              color: Color.fromRGBO(248, 237, 235, 1),
               borderRadius: BorderRadius.circular(10),
             ),
             margin: EdgeInsets.only(top: 2, bottom: 10, left: 20, right: 20),
@@ -139,7 +151,11 @@ class SellInfoTile extends StatelessWidget {
                 ),
                 title: Text(plant.deliveryDate ?? ''),
                 trailing: IconButton(
-                  icon: Icon(Icons.edit_rounded),
+                  icon: Icon(
+                    Icons.edit_rounded,
+                    color: Color.fromRGBO(138, 158, 127, 0.7),
+                    size: 22,
+                  ),
                   onPressed: () => editDateTapped!(context),
                 ),
               ),

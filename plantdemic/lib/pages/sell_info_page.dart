@@ -25,8 +25,8 @@ class _SellInfoPageState extends State<SellInfoPage> {
 
     //widget.plant.decrementQuantity();
 
-    /* Provider.of<PlantdemicInventory>(context, listen: false)
-        .decrementQuantity(widget.plant, quantity);*/
+    Provider.of<PlantdemicInventory>(context, listen: false).decrementQuantity(quantity);
+
 
     Navigator.pop(context);
     Navigator.pop(context);
@@ -497,7 +497,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
               ),
               pinned: true,
               automaticallyImplyLeading: false,
-              backgroundColor: Color.fromRGBO(106, 136, 86, 1),
+              backgroundColor: Color.fromRGBO(88, 129, 87, 1),
               expandedHeight: 250,
               flexibleSpace: FlexibleSpaceBar(
                 background: Center(

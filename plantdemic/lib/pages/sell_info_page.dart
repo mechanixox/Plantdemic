@@ -22,14 +22,13 @@ class _SellInfoPageState extends State<SellInfoPage> {
   void addToDelivery() {
     Provider.of<PlantdemicInventory>(context, listen: false)
         .addToDelivery(widget.plant);
-
-    //widget.plant.decrementQuantity();
-
-    Provider.of<PlantdemicInventory>(context, listen: false).decrementQuantity(quantity);
-
+    int quantity = int.tryParse(_quantityController.text) ?? 0;
+    Provider.of<PlantdemicInventory>(context, listen: false)
+        .decrementQuantity(widget.plant, quantity);
 
     Navigator.pop(context);
     Navigator.pop(context);
+
     showDialog(
       context: context,
       builder: (context) {
@@ -102,7 +101,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
     super.dispose();
   }
 
-  void editSellInfo(Plant individualPlant) {
+  void editSellPriceInfo(Plant individualPlant) {
     showDialog(
       context: context,
       builder: (context) {
@@ -154,7 +153,6 @@ class _SellInfoPageState extends State<SellInfoPage> {
             TextButton(
               onPressed: () {
                 _priceController.text = widget.plant.price;
-
                 Navigator.pop(context);
               }, // Cancel
               child: Text(
@@ -192,7 +190,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
             children: [
               Icon(Icons.numbers_outlined, color: Colors.grey.shade600),
               Text(
-                ' Quantity',
+                ' Sell quantity',
                 style: TextStyle(
                   color: Colors.grey.shade800,
                   fontWeight: FontWeight.bold,
@@ -233,7 +231,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
           actions: [
             TextButton(
               onPressed: () {
-                _quantityController.text = widget.plant.quantity;
+                _quantityController.text = widget.plant.sellQuantity ?? '';
 
                 Navigator.pop(context);
               }, // Cancel
@@ -244,8 +242,9 @@ class _SellInfoPageState extends State<SellInfoPage> {
             ),
             TextButton(
               onPressed: () {
+                //int quantity = int.parse(_quantityController.text);
                 setState(() {
-                  individualPlant.quantity = _quantityController.text;
+                  individualPlant.sellQuantity = _quantityController.text;
                 });
                 Provider.of<PlantdemicInventory>(context, listen: false)
                     .notifyListeners();
@@ -404,7 +403,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
                   selectDate();
                 },
                 child: AnimatedTextField(
-                  label: "MM/DD/YYYY",
+                  label: "mm/dd/yyyy",
                   suffix: IconButton(
                     icon: Icon(Icons.calendar_today_outlined),
                     onPressed: () {
@@ -531,7 +530,8 @@ class _SellInfoPageState extends State<SellInfoPage> {
                   SizedBox(height: 30),
                   SellInfoTile(
                     plant: widget.plant,
-                    editPriceTapped: (context) => editSellInfo(widget.plant),
+                    editPriceTapped: (context) =>
+                        editSellPriceInfo(widget.plant),
                     editQuantityTapped: (context) =>
                         editSellQuantityInfo(widget.plant),
                     editBuyerTapped: (context) => editBuyerInfo(widget.plant),

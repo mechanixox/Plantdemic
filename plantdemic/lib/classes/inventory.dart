@@ -88,12 +88,21 @@ class PlantdemicInventory extends ChangeNotifier {
     notifyListeners();
   }
 
-  void decrementQuantity(int quantity) {
-    for (var plant in _inventory) {
-      int currentQuantity = int.tryParse(plant.quantity) ?? 0;
+  void decrementQuantity(Plant plant, int quantity) {
+    final selectedPlantIndex =
+        _inventory.indexWhere((p) => p.name == plant.name);
+
+    if (selectedPlantIndex != -1) {
+      int currentQuantity =
+          int.tryParse(_inventory[selectedPlantIndex].quantity) ?? 0;
       int newQuantity = currentQuantity - quantity;
-      plant.quantity = newQuantity.toString();
+
+      if (newQuantity > 0) {
+        _inventory[selectedPlantIndex].quantity = newQuantity.toString();
+        notifyListeners();
+      } else {
+        removeFromInventory(_inventory[selectedPlantIndex]);
+      }
     }
-    notifyListeners();
   }
 }

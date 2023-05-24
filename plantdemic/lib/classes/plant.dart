@@ -4,6 +4,7 @@ class Plant {
   String price;
   String quantity;
   String imagePath;
+  String? sellQuantity;
   String? buyer;
   String? deliveryDate;
 
@@ -13,17 +14,10 @@ class Plant {
     required this.price,
     required this.quantity,
     required this.imagePath,
+    this.sellQuantity,
     this.buyer,
     this.deliveryDate,
   });
-
-  void decrementQuantity() {
-    int currentQuantity = int.tryParse(quantity) ?? 0;
-    if (currentQuantity > 0) {
-      currentQuantity--;
-      quantity = currentQuantity.toString();
-    }
-  }
 
   bool isOutOfStock() {
     int currentQuantity = int.tryParse(quantity) ?? 0;

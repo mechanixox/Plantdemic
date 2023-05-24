@@ -68,7 +68,7 @@ class DeliveryTile extends StatelessWidget {
                           width:
                               0), // Add some spacing between price and quantity
                       Text(
-                        '${plant.quantity}x',
+                        '${plant.sellQuantity}x',
                         style: TextStyle(fontSize: 14),
                       ),
                     ],

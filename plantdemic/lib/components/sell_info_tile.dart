@@ -81,8 +81,7 @@ class SellInfoTile extends StatelessWidget {
                   ),
                 ),
                 title: Text(
-                  // ignore: unrelated_type_equality_checks
-                  '${plant.quantity}x',
+                  plant.sellQuantity ?? '',
                 ),
                 trailing: IconButton(
                   icon: Icon(

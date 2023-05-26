@@ -219,7 +219,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                   //
                   // sell plant -> button
                   //
-                  const SizedBox(height: 45), // space
+                  const SizedBox(height: 38), // space
                   Padding(
                     padding: const EdgeInsets.only(left: 90.0, right: 90),
                     child: ClipRRect(

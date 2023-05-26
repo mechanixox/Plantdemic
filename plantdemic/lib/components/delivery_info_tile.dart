@@ -13,14 +13,14 @@ class DeliveryInfoTile extends StatelessWidget {
   }) : super(key: key);
   double calculateSellTotal() {
     final double price = double.parse(plant.price);
-    final int quantity = int.parse(plant.quantity);
-    return price * quantity;
+    final int sellQuantity = int.parse(plant.sellQuantity ?? '');
+    return price * sellQuantity;
   }
 
   double calculateProfit() {
     final double price = double.parse(plant.price);
     final double cost = double.parse(plant.cost);
-    final int quantity = int.parse(plant.quantity);
+    final int quantity = int.parse(plant.sellQuantity ?? '');
     return (price - cost) * quantity;
   }
 
@@ -148,7 +148,7 @@ class DeliveryInfoTile extends StatelessWidget {
           //
           Container(
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 229, 233, 229),
+              color: Colors.green.shade100,
               borderRadius: BorderRadius.circular(10),
             ),
             margin: EdgeInsets.only(top: 2, bottom: 10, left: 20, right: 20),
@@ -176,7 +176,7 @@ class DeliveryInfoTile extends StatelessWidget {
           //
           Container(
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 229, 233, 229),
+              color: Colors.green.shade100,
               borderRadius: BorderRadius.circular(10),
             ),
             margin: EdgeInsets.only(top: 2, bottom: 10, left: 20, right: 20),

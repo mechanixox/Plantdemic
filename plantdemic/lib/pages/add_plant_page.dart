@@ -14,10 +14,10 @@ class AddPlantPage extends StatefulWidget {
 
 class _AddPlantPageState extends State<AddPlantPage> {
   // create TextEditingController for text input fields
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController costController = TextEditingController();
-  final TextEditingController priceController = TextEditingController();
-  final TextEditingController quantityController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _costController = TextEditingController();
+  final TextEditingController _priceController = TextEditingController();
+  final TextEditingController _quantityController = TextEditingController();
 
   // track if the text fields are empty
   bool isNameEmpty = false;
@@ -31,18 +31,18 @@ class _AddPlantPageState extends State<AddPlantPage> {
   @override
   void dispose() {
     // dispose of the text editing controllers when the widget is disposed
-    nameController.dispose();
-    costController.dispose();
-    priceController.dispose();
-    quantityController.dispose();
+    _nameController.dispose();
+    _costController.dispose();
+    _priceController.dispose();
+    _quantityController.dispose();
     super.dispose();
   }
 
   void addToInventory() {
-    String name = nameController.text;
-    String cost = costController.text;
-    String price = priceController.text;
-    String quantity = quantityController.text;
+    String name = _nameController.text;
+    String cost = _costController.text;
+    String price = _priceController.text;
+    String quantity = _quantityController.text;
     String imagePath = 'assets/icons/plant.png';
 
     // Reset the boolean variables
@@ -70,9 +70,37 @@ class _AddPlantPageState extends State<AddPlantPage> {
       setState(() {
         showWarningIcon = true;
       });
-      if (isNameEmpty && showWarningIcon) {
+      if (showWarningIcon) {
         fillFields(widget.plant);
       }
+
+      // Blink the warning icon several times
+      Timer.periodic(Duration(milliseconds: 300), (timer) {
+        setState(() {
+          showWarningIcon = !showWarningIcon;
+        });
+
+        // Stop blinking after a certain number of times
+        if (timer.tick >= 5) {
+          setState(() {
+            showWarningIcon = false;
+          });
+          timer.cancel();
+        }
+      });
+
+      return;
+    }
+    if (int.tryParse(quantity)! <= 0 ||
+        int.tryParse(price)! <= 0 ||
+        int.tryParse(cost)! <= 0) {
+      setState(() {
+        showWarningIcon = true;
+      });
+      if (showWarningIcon) {
+        restrictFields(widget.plant);
+      }
+
       // Blink the warning icon several times
       Timer.periodic(Duration(milliseconds: 300), (timer) {
         setState(() {
@@ -133,6 +161,50 @@ class _AddPlantPageState extends State<AddPlantPage> {
                     padding: const EdgeInsets.only(bottom: 0),
                     child: Text(
                       'All fields must be filled!',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey.shade800,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void restrictFields(Plant plant) {
+    showDialog(
+      useSafeArea: true,
+      context: context,
+      builder: (context) {
+        Timer(Duration(seconds: 1), () {
+          Navigator.of(context).pop();
+        });
+        return BackdropFilter(
+          filter:
+              ImageFilter.blur(sigmaX: 0.2, sigmaY: 0.2), // Apply blur effect
+          child: AlertDialog(
+            contentPadding: EdgeInsets.only(
+                bottom: 14), // Remove the default content padding
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            backgroundColor: Colors.green.shade50.withOpacity(0.80),
+            content: Container(
+              height: MediaQuery.of(context).size.width / 5,
+              width: MediaQuery.of(context).size.height / 6,
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 0),
+                    child: Text(
+                      'Please enter a valid number.',
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.grey.shade800,
@@ -254,7 +326,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
                                           color: Colors.grey,
                                         ),
                                       ),
-                                      controller: nameController,
+                                      controller: _nameController,
                                     ),
                                   ),
                                   //
@@ -315,7 +387,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
                                           color: Colors.grey,
                                         ),
                                       ),
-                                      controller: costController,
+                                      controller: _costController,
                                     ),
                                   ),
                                   //
@@ -377,7 +449,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
                                           color: Colors.grey,
                                         ),
                                       ),
-                                      controller: priceController,
+                                      controller: _priceController,
                                     ),
                                   ),
                                   //
@@ -438,7 +510,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
                                           color: Colors.grey,
                                         ),
                                       ),
-                                      controller: quantityController,
+                                      controller: _quantityController,
                                     ),
                                   ),
                                   //

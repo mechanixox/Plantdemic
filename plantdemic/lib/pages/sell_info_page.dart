@@ -19,12 +19,100 @@ class SellInfoPage extends StatefulWidget {
 }
 
 class _SellInfoPageState extends State<SellInfoPage> {
+  final TextEditingController _priceController = TextEditingController();
+  final TextEditingController _quantityController = TextEditingController();
+  final TextEditingController _buyerController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
+  int price = 0;
+  int quantity = 0;
+  @override
+  void initState() {
+    super.initState();
+
+    _buyerController.text = widget.plant.buyer ?? '';
+    _dateController.text = widget.plant.deliveryDate ?? '';
+
+    int initialQuantity = int.tryParse(widget.plant.quantity) ?? 0;
+    setState(() {
+      quantity = initialQuantity;
+    });
+    int initialPrice = int.tryParse(widget.plant.price) ?? 0;
+    setState(() {
+      price = initialPrice;
+    });
+  }
+
+  @override
+  void dispose() {
+    _priceController.dispose();
+    _quantityController.dispose();
+    _buyerController.dispose();
+    _dateController.dispose();
+    super.dispose();
+  }
+
+  // track if the text fields are empty
+  bool isPriceEmpty = false;
+  bool isQuantityEmpty = false;
+  bool isBuyerEmpty = false;
+  bool isDeliveryDateEmpty = false;
+  //
+  //
+  //
   void addToDelivery() {
+    // Reset the boolean variables
+
+    String price = _priceController.text;
+    String quantity = _quantityController.text;
+    String buyer = _buyerController.text;
+    String date = _dateController.text;
+
+    isPriceEmpty = false;
+    isQuantityEmpty = false;
+    isBuyerEmpty = false;
+    isDeliveryDateEmpty = false;
+
+    // Check if any text field is empty
+
+    if (price.isEmpty) {
+      isPriceEmpty = true;
+    }
+    if (quantity.isEmpty) {
+      isQuantityEmpty = true;
+    }
+    if (buyer.isEmpty) {
+      isQuantityEmpty = true;
+    }
+    if (date.isEmpty) {
+      isQuantityEmpty = true;
+    }
+
+    if (isQuantityEmpty || isBuyerEmpty || isDeliveryDateEmpty) {
+      fillFields(widget.plant);
+
+      return;
+    } else if (int.tryParse(price) == null ||
+        int.tryParse(quantity)! > int.tryParse(widget.plant.quantity)! ||
+        int.tryParse(quantity)! <= 0) {
+      restrictQuantity(widget.plant);
+      return;
+    } else if (quantity.contains(RegExp(r'[^0-9]'))) {
+      restrictQuantity(widget.plant);
+      return;
+    }
+    //
+    //
+    //
+    if (int.tryParse(price) == null || int.tryParse(price)! <= 0) {
+      restrictPrice(widget.plant);
+      return;
+    }
+
     Provider.of<PlantdemicInventory>(context, listen: false)
         .addToDelivery(widget.plant);
-    int quantity = int.tryParse(_quantityController.text) ?? 0;
+    int sellQuantity = int.tryParse(_quantityController.text) ?? 0;
     Provider.of<PlantdemicInventory>(context, listen: false)
-        .decrementQuantity(widget.plant, quantity);
+        .decrementQuantity(widget.plant, sellQuantity);
 
     Navigator.pop(context);
     Navigator.pop(context);
@@ -69,36 +157,136 @@ class _SellInfoPageState extends State<SellInfoPage> {
     );
   }
 
-  final TextEditingController _priceController = TextEditingController();
-  final TextEditingController _quantityController = TextEditingController();
-  final TextEditingController _buyerController = TextEditingController();
-  final TextEditingController _dateController = TextEditingController();
-  int price = 0;
-  int quantity = 0;
-  @override
-  void initState() {
-    super.initState();
-
-    _buyerController.text = widget.plant.buyer ?? '';
-    _dateController.text = widget.plant.deliveryDate ?? '';
-
-    int initialQuantity = int.tryParse(widget.plant.quantity) ?? 0;
-    setState(() {
-      quantity = initialQuantity;
-    });
-    int initialPrice = int.tryParse(widget.plant.price) ?? 0;
-    setState(() {
-      price = initialPrice;
-    });
+  void fillFields(Plant plant) {
+    showDialog(
+      useSafeArea: true,
+      context: context,
+      builder: (context) {
+        Timer(Duration(seconds: 1), () {
+          Navigator.of(context).pop();
+        });
+        return BackdropFilter(
+          filter:
+              ImageFilter.blur(sigmaX: 0.2, sigmaY: 0.2), // Apply blur effect
+          child: AlertDialog(
+            contentPadding: EdgeInsets.only(
+                bottom: 14), // Remove the default content padding
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            backgroundColor: Colors.green.shade50.withOpacity(0.80),
+            content: Container(
+              height: MediaQuery.of(context).size.width / 5,
+              width: MediaQuery.of(context).size.height / 6,
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 0),
+                    child: Text(
+                      'All fields must be filled!',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey.shade800,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 
-  @override
-  void dispose() {
-    _priceController.dispose();
-    _quantityController.dispose();
-    _buyerController.dispose();
-    _dateController.dispose();
-    super.dispose();
+  void restrictQuantity(Plant plant) {
+    showDialog(
+      useSafeArea: true,
+      context: context,
+      builder: (context) {
+        Timer(Duration(seconds: 1), () {
+          Navigator.of(context).pop();
+        });
+        return BackdropFilter(
+          filter:
+              ImageFilter.blur(sigmaX: 0.2, sigmaY: 0.2), // Apply blur effect
+          child: AlertDialog(
+            contentPadding: EdgeInsets.only(
+                bottom: 14), // Remove the default content padding
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            backgroundColor: Colors.green.shade50.withOpacity(0.80),
+            content: Container(
+              height: MediaQuery.of(context).size.width / 5,
+              width: MediaQuery.of(context).size.height / 6,
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 0),
+                    child: Text(
+                      'Please enter a valid quantity.',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey.shade800,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void restrictPrice(Plant plant) {
+    showDialog(
+      useSafeArea: true,
+      context: context,
+      builder: (context) {
+        Timer(Duration(seconds: 1), () {
+          Navigator.of(context).pop();
+        });
+        return BackdropFilter(
+          filter:
+              ImageFilter.blur(sigmaX: 0.2, sigmaY: 0.2), // Apply blur effect
+          child: AlertDialog(
+            contentPadding: EdgeInsets.only(
+                bottom: 14), // Remove the default content padding
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            backgroundColor: Colors.green.shade50.withOpacity(0.80),
+            content: Container(
+              height: MediaQuery.of(context).size.width / 5,
+              width: MediaQuery.of(context).size.height / 6,
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 0),
+                    child: Text(
+                      'Please enter a valid price.',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey.shade800,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   void editSellPriceInfo(Plant individualPlant) {

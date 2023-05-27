@@ -25,6 +25,9 @@ class _UserDeliverState extends State<UserDelivery> {
   }
 
   void addToRecordsWhenCheckPressed(Plant plant) {
+    double profit = plant.calculateProfit();
+    Provider.of<PlantdemicInventory>(context, listen: false)
+        .addToRecords(plant,profit);
     Provider.of<PlantdemicInventory>(context, listen: false)
         .removeFromDelivery(plant);
     showDialog(

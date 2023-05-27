@@ -34,19 +34,19 @@ class PlantTile extends StatelessWidget {
               child: StretchMotion(),
             ),
             children: [
-              //delete tile
-              SlidableAction(
-                onPressed: deleteTapped,
-                backgroundColor: Colors.red.shade400,
-                icon: Icons.delete_rounded,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              SizedBox(width: 5),
               //sell tile
               SlidableAction(
                 onPressed: sellTapped,
                 backgroundColor: Colors.teal.shade800,
                 icon: Icons.sell_rounded,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              SizedBox(width: 5),
+              //delete tile
+              SlidableAction(
+                onPressed: deleteTapped,
+                backgroundColor: Colors.red.shade400,
+                icon: Icons.delete_rounded,
                 borderRadius: BorderRadius.circular(15),
               ),
             ],

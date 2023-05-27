@@ -19,6 +19,9 @@ class ManageDeliveryPage extends StatefulWidget {
 
 class _ManageDeliveryPageState extends State<ManageDeliveryPage> {
   void addToRecords() {
+    double profit = widget.plant.calculateProfit();
+    Provider.of<PlantdemicInventory>(context, listen: false)
+        .addToRecords(widget.plant, profit);
     Provider.of<PlantdemicInventory>(context, listen: false)
         .removeFromDelivery(widget.plant);
     Navigator.pop(context);
@@ -139,7 +142,7 @@ class _ManageDeliveryPageState extends State<ManageDeliveryPage> {
                       //'assets/icons/earning.png',
                       widget.plant.imagePath),
                   //
-                  // sell info tile
+                  // delivery info tile
                   //
                   SizedBox(height: 10),
                   DeliveryInfoTile(

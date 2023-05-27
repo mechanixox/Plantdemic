@@ -88,6 +88,23 @@ class PlantdemicInventory extends ChangeNotifier {
     notifyListeners();
   }
 
+  final List<Plant> _records = [];
+
+  //get to deliver plants
+  List<Plant> get records => _records;
+
+  //add plant to delivery
+  void addToRecords(Plant plant, double profit) {
+    plant.profit = profit;
+    _records.add(plant);
+    notifyListeners();
+  }
+
+  void removeFromRecords(Plant plant) {
+    _records.remove(plant);
+    notifyListeners();
+  }
+
   void decrementQuantity(Plant plant, int quantity) {
     final selectedPlantIndex =
         _inventory.indexWhere((p) => p.name == plant.name);

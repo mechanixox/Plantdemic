@@ -7,6 +7,7 @@ class Plant {
   String? sellQuantity;
   String? buyer;
   String? deliveryDate;
+  double? profit;
 
   Plant({
     required this.name,
@@ -17,15 +18,23 @@ class Plant {
     this.sellQuantity,
     this.buyer,
     this.deliveryDate,
+    this.profit,
   });
+  double calculateSellTotal() {
+    final double priceValue = double.parse(price);
+    final int sellQuantityValue = int.parse(sellQuantity ?? '');
+    return priceValue * sellQuantityValue;
+  }
+
+  double calculateProfit() {
+    final double priceValue = double.parse(price);
+    final double costValue = double.parse(cost);
+    final int quantityValue = int.parse(sellQuantity ?? '');
+    return profit = (priceValue - costValue) * quantityValue;
+  }
 
   bool isOutOfStock() {
     int currentQuantity = int.tryParse(quantity) ?? 0;
     return currentQuantity == 0;
-  }
-
-  double computeTotalPrice(int sellQuantity) {
-    double plantPrice = double.tryParse(price) ?? 0;
-    return plantPrice * sellQuantity;
   }
 }

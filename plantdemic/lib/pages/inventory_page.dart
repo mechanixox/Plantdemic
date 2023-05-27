@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:plantdemic/classes/inventory.dart';
 import 'package:plantdemic/components/inventory_tile.dart';
+import 'package:plantdemic/pages/sell_info_page.dart';
 import 'package:provider/provider.dart';
 
 import '../classes/plant.dart';
@@ -51,6 +52,13 @@ class _UserInventoryState extends State<UserInventory> {
         .removeFromInventory(plant);
   }
 
+  void navigateToSellInfoPage(Plant plant) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SellInfoPage(plant: plant)),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<PlantdemicInventory>(
@@ -85,6 +93,8 @@ class _UserInventoryState extends State<UserInventory> {
                       ),
                       deleteTapped: (context) =>
                           removeFromInventory(individualPlant),
+                      sellTapped: (context) =>
+                          navigateToSellInfoPage(individualPlant),
                     ),
                   );
                 },

@@ -91,20 +91,13 @@ class _SellInfoPageState extends State<SellInfoPage> {
       fillFields(widget.plant);
 
       return;
-    } else if (int.tryParse(price) == null ||
+    } else if (int.tryParse(quantity) == null ||
         int.tryParse(quantity)! > int.tryParse(widget.plant.quantity)! ||
         int.tryParse(quantity)! <= 0) {
       restrictQuantity(widget.plant);
       return;
     } else if (quantity.contains(RegExp(r'[^0-9]'))) {
       restrictQuantity(widget.plant);
-      return;
-    }
-    //
-    //
-    //
-    if (int.tryParse(price) == null || int.tryParse(price)! <= 0) {
-      restrictPrice(widget.plant);
       return;
     }
 
@@ -114,7 +107,6 @@ class _SellInfoPageState extends State<SellInfoPage> {
     Provider.of<PlantdemicInventory>(context, listen: false)
         .decrementQuantity(widget.plant, sellQuantity);
 
-    Navigator.pop(context);
     Navigator.pop(context);
 
     showDialog(

@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import '../../classes/plant.dart';
+import '../classes/inventory.dart';
 
 class AddPlantPage extends StatefulWidget {
   final Plant plant;
@@ -38,6 +39,23 @@ class _AddPlantPageState extends State<AddPlantPage> {
     super.dispose();
   }
 
+  bool checkIfPlantNameExists(String name) {
+    PlantdemicInventory inventory = PlantdemicInventory();
+    List<Plant> inventoryPlants = inventory.inventory;
+
+    name = name
+        .trim()
+        .toLowerCase(); // Remove leading/trailing white spaces and convert to lowercase
+
+    for (Plant plant in inventoryPlants) {
+      if (plant.name.trim().toLowerCase() == name) {
+        return true; // A plant with the same name already exists
+      }
+    }
+
+    return false; // No plant with the same name found
+  }
+
   void addToInventory() {
     String name = _nameController.text;
     String cost = _costController.text;
@@ -45,91 +63,157 @@ class _AddPlantPageState extends State<AddPlantPage> {
     String quantity = _quantityController.text;
     String imagePath = 'assets/icons/plant.png';
 
-    // Reset the boolean variables
-    isNameEmpty = false;
-    isCostEmpty = false;
-    isPriceEmpty = false;
-    isQuantityEmpty = false;
+    bool isValid = true; // Track if all fields are valid
 
-    // Check if any text field is empty
     if (name.isEmpty) {
-      isNameEmpty = true;
+      setState(() {
+        isNameEmpty = true;
+        isValid = false;
+      });
+    } else {
+      setState(() {
+        isNameEmpty = false;
+      });
     }
+    bool plantExists = checkIfPlantNameExists(name); // Implement this method
+    if (plantExists) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: Colors.green.shade50.withOpacity(0.80),
+            contentPadding: EdgeInsets.only(
+                bottom: 20), // Remove the default content padding
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            title: Text('Plant exists',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.grey.shade800)),
+            content: Padding(
+              padding: const EdgeInsets.only(left: 25.0),
+              child: Text(
+                  'A plant with the same name already exists in the inventory.',
+                  style: TextStyle(fontSize: 16)),
+            ),
+            actions: [
+              Container(
+                alignment: Alignment.center,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pop(context); // Close the dialog
+                  },
+                  child: Text('Got it!', style: TextStyle(fontSize: 16)),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+
+      setState(() {
+        isValid = false;
+      });
+    }
+
     if (cost.isEmpty) {
-      isCostEmpty = true;
+      setState(() {
+        isCostEmpty = true;
+        isValid = false;
+      });
+    } else {
+      setState(() {
+        isCostEmpty = false;
+      });
     }
+
     if (price.isEmpty) {
-      isPriceEmpty = true;
+      setState(() {
+        isPriceEmpty = true;
+        isValid = false;
+      });
+    } else {
+      setState(() {
+        isPriceEmpty = false;
+      });
     }
+
     if (quantity.isEmpty) {
-      isQuantityEmpty = true;
+      setState(() {
+        isQuantityEmpty = true;
+        isValid = false;
+      });
+    } else {
+      setState(() {
+        isQuantityEmpty = false;
+      });
     }
 
-    // If any field is empty, show the warning icon and dialog box
-    if (isNameEmpty || isCostEmpty || isPriceEmpty || isQuantityEmpty) {
-      setState(() {
-        showWarningIcon = true;
-      });
-      if (showWarningIcon) {
-        fillFields(widget.plant);
-      }
+    if (isValid) {
+      int parsedQuantity = int.tryParse(quantity)!;
+      int parsedPrice = int.tryParse(price)!;
+      int parsedCost = int.tryParse(cost)!;
 
-      // Blink the warning icon several times
-      Timer.periodic(Duration(milliseconds: 300), (timer) {
-        setState(() {
-          showWarningIcon = !showWarningIcon;
-        });
-
-        // Stop blinking after a certain number of times
-        if (timer.tick >= 5) {
-          setState(() {
-            showWarningIcon = false;
-          });
-          timer.cancel();
-        }
-      });
-
-      return;
-    }
-    if (int.tryParse(quantity)! <= 0 ||
-        int.tryParse(price)! <= 0 ||
-        int.tryParse(cost)! <= 0) {
-      setState(() {
-        showWarningIcon = true;
-      });
-      if (showWarningIcon) {
+      if (parsedQuantity <= 0 || parsedPrice <= 0 || parsedCost <= 0) {
         restrictFields(widget.plant);
+        // Show the warning icon and blink it
+        setState(() {
+          showWarningIcon = true;
+        });
+
+        Timer.periodic(Duration(milliseconds: 300), (timer) {
+          if (!mounted) {
+            timer.cancel();
+            return;
+          }
+          setState(() {
+            showWarningIcon = !showWarningIcon;
+          });
+
+          if (timer.tick >= 8) {
+            setState(() {
+              showWarningIcon = false;
+            });
+            timer.cancel();
+          }
+        });
+        return;
       }
 
-      // Blink the warning icon several times
-      Timer.periodic(Duration(milliseconds: 300), (timer) {
+      // All fields are valid, create a new Plant object
+      Plant newPlant = Plant(
+        name: name,
+        cost: cost,
+        price: price,
+        quantity: quantity,
+        imagePath: imagePath,
+      );
+
+      // Pass the new plant back to the previous screen
+      Navigator.pop(context, newPlant);
+    } else if (isCostEmpty || isPriceEmpty || isQuantityEmpty || isNameEmpty) {
+      fillFields(widget.plant);
+      // Show the warning icon and blink it
+      setState(() {
+        showWarningIcon = true;
+      });
+
+      Timer.periodic(Duration(milliseconds: 350), (timer) {
+        if (!mounted) {
+          timer.cancel();
+          return;
+        }
         setState(() {
           showWarningIcon = !showWarningIcon;
         });
 
-        // Stop blinking after a certain number of times
-        if (timer.tick >= 5) {
+        if (timer.tick >= 8) {
           setState(() {
             showWarningIcon = false;
           });
           timer.cancel();
         }
       });
-
-      return;
     }
-
-    // Create a new Plant object with the entered values
-    Plant newPlant = Plant(
-      name: name,
-      cost: cost,
-      price: price,
-      quantity: quantity,
-      imagePath: imagePath,
-    );
-
-    // Pass the new plant back to the previous screen
-    Navigator.pop(context, newPlant);
   }
 
   void fillFields(Plant plant) {
@@ -181,12 +265,12 @@ class _AddPlantPageState extends State<AddPlantPage> {
       useSafeArea: true,
       context: context,
       builder: (context) {
-        Timer(Duration(seconds: 1), () {
+        Timer(Duration(seconds: 2), () {
           Navigator.of(context).pop();
         });
         return BackdropFilter(
           filter:
-              ImageFilter.blur(sigmaX: 0.2, sigmaY: 0.2), // Apply blur effect
+              ImageFilter.blur(sigmaX: 0.3, sigmaY: 0.3), // Apply blur effect
           child: AlertDialog(
             contentPadding: EdgeInsets.only(
                 bottom: 14), // Remove the default content padding
@@ -194,7 +278,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             backgroundColor: Colors.green.shade50.withOpacity(0.80),
             content: Container(
-              height: MediaQuery.of(context).size.width / 5,
+              height: MediaQuery.of(context).size.width / 4,
               width: MediaQuery.of(context).size.height / 6,
               alignment: Alignment.center,
               child: Column(
@@ -202,13 +286,26 @@ class _AddPlantPageState extends State<AddPlantPage> {
                 children: [
                   SizedBox(height: 20),
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 0),
-                    child: Text(
-                      'Please enter a valid number.',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey.shade800,
-                      ),
+                    padding: const EdgeInsets.only(bottom: 1),
+                    child: Column(
+                      children: [
+                        Text(
+                          'Please enter a valid number',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey.shade800,
+                          ),
+                        ),
+                        Text(
+                          'greater than 0.',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey.shade800,
+                          ),
+                        ),
+                        //SizedBox(height: 5)
+                      ],
                     ),
                   ),
                 ],
@@ -223,6 +320,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
   //
   //
   //
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

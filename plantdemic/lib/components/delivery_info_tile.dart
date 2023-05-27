@@ -11,18 +11,6 @@ class DeliveryInfoTile extends StatelessWidget {
     Key? key,
     required this.plant,
   }) : super(key: key);
-  double calculateSellTotal() {
-    final double price = double.parse(plant.price);
-    final int sellQuantity = int.parse(plant.sellQuantity ?? '');
-    return price * sellQuantity;
-  }
-
-  double calculateProfit() {
-    final double price = double.parse(plant.price);
-    final double cost = double.parse(plant.cost);
-    final int quantity = int.parse(plant.sellQuantity ?? '');
-    return (price - cost) * quantity;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -166,7 +154,7 @@ class DeliveryInfoTile extends StatelessWidget {
                 ),
                 title: Text(
                   // ignore: unrelated_type_equality_checks
-                  '₱${calculateSellTotal().toStringAsFixed(2)}',
+                  '₱${plant.calculateSellTotal().toStringAsFixed(2)}',
                 ),
               ),
             ),
@@ -194,7 +182,7 @@ class DeliveryInfoTile extends StatelessWidget {
                 ),
                 title: Text(
                   // ignore: unrelated_type_equality_checks
-                  '₱${calculateProfit().toStringAsFixed(2)}',
+                  '₱${plant.calculateProfit().toStringAsFixed(2)}',
                 ),
               ),
             ),

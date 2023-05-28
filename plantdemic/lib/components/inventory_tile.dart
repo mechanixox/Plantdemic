@@ -54,7 +54,7 @@ class PlantTile extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               color: Colors.grey.shade200,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(15),
             ),
             margin: EdgeInsets.only(bottom: 12),
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),

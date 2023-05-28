@@ -27,13 +27,12 @@ class _UserRecordsState extends State<UserRecords> {
     20.00,
     50.30,
     90.30,
-    40.50,
   ];
   @override
   Widget build(BuildContext context) {
     return Consumer<PlantdemicInventory>(
       builder: (context, value, child) => Container(
-        color: Colors.white,
+        color: Color.fromRGBO(242, 243, 245, 1),
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(right: 15, top: 15, left: 15),
@@ -42,11 +41,13 @@ class _UserRecordsState extends State<UserRecords> {
               children: [
                 // Profit summary chart
                 Padding(
-                  padding: const EdgeInsets.only(top: 15.0),
+                  padding: const EdgeInsets.only(top: 15.0, bottom: 30),
                   child: Center(
                       child: SizedBox(
-                    height: 250,
-                    child: ProfitGraph(),
+                    height: 200,
+                    child: ProfitGraph(
+                      weeklySummary: weeklySummary,
+                    ),
                   )),
                 ),
                 // List of plant(s)

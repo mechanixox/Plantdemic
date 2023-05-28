@@ -18,7 +18,7 @@ class RecordsTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Slidable(
       endActionPane: ActionPane(
-        extentRatio: 0.4,
+        extentRatio: 0.3,
         motion: Padding(
           padding:
               const EdgeInsets.only(bottom: 20, top: 10, left: 10, right: 10),
@@ -36,11 +36,11 @@ class RecordsTile extends StatelessWidget {
       ),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.green.shade100.withOpacity(0.5),
-          borderRadius: BorderRadius.circular(10),
+          color: Color.fromARGB(255, 255, 255, 255),
+          borderRadius: BorderRadius.circular(15),
         ),
         margin: EdgeInsets.only(bottom: 12),
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 3),
+        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 1),
         child: Padding(
           padding:
               const EdgeInsets.only(top: 5.0, left: 0, bottom: 5, right: 10),

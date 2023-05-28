@@ -29,7 +29,7 @@ class _UserDeliverState extends State<UserDelivery> {
     Provider.of<PlantdemicInventory>(context, listen: false)
         .addToRecords(plant,profit);
     Provider.of<PlantdemicInventory>(context, listen: false)
-        .removeFromDelivery(plant);
+        .removeFromDeliveryToRecords(plant);
     showDialog(
       context: context,
       builder: (context) {

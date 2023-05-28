@@ -23,7 +23,7 @@ class _ManageDeliveryPageState extends State<ManageDeliveryPage> {
     Provider.of<PlantdemicInventory>(context, listen: false)
         .addToRecords(widget.plant, profit);
     Provider.of<PlantdemicInventory>(context, listen: false)
-        .removeFromDelivery(widget.plant);
+        .removeFromDeliveryToRecords(widget.plant);
     Navigator.pop(context);
     showDialog(
       context: context,

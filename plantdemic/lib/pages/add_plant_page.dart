@@ -2,8 +2,9 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+//import 'package:provider/provider.dart';
 import '../../classes/plant.dart';
-import '../classes/inventory.dart';
+//import '../classes/inventory.dart';
 
 class AddPlantPage extends StatefulWidget {
   final Plant plant;
@@ -28,6 +29,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
 
   // control the visibility and opacity of the warning icon
   bool showWarningIcon = false;
+  Timer? warningIconTimer;
 
   @override
   void dispose() {
@@ -36,10 +38,11 @@ class _AddPlantPageState extends State<AddPlantPage> {
     _costController.dispose();
     _priceController.dispose();
     _quantityController.dispose();
+    warningIconTimer?.cancel();
     super.dispose();
   }
 
-  bool checkIfPlantNameExists(String name) {
+  /* bool checkIfPlantNameExists(String name) {
     PlantdemicInventory inventory = PlantdemicInventory();
     List<Plant> inventoryPlants = inventory.inventory;
 
@@ -54,7 +57,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
     }
 
     return false; // No plant with the same name found
-  }
+  }*/
 
   void addToInventory() {
     String name = _nameController.text;
@@ -73,45 +76,6 @@ class _AddPlantPageState extends State<AddPlantPage> {
     } else {
       setState(() {
         isNameEmpty = false;
-      });
-    }
-    bool plantExists = checkIfPlantNameExists(name); // Implement this method
-    if (plantExists) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            backgroundColor: Colors.green.shade50.withOpacity(0.80),
-            contentPadding: EdgeInsets.only(
-                bottom: 20), // Remove the default content padding
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            title: Text('Plant exists',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, color: Colors.grey.shade800)),
-            content: Padding(
-              padding: const EdgeInsets.only(left: 25.0),
-              child: Text(
-                  'A plant with the same name already exists in the inventory.',
-                  style: TextStyle(fontSize: 16)),
-            ),
-            actions: [
-              Container(
-                alignment: Alignment.center,
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.pop(context); // Close the dialog
-                  },
-                  child: Text('Got it!', style: TextStyle(fontSize: 16)),
-                ),
-              ),
-            ],
-          );
-        },
-      );
-
-      setState(() {
-        isValid = false;
       });
     }
 
@@ -160,7 +124,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
           showWarningIcon = true;
         });
 
-        Timer.periodic(Duration(milliseconds: 300), (timer) {
+        Timer.periodic(Duration(milliseconds: 350), (timer) {
           if (!mounted) {
             timer.cancel();
             return;
@@ -176,21 +140,24 @@ class _AddPlantPageState extends State<AddPlantPage> {
             timer.cancel();
           }
         });
-        return;
+      } else {
+        // All fields are valid, create a new Plant object
+        Plant newPlant = Plant(
+          name: name,
+          cost: cost,
+          price: price,
+          quantity: quantity,
+          imagePath: imagePath,
+        );
+
+        // Pass the new plant back to the previous screen
+        Navigator.pop(context, newPlant);
+
+        // Add the new plant to the inventory
+        /*Provider.of<PlantdemicInventory>(context, listen: false)
+              .addToInventory(context,newPlant);*/
       }
-
-      // All fields are valid, create a new Plant object
-      Plant newPlant = Plant(
-        name: name,
-        cost: cost,
-        price: price,
-        quantity: quantity,
-        imagePath: imagePath,
-      );
-
-      // Pass the new plant back to the previous screen
-      Navigator.pop(context, newPlant);
-    } else if (isCostEmpty || isPriceEmpty || isQuantityEmpty || isNameEmpty) {
+    } else {
       fillFields(widget.plant);
       // Show the warning icon and blink it
       setState(() {
@@ -222,7 +189,9 @@ class _AddPlantPageState extends State<AddPlantPage> {
       context: context,
       builder: (context) {
         Timer(Duration(seconds: 1), () {
-          Navigator.of(context).pop();
+          if (mounted) {
+            Navigator.of(context).pop();
+          }
         });
         return BackdropFilter(
           filter:
@@ -266,11 +235,13 @@ class _AddPlantPageState extends State<AddPlantPage> {
       context: context,
       builder: (context) {
         Timer(Duration(seconds: 2), () {
-          Navigator.of(context).pop();
+          if (mounted) {
+            Navigator.of(context).pop();
+          }
         });
         return BackdropFilter(
           filter:
-              ImageFilter.blur(sigmaX: 0.3, sigmaY: 0.3), // Apply blur effect
+              ImageFilter.blur(sigmaX: 0.2, sigmaY: 0.2), // Apply blur effect
           child: AlertDialog(
             contentPadding: EdgeInsets.only(
                 bottom: 14), // Remove the default content padding

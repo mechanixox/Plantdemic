@@ -28,7 +28,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
   @override
   void initState() {
     super.initState();
-
+    //_priceController.text = widget.plant.price;
     _buyerController.text = widget.plant.buyer ?? '';
     _dateController.text = widget.plant.deliveryDate ?? '';
 
@@ -60,8 +60,6 @@ class _SellInfoPageState extends State<SellInfoPage> {
   //
   //
   void addToDelivery() {
-    // Reset the boolean variables
-
     String price = _priceController.text;
     String quantity = _quantityController.text;
     String buyer = _buyerController.text;
@@ -107,7 +105,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
     Provider.of<PlantdemicInventory>(context, listen: false)
         .decrementQuantity(widget.plant, sellQuantity);
 
-    Navigator.pop(context);
+    Navigator.popUntil(context, (route) => route.isFirst);
 
     showDialog(
       context: context,
@@ -351,7 +349,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
               },
               child: Text(
                 'Save',
-                style: TextStyle(fontSize: 16, color: Colors.blue.shade400),
+                style: TextStyle(fontSize: 16, color: Colors.blue.shade500),
               ),
             ),
           ],

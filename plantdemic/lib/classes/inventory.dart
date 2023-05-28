@@ -6,7 +6,6 @@ class PlantdemicInventory extends ChangeNotifier {
   //list of plants available
   final List<Plant> _inventory = [
     //Cactus
-
     Plant(
         name: 'Cactus',
         cost: '50.00',
@@ -60,9 +59,64 @@ class PlantdemicInventory extends ChangeNotifier {
   /*final List<Plant> _intoInventory = [];
   List<Plant> get intoInventory => _intoInventory;*/
 
-  void addToInventory(Plant plant) {
-    _inventory.add(plant);
-    notifyListeners();
+  void addToInventory(BuildContext context, Plant plant) {
+    String newPlantName = plant.name.trim().toLowerCase();
+
+    // Check if a plant with the same name already exists
+    bool plantExists = _inventory.any(
+      (existingPlant) =>
+          existingPlant.name.trim().toLowerCase() == newPlantName,
+    );
+
+    if (plantExists) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: Colors.green.shade50.withOpacity(0.90),
+            contentPadding: EdgeInsets.only(
+                bottom: 20), // Remove the default content padding
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            title: Text(
+              'Plant exists',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.grey.shade800,
+              ),
+            ),
+            content: Padding(
+              padding: const EdgeInsets.only(left: 25.0),
+              child: Text(
+                'A plant with the same name already exists in the inventory.',
+                style: TextStyle(fontSize: 16),
+              ),
+            ),
+            actions: [
+              Container(
+                alignment: Alignment.center,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pop(context); // Close the dialog
+                  },
+                  child: Text(
+                    'Got it!',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.blue.shade700,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      _inventory.add(plant);
+      notifyListeners();
+    }
   }
 
   void removeFromInventory(Plant plant) {
@@ -84,6 +138,33 @@ class PlantdemicInventory extends ChangeNotifier {
 
   //remove plant from delivery
   void removeFromDelivery(Plant plant) {
+    _delivery.remove(plant);
+    notifyListeners();
+
+    final selectedPlantIndex =
+        _inventory.indexWhere((p) => p.name == plant.name);
+    if (selectedPlantIndex != -1) {
+      int currentQuantity =
+          int.tryParse(_inventory[selectedPlantIndex].quantity) ?? 0;
+      int deliveryQuantity = int.tryParse(plant.sellQuantity ?? '') ?? 0;
+      int newQuantity = currentQuantity + deliveryQuantity;
+
+      _inventory[selectedPlantIndex].quantity = newQuantity.toString();
+      notifyListeners();
+    } else {
+      Plant newPlant = Plant(
+        name: plant.name,
+        cost: plant.cost,
+        price: plant.price,
+        quantity: plant.sellQuantity ?? '',
+        imagePath: plant.imagePath,
+      );
+      _inventory.add(newPlant);
+      notifyListeners();
+    }
+  }
+
+  void removeFromDeliveryToRecords(Plant plant) {
     _delivery.remove(plant);
     notifyListeners();
   }
@@ -119,6 +200,7 @@ class PlantdemicInventory extends ChangeNotifier {
         notifyListeners();
       } else {
         removeFromInventory(_inventory[selectedPlantIndex]);
+        notifyListeners();
       }
     }
   }

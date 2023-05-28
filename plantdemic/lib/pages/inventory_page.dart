@@ -42,7 +42,7 @@ class _UserInventoryState extends State<UserInventory> {
     ).then((result) {
       if (result != null && result is Plant) {
         Provider.of<PlantdemicInventory>(context, listen: false)
-            .addToInventory(result);
+            .addToInventory(context, result);
       }
     });
   }

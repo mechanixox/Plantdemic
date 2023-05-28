@@ -113,11 +113,16 @@ class _AddPlantPageState extends State<AddPlantPage> {
     }
 
     if (isValid) {
-      int parsedQuantity = int.tryParse(quantity)!;
-      int parsedPrice = int.tryParse(price)!;
-      int parsedCost = int.tryParse(cost)!;
+      int parsedQuantity = int.tryParse(quantity) ?? 0;
+      double parsedPrice = double.tryParse(price) ?? 0;
+      double parsedCost = double.tryParse(cost) ?? 0;
 
-      if (parsedQuantity <= 0 || parsedPrice <= 0 || parsedCost <= 0) {
+      if (parsedQuantity <= 0 ||
+          parsedPrice <= 0 ||
+          parsedCost <= 0 ||
+          quantity.contains(RegExp(r'[^0-9]')) ||
+          price.contains(RegExp(r'[^0-9]')) ||
+          cost.contains(RegExp(r'[^0-9]'))) {
         restrictFields(widget.plant);
         // Show the warning icon and blink it
         setState(() {

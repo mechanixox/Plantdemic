@@ -16,6 +16,8 @@ class RecordsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int profit = plant.profit?.toInt() ?? 0; // Convert double to int
+
     return Slidable(
       endActionPane: ActionPane(
         extentRatio: 0.3,
@@ -65,11 +67,11 @@ class RecordsTile extends StatelessWidget {
             ),
             trailing: SizedBox(
               width: 60,
-              height: 40, // Adjust the width as needed
+              height: 40, 
               child: Column(
                 children: [
-                  Text('    Profit'),
-                  Text('₱${plant.profit?.toStringAsFixed(2)}'),
+                  Text('Profit'),
+                  Text('₱$profit'),
                 ],
               ),
             ),

@@ -55,9 +55,10 @@ class _UserRecordsState extends State<UserRecords> {
                   child: ListView.builder(
                     itemCount: value.records.length,
                     itemBuilder: (context, index) {
-                      // Get individual plant from inventory
-                      Plant plant = value.records[index];
-                      // Return plant tile
+                      // Get plant at the desired index
+                      Plant plant =
+                          value.records[value.records.length - 1 - index];
+                      // Return record tile
                       return RecordsTile(
                         plant: plant,
                         deleteTapped: (context) => removeFromRecords(plant),

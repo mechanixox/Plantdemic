@@ -30,8 +30,8 @@ class PlantdemicInventory extends ChangeNotifier {
     //Rosemary
     Plant(
         name: 'Rosemary',
-        cost: '232.00',
-        price: '25.50',
+        cost: '20.00',
+        price: '60.00',
         quantity: '8',
         imagePath: 'assets/icons/rosemary.png'),
     //Sunflower

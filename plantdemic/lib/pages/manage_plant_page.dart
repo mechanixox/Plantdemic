@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:plantdemic/classes/inventory.dart';
 import 'package:plantdemic/pages/sell_info_page.dart';
@@ -34,6 +36,194 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
     _priceController.dispose();
     _quantityController.dispose();
     super.dispose();
+  }
+
+  void fillFields(BuildContext context, Plant plant) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return BackdropFilter(
+          filter:
+              ImageFilter.blur(sigmaX: 5, sigmaY: 5, tileMode: TileMode.mirror),
+          child: AlertDialog(
+            backgroundColor: Colors.green.shade50.withOpacity(0.90),
+            contentPadding: EdgeInsets.only(bottom: 20, left: 24, right: 24),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            title: Text(
+              'Empty field(s)',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.grey.shade800,
+              ),
+            ),
+            content: Text(
+              'All fields must be filled.',
+              style: TextStyle(fontSize: 16),
+            ),
+            actions: [
+              Container(
+                alignment: Alignment.center,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    '  OK  ',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.blue.shade700,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void restrictName(BuildContext context, Plant plant) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return BackdropFilter(
+          filter:
+              ImageFilter.blur(sigmaX: 5, sigmaY: 5, tileMode: TileMode.mirror),
+          child: AlertDialog(
+            backgroundColor: Colors.green.shade50.withOpacity(0.90),
+            contentPadding: EdgeInsets.only(bottom: 20, left: 24, right: 24),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            title: Text(
+              'Invalid name',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.grey.shade800,
+              ),
+            ),
+            content: Text(
+              'Plant name already exists in your inventory. Please provide a unique one.',
+              style: TextStyle(fontSize: 16),
+            ),
+            actions: [
+              Container(
+                alignment: Alignment.center,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    '  OK  ',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.blue.shade700,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void restrictPrice(Plant plant) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return BackdropFilter(
+          filter:
+              ImageFilter.blur(sigmaX: 5, sigmaY: 5, tileMode: TileMode.mirror),
+          child: AlertDialog(
+            backgroundColor: Colors.green.shade50.withOpacity(0.90),
+            contentPadding: EdgeInsets.only(bottom: 20, left: 24, right: 24),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            title: Text(
+              'Invalid price',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.grey.shade800,
+              ),
+            ),
+            content: Text(
+              'Please enter a valid price greater than 0.',
+              style: TextStyle(fontSize: 16),
+            ),
+            actions: [
+              Container(
+                alignment: Alignment.center,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    '  OK  ',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.blue.shade700,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void restrictQuantity(Plant plant) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return BackdropFilter(
+          filter:
+              ImageFilter.blur(sigmaX: 5, sigmaY: 5, tileMode: TileMode.mirror),
+          child: AlertDialog(
+            backgroundColor: Colors.green.shade50.withOpacity(0.90),
+            contentPadding: EdgeInsets.only(bottom: 20, left: 24, right: 24),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            title: Text(
+              'Invalid quantity',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.grey.shade800,
+              ),
+            ),
+            content: Text(
+              'Please enter a valid quantity greater than 0.',
+              style: TextStyle(fontSize: 16),
+            ),
+            actions: [
+              Container(
+                alignment: Alignment.center,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    '  OK  ',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.blue.shade700,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   void editPlantInfo(Plant individualPlant) {
@@ -125,10 +315,77 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
             ),
             TextButton(
               onPressed: () {
+                String newName = _nameController.text.trim();
+                String newPrice = _priceController.text.trim();
+                String newQuantity = _quantityController.text.trim();
+
+                // Validate name
+                if (newName == widget.plant.name &&
+                    newPrice.isEmpty &&
+                    newQuantity.isEmpty) {
+                  // Name is empty or unchanged
+                  fillFields(context, widget.plant);
+                  return;
+                } else if (newName == widget.plant.name) {
+                  if (double.tryParse(newPrice) == null ||
+                      double.parse(newPrice) <= 0) {
+                    restrictPrice(widget.plant);
+                    return;
+                  }
+
+                  // Validate quantity
+                  if (int.tryParse(newQuantity) == null ||
+                      int.parse(newQuantity) <= 0) {
+                    restrictQuantity(widget.plant);
+                    return;
+                  }
+                  setState(() {
+                    individualPlant.price = newPrice;
+                    individualPlant.quantity = newQuantity;
+                  });
+                  Provider.of<PlantdemicInventory>(context, listen: false)
+                      .notifyListeners();
+                  Navigator.pop(context);
+                  return;
+                } else if (newName.isEmpty ||
+                    newPrice.isEmpty ||
+                    newQuantity.isEmpty) {
+                  fillFields(context, widget.plant);
+                  return;
+                }
+
+                // Check if the name already exists in the inventory
+                bool plantExists =
+                    Provider.of<PlantdemicInventory>(context, listen: false)
+                        .inventory
+                        .any((existingPlant) =>
+                            existingPlant.name.trim().toLowerCase() ==
+                            newName.toLowerCase());
+
+                if (plantExists) {
+                  restrictName(context, widget.plant);
+                  return;
+                }
+
+                // Validate price
+                if (double.tryParse(newPrice) == null ||
+                    double.parse(newPrice) <= 0) {
+                  restrictPrice(widget.plant);
+                  return;
+                }
+
+                // Validate quantity
+                if (int.tryParse(newQuantity) == null ||
+                    int.parse(newQuantity) <= 0) {
+                  restrictQuantity(widget.plant);
+                  return;
+                }
+
+                // Update plant information
                 setState(() {
-                  individualPlant.name = _nameController.text;
-                  individualPlant.price = _priceController.text;
-                  individualPlant.quantity = _quantityController.text;
+                  individualPlant.name = newName;
+                  individualPlant.price = newPrice;
+                  individualPlant.quantity = newQuantity;
                 });
                 Provider.of<PlantdemicInventory>(context, listen: false)
                     .notifyListeners();

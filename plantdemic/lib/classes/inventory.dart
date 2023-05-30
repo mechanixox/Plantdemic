@@ -119,6 +119,66 @@ class PlantdemicInventory extends ChangeNotifier {
     }
   }
 
+  void updatePlantInfo(BuildContext context, Plant plant) {
+    String newPlantName = plant.name.trim().toLowerCase();
+
+    // Check if a plant with the same name already exists
+    bool plantExists = _inventory.any(
+      (existingPlant) =>
+          existingPlant.name.trim().toLowerCase() == newPlantName,
+    );
+
+    if (plantExists) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: Colors.green.shade50.withOpacity(0.90),
+            contentPadding: EdgeInsets.only(
+                bottom: 20), // Remove the default content padding
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            title: Text(
+              'Plant exists',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.grey.shade800,
+              ),
+            ),
+            content: Padding(
+              padding: const EdgeInsets.only(left: 25.0),
+              child: Text(
+                'A plant with the same name already exists in the inventory.',
+                style: TextStyle(fontSize: 16),
+              ),
+            ),
+            actions: [
+              Container(
+                alignment: Alignment.center,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pop(context); // Close the dialog
+                  },
+                  child: Text(
+                    'Got it!',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.blue.shade700,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      _inventory.add(plant);
+      notifyListeners();
+    }
+  }
+
   void removeFromInventory(Plant plant) {
     _inventory.remove(plant);
     notifyListeners();

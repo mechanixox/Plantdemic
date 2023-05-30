@@ -152,7 +152,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
       useSafeArea: true,
       context: context,
       builder: (context) {
-        Timer(Duration(seconds: 1), () {
+        Timer(Duration(seconds: 2), () {
           Navigator.of(context).pop();
         });
         return BackdropFilter(

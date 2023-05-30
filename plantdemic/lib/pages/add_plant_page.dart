@@ -138,7 +138,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
             showWarningIcon = !showWarningIcon;
           });
 
-          if (timer.tick >= 8) {
+          if (timer.tick >= 9) {
             setState(() {
               showWarningIcon = false;
             });
@@ -178,7 +178,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
           showWarningIcon = !showWarningIcon;
         });
 
-        if (timer.tick >= 8) {
+        if (timer.tick >= 9) {
           setState(() {
             showWarningIcon = false;
           });
@@ -193,7 +193,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
       useSafeArea: true,
       context: context,
       builder: (context) {
-        Timer(Duration(seconds: 1), () {
+        Timer(Duration(seconds: 2), () {
           if (mounted) {
             Navigator.of(context).pop();
           }

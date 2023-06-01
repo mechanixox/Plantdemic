@@ -4,19 +4,36 @@ import 'package:fl_chart/fl_chart.dart';
 import 'bar_data.dart';
 
 class ProfitGraph extends StatelessWidget {
-  final List weeklySummary;
-  const ProfitGraph({super.key, required this.weeklySummary});
+  final double? maxY;
+  final double sunAmount;
+  final double monAmount;
+  final double tueAmount;
+  final double wedAmount;
+  final double thuAmount;
+  final double friAmount;
+  final double satAmount;
+
+  const ProfitGraph(
+      {super.key,
+      required this.maxY,
+      required this.sunAmount,
+      required this.monAmount,
+      required this.tueAmount,
+      required this.wedAmount,
+      required this.thuAmount,
+      required this.friAmount,
+      required this.satAmount});
 
   @override
   Widget build(BuildContext context) {
     BarData myBarData = BarData(
-      sunAmount: weeklySummary[0],
-      monAmount: weeklySummary[1],
-      tueAmount: weeklySummary[2],
-      wedAmount: weeklySummary[3],
-      thurAmount: weeklySummary[4],
-      friAmount: weeklySummary[5],
-      satAmount: weeklySummary[6],
+      sunAmount: sunAmount,
+      monAmount: monAmount,
+      tueAmount: tueAmount,
+      wedAmount: wedAmount,
+      thurAmount: thuAmount,
+      friAmount: friAmount,
+      satAmount: satAmount,
     );
     myBarData.initializeBarData();
     return Padding(
@@ -27,7 +44,7 @@ class ProfitGraph extends StatelessWidget {
           tooltipBgColor: Color.fromARGB(255, 255, 255, 255).withOpacity(0.8),
           fitInsideVertically: true,
         )),
-        maxY: 100,
+        maxY: maxY,
         minY: 0,
         gridData: FlGridData(
           show: false,
@@ -52,10 +69,10 @@ class ProfitGraph extends StatelessWidget {
                       toY: data.y,
                       color: Colors.green.shade600.withOpacity(0.8),
                       width: 25,
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(7),
                       backDrawRodData: BackgroundBarChartRodData(
                         show: true,
-                        toY: 100,
+                        toY: 0,
                         color: Colors.green.shade100,
                       )),
                 ]))
@@ -68,7 +85,7 @@ class ProfitGraph extends StatelessWidget {
 Widget getBottomTitles(double value, TitleMeta meta) {
   const style = TextStyle(
     color: Colors.grey,
-    fontSize: 12,
+    fontSize: 12.5,
   );
   Widget text;
   switch (value.toInt()) {

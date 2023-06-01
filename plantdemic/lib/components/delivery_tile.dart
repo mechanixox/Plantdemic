@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-import '../classes/plant.dart';
+import '../models/plant.dart';
 
 // ignore: must_be_immutable
 class DeliveryTile extends StatelessWidget {
@@ -42,7 +42,7 @@ class DeliveryTile extends StatelessWidget {
         ),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.grey.shade200,
+            color: Color.fromARGB(255, 255, 255, 255),
             borderRadius: BorderRadius.circular(15),
           ),
           margin: EdgeInsets.only(bottom: 12),

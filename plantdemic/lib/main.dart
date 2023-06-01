@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 //import 'package:hive_flutter/adapters.dart';
-import 'package:plantdemic/classes/inventory.dart';
-import 'package:plantdemic/classes/delivery.dart';
+import 'package:plantdemic/models/plantdemic.dart';
 import 'pages/home_page.dart';
 import 'pages/splash.dart';
 import 'package:provider/provider.dart';
@@ -21,12 +20,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<PlantdemicInventory>(
-          create: (context) => PlantdemicInventory(),
+        ChangeNotifierProvider<Plantdemic>(
+          create: (context) => Plantdemic(),
         ),
-        ChangeNotifierProvider<PlantdemicDelivery>(
-          create: (context) => PlantdemicDelivery(),
-        ),
+        
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

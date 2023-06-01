@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'dart:ui';
+//import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:plantdemic/classes/plant.dart';
+import 'package:plantdemic/models/plant.dart';
 import 'package:provider/provider.dart';
 
-import '../classes/inventory.dart';
+import '../models/plantdemic.dart';
+import '../models/profit_item.dart';
 import '../components/delivery_info_tile.dart';
 
 class ManageDeliveryPage extends StatefulWidget {
@@ -19,10 +21,21 @@ class ManageDeliveryPage extends StatefulWidget {
 
 class _ManageDeliveryPageState extends State<ManageDeliveryPage> {
   void addToRecords() {
-    double profit = widget.plant.calculateProfit();
-    Provider.of<PlantdemicInventory>(context, listen: false)
-        .addToRecords(widget.plant, profit);
-    Provider.of<PlantdemicInventory>(context, listen: false)
+    /*final DateFormat inputFormat = DateFormat('M/d/yyyy');
+    final DateTime deliveryDate = inputFormat.parse(plant.deliveryDate ?? '');*/
+    final DateTime deliveryDate = DateTime.now();
+    double profitAmount = widget.plant.calculateProfit();
+
+    final ProfitItem newProfit = ProfitItem(
+      name: widget.plant.name,
+      date: deliveryDate,
+      profitAmount: profitAmount.toStringAsFixed(2),
+    );
+
+    Provider.of<Plantdemic>(context, listen: false)
+        .addToRecords(widget.plant, profitAmount);
+    Provider.of<Plantdemic>(context, listen: false).addNewProfit(newProfit);
+    Provider.of<Plantdemic>(context, listen: false)
         .removeFromDeliveryToRecords(widget.plant);
     Navigator.pop(context);
     showDialog(
@@ -67,7 +80,7 @@ class _ManageDeliveryPageState extends State<ManageDeliveryPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<PlantdemicInventory>(
+    return Consumer<Plantdemic>(
       builder: (context, value, child) => Scaffold(
         body: CustomScrollView(
           slivers: [

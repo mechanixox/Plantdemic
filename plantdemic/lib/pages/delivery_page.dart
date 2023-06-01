@@ -1,13 +1,15 @@
 import 'dart:async';
 import 'dart:ui';
+//import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:plantdemic/classes/inventory.dart';
+import 'package:plantdemic/models/plantdemic.dart';
 //import 'package:plantdemic/deliveryTabBar/delivery_tab.dart';
 import 'package:provider/provider.dart';
 
-import '../classes/plant.dart';
+import '../models/plant.dart';
+import '../models/profit_item.dart';
 import '../components/delivery_tile.dart';
 import 'delivery_info_page.dart';
 
@@ -20,15 +22,25 @@ class UserDelivery extends StatefulWidget {
 
 class _UserDeliverState extends State<UserDelivery> {
   void removeFromDelivery(Plant plant) {
-    Provider.of<PlantdemicInventory>(context, listen: false)
-        .removeFromDelivery(plant);
+    Provider.of<Plantdemic>(context, listen: false).removeFromDelivery(plant);
   }
 
   void addToRecordsWhenCheckPressed(Plant plant) {
-    double profit = plant.calculateProfit();
-    Provider.of<PlantdemicInventory>(context, listen: false)
-        .addToRecords(plant,profit);
-    Provider.of<PlantdemicInventory>(context, listen: false)
+    /*final DateFormat inputFormat = DateFormat('M/d/yyyy');
+    final DateTime deliveryDate = inputFormat.parse(plant.deliveryDate ?? '');*/
+    final DateTime deliveryDate = DateTime.now();
+    double profitAmount = plant.calculateProfit();
+
+    final ProfitItem newProfit = ProfitItem(
+      name: plant.name,
+      date: deliveryDate,
+      profitAmount: profitAmount.toStringAsFixed(2),
+    );
+
+    Provider.of<Plantdemic>(context, listen: false)
+        .addToRecords(plant, profitAmount);
+    Provider.of<Plantdemic>(context, listen: false).addNewProfit(newProfit);
+    Provider.of<Plantdemic>(context, listen: false)
         .removeFromDeliveryToRecords(plant);
     showDialog(
       context: context,
@@ -81,9 +93,9 @@ class _UserDeliverState extends State<UserDelivery> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<PlantdemicInventory>(
+    return Consumer<Plantdemic>(
       builder: (context, value, child) => Container(
-        color: Colors.white,
+        color: Color.fromRGBO(242, 243, 245, 1),
         child: SafeArea(
           child: Padding(
             padding:
@@ -98,7 +110,6 @@ class _UserDeliverState extends State<UserDelivery> {
                     itemBuilder: (context, index) {
                       //get individual plant from inventory
                       Plant plant = value.delivery[index];
-
                       //return plant tile
                       return DeliveryTile(
                         plant: plant,

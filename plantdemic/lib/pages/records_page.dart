@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:plantdemic/bar%20graph/profit_summary.dart';
 import 'package:provider/provider.dart';
 
-import '../bar graph/profit_graph.dart';
-import '../classes/inventory.dart';
-import '../classes/plant.dart';
+import '../models/plantdemic.dart';
+import '../models/plant.dart';
 import '../components/record_tile.dart';
 
 class UserRecords extends StatefulWidget {
@@ -15,22 +15,12 @@ class UserRecords extends StatefulWidget {
 
 class _UserRecordsState extends State<UserRecords> {
   void removeFromRecords(Plant plant) {
-    Provider.of<PlantdemicInventory>(context, listen: false)
-        .removeFromRecords(plant);
+    Provider.of<Plantdemic>(context, listen: false).removeFromRecords(plant);
   }
 
-  List<double> weeklySummary = [
-    4.20,
-    56.50,
-    99.90,
-    34.50,
-    20.00,
-    50.30,
-    90.30,
-  ];
   @override
   Widget build(BuildContext context) {
-    return Consumer<PlantdemicInventory>(
+    return Consumer<Plantdemic>(
       builder: (context, value, child) => Container(
         color: Color.fromRGBO(242, 243, 245, 1),
         child: SafeArea(
@@ -40,16 +30,8 @@ class _UserRecordsState extends State<UserRecords> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Profit summary chart
-                Padding(
-                  padding: const EdgeInsets.only(top: 15.0, bottom: 30),
-                  child: Center(
-                      child: SizedBox(
-                    height: 200,
-                    child: ProfitGraph(
-                      weeklySummary: weeklySummary,
-                    ),
-                  )),
-                ),
+                ProfitSummary(startOfWeek: value.startOfWeekDate()),
+                SizedBox(height: 20),
                 // List of plant(s)
                 Expanded(
                   child: ListView.builder(

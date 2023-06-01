@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:plantdemic/classes/inventory.dart';
+import 'package:plantdemic/models/plantdemic.dart';
 import 'package:plantdemic/components/inventory_tile.dart';
 import 'package:plantdemic/pages/sell_info_page.dart';
 import 'package:provider/provider.dart';
 
-import '../classes/plant.dart';
+import '../models/plant.dart';
 import 'add_plant_page.dart';
 import 'manage_plant_page.dart';
 
@@ -41,15 +41,14 @@ class _UserInventoryState extends State<UserInventory> {
       ),
     ).then((result) {
       if (result != null && result is Plant) {
-        Provider.of<PlantdemicInventory>(context, listen: false)
+        Provider.of<Plantdemic>(context, listen: false)
             .addToInventory(context, result);
       }
     });
   }
 
   void removeFromInventory(Plant plant) {
-    Provider.of<PlantdemicInventory>(context, listen: false)
-        .removeFromInventory(plant);
+    Provider.of<Plantdemic>(context, listen: false).removeFromInventory(plant);
   }
 
   void navigateToSellInfoPage(Plant plant) {
@@ -61,21 +60,25 @@ class _UserInventoryState extends State<UserInventory> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<PlantdemicInventory>(
+    return Consumer<Plantdemic>(
       builder: (context, value, child) => Scaffold(
+        backgroundColor: Color.fromRGBO(242, 243, 245, 1),
         body: CustomScrollView(
           slivers: [
             SliverAppBar(
-              title: Text(
-                'Manage your plants',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Color.fromRGBO(106, 136, 86, 1),
+              title: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(
+                  'Manage your plants',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Color.fromRGBO(0, 0, 0, 1),
+                  ),
                 ),
               ),
               floating: true,
               snap: true,
-              backgroundColor: Colors.white,
+              backgroundColor: Color.fromRGBO(242, 243, 245, 1),
               elevation: 0,
             ),
             SliverList(

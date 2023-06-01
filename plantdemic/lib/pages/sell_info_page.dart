@@ -6,8 +6,8 @@ import 'package:lottie/lottie.dart';
 import 'package:plantdemic/components/sell_info_tile.dart';
 import 'package:provider/provider.dart';
 
-import '../classes/inventory.dart';
-import '../classes/plant.dart';
+import '../models/plantdemic.dart';
+import '../models/plant.dart';
 import '../textfield_utility/animated_textfield.dart';
 
 class SellInfoPage extends StatefulWidget {
@@ -99,10 +99,9 @@ class _SellInfoPageState extends State<SellInfoPage> {
       return;
     }
 
-    Provider.of<PlantdemicInventory>(context, listen: false)
-        .addToDelivery(widget.plant);
+    Provider.of<Plantdemic>(context, listen: false).addToDelivery(widget.plant);
     int sellQuantity = int.tryParse(_quantityController.text) ?? 0;
-    Provider.of<PlantdemicInventory>(context, listen: false)
+    Provider.of<Plantdemic>(context, listen: false)
         .decrementQuantity(widget.plant, sellQuantity);
 
     Navigator.popUntil(context, (route) => route.isFirst);
@@ -343,7 +342,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
                 setState(() {
                   individualPlant.price = _priceController.text;
                 });
-                Provider.of<PlantdemicInventory>(context, listen: false)
+                Provider.of<Plantdemic>(context, listen: false)
                     .notifyListeners();
                 Navigator.pop(context);
               },
@@ -424,7 +423,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
                 setState(() {
                   individualPlant.sellQuantity = _quantityController.text;
                 });
-                Provider.of<PlantdemicInventory>(context, listen: false)
+                Provider.of<Plantdemic>(context, listen: false)
                     .notifyListeners();
                 Navigator.pop(context);
               },
@@ -504,7 +503,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
                 setState(() {
                   individualPlant.buyer = _buyerController.text;
                 });
-                Provider.of<PlantdemicInventory>(context, listen: false)
+                Provider.of<Plantdemic>(context, listen: false)
                     .notifyListeners(); // Notify listeners of the changes
                 Navigator.pop(context); // Done
               },
@@ -581,7 +580,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
                   selectDate();
                 },
                 child: AnimatedTextField(
-                  label: "mm/dd/yyyy",
+                  label: "m/d/yyyy",
                   suffix: IconButton(
                     icon: Icon(Icons.calendar_today_outlined),
                     onPressed: () {
@@ -611,7 +610,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
                 setState(() {
                   individualPlant.deliveryDate = _dateController.text;
                 });
-                Provider.of<PlantdemicInventory>(context, listen: false)
+                Provider.of<Plantdemic>(context, listen: false)
                     .notifyListeners(); // Notify listeners of the changes
                 Navigator.pop(context); // Done
               },
@@ -628,7 +627,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<PlantdemicInventory>(
+    return Consumer<Plantdemic>(
       builder: (context, value, child) => Scaffold(
         body: CustomScrollView(
           slivers: [

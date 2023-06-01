@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(106, 136, 86, 1),
+        backgroundColor: Color.fromRGBO(242, 243, 245, 1),
         elevation: 0,
         /*
         leading: IconButton(
@@ -53,13 +53,19 @@ class _HomePageState extends State<HomePage> {
         actions: [IconButton(onPressed: () {}, icon: Icon(Icons.more_vert))],
         */
         centerTitle: true,
-        title: Text(
-          appBarTitles[selectedIndex],
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontFamily: 'Arial',
-            fontSize: 22,
-            color: Colors.white,
+        title: Align(
+          alignment: AlignmentDirectional.topStart,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8, top: 8.0),
+            child: Text(
+              appBarTitles[selectedIndex],
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Arial',
+                fontSize: 26,
+                color: Colors.grey.shade800,
+              ),
+            ),
           ),
         ),
       ),

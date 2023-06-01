@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-import '../classes/plant.dart';
+import '../models/plant.dart';
 
 // ignore: must_be_immutable
 class RecordsTile extends StatelessWidget {

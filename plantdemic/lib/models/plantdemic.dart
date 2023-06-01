@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'plant.dart';
+import 'package:plantdemic/models/profit_item.dart';
+import 'package:plantdemic/components/date_time_helper.dart';
 
-class PlantdemicInventory extends ChangeNotifier {
+class Plantdemic extends ChangeNotifier {
   //list of plants available
   final List<Plant> _inventory = [
     //Cactus
@@ -55,9 +57,6 @@ class PlantdemicInventory extends ChangeNotifier {
 
   //get plants for sale
   List<Plant> get inventory => _inventory;
-
-  /*final List<Plant> _intoInventory = [];
-  List<Plant> get intoInventory => _intoInventory;*/
 
   void addToInventory(BuildContext context, Plant plant) {
     String newPlantName = plant.name.trim().toLowerCase();
@@ -263,5 +262,72 @@ class PlantdemicInventory extends ChangeNotifier {
         notifyListeners();
       }
     }
+  }
+
+  List<ProfitItem> overallProfitList = [];
+
+  List<ProfitItem> getAllProfitList() {
+    return overallProfitList;
+  }
+
+  void addNewProfit(ProfitItem newProfit) {
+    overallProfitList.add(newProfit);
+  }
+
+  void deleteProfit(ProfitItem profit) {
+    overallProfitList.remove(profit);
+  }
+
+  String getDayName(DateTime dateTime) {
+    switch (dateTime.weekday) {
+      case 1:
+        return 'Mon';
+      case 2:
+        return 'Tue';
+      case 3:
+        return 'Wed';
+      case 4:
+        return 'Thu';
+      case 5:
+        return 'Fri';
+      case 6:
+        return 'Sat';
+      case 7:
+        return 'Sun';
+      default:
+        return '';
+    }
+  }
+
+  DateTime startOfWeekDate() {
+    DateTime? startOfWeek;
+    DateTime today = DateTime.now();
+
+    for (int i = 0; i < 7; i++) {
+      if (getDayName(today.subtract(Duration(days: i))) == 'Sun') {
+        startOfWeek = today.subtract(Duration(days: i));
+        
+      }
+    }
+
+    return startOfWeek!;
+  }
+
+  Map<String, double> calculateDailyProfitSummary() {
+    Map<String, double> dailyProfitSummary = {};
+
+    for (var profit in overallProfitList) {
+      String date = convertDateTimeToString(profit.date);
+      double amount = double.parse(profit.profitAmount);
+
+      if (dailyProfitSummary.containsKey(date)) {
+        double currentAmount = dailyProfitSummary[date]!;
+        currentAmount += amount;
+        dailyProfitSummary[date] = currentAmount;
+      } else {
+        dailyProfitSummary.addAll({date: amount});
+      }
+    }
+    return dailyProfitSummary;
   }
 }

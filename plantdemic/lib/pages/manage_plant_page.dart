@@ -1,11 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:plantdemic/classes/inventory.dart';
+import 'package:plantdemic/models/plantdemic.dart';
 import 'package:plantdemic/pages/sell_info_page.dart';
 import 'package:provider/provider.dart';
 
-import '../classes/plant.dart';
+import '../models/plant.dart';
 import '../components/plant_info_tile.dart';
 import 'package:plantdemic/textfield_utility/animated_textfield.dart';
 
@@ -343,7 +343,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                     individualPlant.price = newPrice;
                     individualPlant.quantity = newQuantity;
                   });
-                  Provider.of<PlantdemicInventory>(context, listen: false)
+                  Provider.of<Plantdemic>(context, listen: false)
                       .notifyListeners();
                   Navigator.pop(context);
                   return;
@@ -356,7 +356,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
 
                 // Check if the name already exists in the inventory
                 bool plantExists =
-                    Provider.of<PlantdemicInventory>(context, listen: false)
+                    Provider.of<Plantdemic>(context, listen: false)
                         .inventory
                         .any((existingPlant) =>
                             existingPlant.name.trim().toLowerCase() ==
@@ -387,7 +387,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                   individualPlant.price = newPrice;
                   individualPlant.quantity = newQuantity;
                 });
-                Provider.of<PlantdemicInventory>(context, listen: false)
+                Provider.of<Plantdemic>(context, listen: false)
                     .notifyListeners();
                 Navigator.pop(context);
               },
@@ -421,7 +421,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<PlantdemicInventory>(
+    return Consumer<Plantdemic>(
       builder: (context, value, child) => Scaffold(
         backgroundColor: Color.fromARGB(255, 236, 241, 236),
         appBar: AppBar(

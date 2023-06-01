@@ -39,6 +39,7 @@ dependencies:
   lottie: ^1.4.3
   flutter_slidable: ^1.2.0
   fl_chart: ^0.62.0
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

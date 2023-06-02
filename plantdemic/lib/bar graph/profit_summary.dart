@@ -5,6 +5,8 @@ import 'package:plantdemic/models/plantdemic.dart';
 import 'package:plantdemic/components/date_time_helper.dart';
 import 'package:provider/provider.dart';
 
+import '../pages/all_summary.dart';
+
 class ProfitSummary extends StatelessWidget {
   final DateTime startOfWeek;
   const ProfitSummary({super.key, required this.startOfWeek});
@@ -66,6 +68,13 @@ class ProfitSummary extends StatelessWidget {
     return total.toStringAsFixed(2);
   }
 
+  void goToAllSummary(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AllSummary()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     //mm dd yyyy
@@ -90,18 +99,33 @@ class ProfitSummary extends StatelessWidget {
                 Align(
                   alignment: AlignmentDirectional.topStart,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Text(
-                      'Profit Summary',
-                      style: TextStyle(
-                        fontSize: 18,
-                        //fontWeight: FontWeight.bold,
-                      ),
+                    padding: const EdgeInsets.only(left: 9.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          'Weekly Profit Summary',
+                          style: TextStyle(
+                            fontSize: 18,
+                            //fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Spacer(),
+                        GestureDetector(
+                          onTap: () => goToAllSummary(context),
+                          child: Text(
+                            'View all',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.blue.shade500,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 5.0),
+                  padding: const EdgeInsets.only(left: 8.0),
                   child: Row(
                     children: [
                       Icon(

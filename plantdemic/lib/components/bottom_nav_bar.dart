@@ -18,7 +18,7 @@ class MyBottomNavBar extends StatelessWidget {
           activeColor: Color.fromARGB(255, 255, 255, 255),
           tabBackgroundColor: Colors.green.shade400,
           padding: EdgeInsets.only(left: 15, right: 15, top: 13, bottom: 13),
-          tabBorderRadius: 20,
+          tabBorderRadius: 30,
           haptic: true,
           gap: 8,
           tabs: [

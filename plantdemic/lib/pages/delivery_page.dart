@@ -84,11 +84,13 @@ class _UserDeliverState extends State<UserDelivery> {
 
   void goToManageDeliveryInfoPage(Plant plant) {
     Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => ManageDeliveryPage(
-                  plant: plant,
-                )));
+      context,
+      MaterialPageRoute(
+        builder: (context) => ManageDeliveryPage(
+          plant: plant,
+        ),
+      ),
+    );
   }
 
   @override

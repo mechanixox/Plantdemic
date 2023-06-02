@@ -58,9 +58,12 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                 color: Colors.grey.shade800,
               ),
             ),
-            content: Text(
-              'All fields must be filled.',
-              style: TextStyle(fontSize: 16),
+            content: Padding(
+              padding: const EdgeInsets.only(top: 10.0),
+              child: Text(
+                'All fields must be filled.',
+                style: TextStyle(fontSize: 16),
+              ),
             ),
             actions: [
               Container(
@@ -105,9 +108,12 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                 color: Colors.grey.shade800,
               ),
             ),
-            content: Text(
-              'Plant name already exists in your inventory. Please provide a unique one.',
-              style: TextStyle(fontSize: 16),
+            content: Padding(
+              padding: const EdgeInsets.only(top: 10.0),
+              child: Text(
+                'Plant name already exists in your inventory. Please provide a unique one.',
+                style: TextStyle(fontSize: 16),
+              ),
             ),
             actions: [
               Container(
@@ -152,9 +158,12 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                 color: Colors.grey.shade800,
               ),
             ),
-            content: Text(
-              'Please enter a valid price greater than 0.',
-              style: TextStyle(fontSize: 16),
+            content: Padding(
+              padding: const EdgeInsets.only(top: 15.0),
+              child: Text(
+                'Please enter a valid price greater than 0.',
+                style: TextStyle(fontSize: 16),
+              ),
             ),
             actions: [
               Container(
@@ -199,9 +208,12 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                 color: Colors.grey.shade800,
               ),
             ),
-            content: Text(
-              'Please enter a valid quantity greater than 0.',
-              style: TextStyle(fontSize: 16),
+            content: Padding(
+              padding: const EdgeInsets.only(top: 15.0),
+              child: Text(
+                'Please enter a valid quantity greater than 0.',
+                style: TextStyle(fontSize: 16),
+              ),
             ),
             actions: [
               Container(

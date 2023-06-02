@@ -19,20 +19,20 @@ class PlantInfoTile extends StatelessWidget {
     return GestureDetector(
       child: Slidable(
         endActionPane: ActionPane(
-          extentRatio: 0.4,
+          extentRatio: 0.3,
           motion: Padding(
-            padding:
-                const EdgeInsets.only(bottom: 10, top: 30, left: 0, right: 30),
+            padding: const EdgeInsets.only(
+                bottom: 120, top: 140, left: 0, right: 30),
             child: StretchMotion(),
           ),
           children: [
             // edit tile
             SlidableAction(
               onPressed: editTapped,
-              backgroundColor: Colors.green.shade400,
+              backgroundColor: Colors.green.shade400.withOpacity(0.9),
               icon: Icons.edit_rounded,
               foregroundColor: Color.fromARGB(250, 250, 250, 250),
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(100),
             ),
           ],
         ),

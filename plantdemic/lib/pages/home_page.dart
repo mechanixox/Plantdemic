@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage> {
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Arial',
                 fontSize: 26,
-                color: Colors.grey.shade800,
+                color: Colors.grey.shade900,
               ),
             ),
           ),

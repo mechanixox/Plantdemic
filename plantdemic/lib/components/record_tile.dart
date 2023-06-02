@@ -56,7 +56,7 @@ class RecordsTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${plant.deliveryDate}',
+                  '${DateTime.now().month.toString().padLeft(2, '0')}/${DateTime.now().day.toString().padLeft(2, '0')}/${DateTime.now().year.toString()}',
                 ),
               ],
             ),
@@ -67,7 +67,7 @@ class RecordsTile extends StatelessWidget {
             ),
             trailing: SizedBox(
               width: 60,
-              height: 40, 
+              height: 40,
               child: Column(
                 children: [
                   Text('Profit'),

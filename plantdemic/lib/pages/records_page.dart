@@ -32,6 +32,7 @@ class _UserRecordsState extends State<UserRecords> {
                 // Profit summary chart
                 ProfitSummary(startOfWeek: value.startOfWeekDate()),
                 SizedBox(height: 20),
+
                 // List of plant(s)
                 Expanded(
                   child: ListView.builder(

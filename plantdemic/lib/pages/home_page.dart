@@ -22,14 +22,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   final List<Widget> tabs = [
-    UserDelivery(),
     UserInventory(),
+    UserDelivery(),
     UserReceipt(),
     UserRecords(),
   ];
   final List<String> appBarTitles = [
-    'Delivery',
     'Inventory',
+    'Delivery',
     'Receipt',
     'Records',
   ];
@@ -56,12 +56,12 @@ class _HomePageState extends State<HomePage> {
         title: Align(
           alignment: AlignmentDirectional.topStart,
           child: Padding(
-            padding: const EdgeInsets.only(left: 8, top: 8.0),
+            padding: const EdgeInsets.only(left: 8, top: 8.0, bottom: 5),
             child: Text(
               appBarTitles[selectedIndex],
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontFamily: 'Arial',
+                //fontFamily: 'Arial',
                 fontSize: 26,
                 color: Colors.grey.shade900,
               ),

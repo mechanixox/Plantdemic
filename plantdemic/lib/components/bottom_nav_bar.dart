@@ -23,9 +23,9 @@ class MyBottomNavBar extends StatelessWidget {
           gap: 8,
           tabs: [
             GButton(
-              icon: Icons.shopping_basket_outlined,
+              icon: Icons.inventory_2_outlined,
               iconColor: Color.fromARGB(255, 111, 109, 109),
-              text: 'Delivery',
+              text: 'Inventory',
               textStyle: TextStyle(
                   fontFamily: 'Arial',
                   //fontWeight: FontWeight.bold,
@@ -33,9 +33,9 @@ class MyBottomNavBar extends StatelessWidget {
                   fontSize: 16),
             ),
             GButton(
-              icon: Icons.inventory_2_outlined,
+              icon: Icons.shopping_basket_outlined,
               iconColor: Color.fromARGB(255, 111, 109, 109),
-              text: 'Inventory',
+              text: 'Delivery',
               textStyle: TextStyle(
                   fontFamily: 'Arial',
                   //fontWeight: FontWeight.bold,

@@ -16,6 +16,7 @@ class UserInventory extends StatefulWidget {
 }
 
 class _UserInventoryState extends State<UserInventory> {
+  ImageProvider<Object>? selectedImage;
   void goToManagePlantPage(Plant plant) {
     Navigator.push(
       context,
@@ -32,6 +33,7 @@ class _UserInventoryState extends State<UserInventory> {
       price: '0',
       quantity: '0',
       imagePath: 'assets/icons/plant.png',
+      selectedImage: selectedImage,
     );
 
     Navigator.push(
@@ -67,12 +69,12 @@ class _UserInventoryState extends State<UserInventory> {
           slivers: [
             SliverAppBar(
               title: Padding(
-                padding: const EdgeInsets.only(left: 8.0),
+                padding: const EdgeInsets.only(left: 8.0, bottom: 10),
                 child: Text(
                   'Manage your plants',
                   style: TextStyle(
-                    fontSize: 18,
-                    color: Color.fromRGBO(0, 0, 0, 1),
+                    fontSize: 17,
+                    color: Colors.grey.shade800,
                   ),
                 ),
               ),
@@ -87,7 +89,7 @@ class _UserInventoryState extends State<UserInventory> {
                   Plant individualPlant = value.inventory[index];
                   return Padding(
                     padding: const EdgeInsets.only(left: 15.0, right: 15),
-                    child: PlantTile(
+                    child: InventoryTile(
                       plant: individualPlant,
                       onTap: () => goToManagePlantPage(individualPlant),
                       trailing: IconButton(
@@ -98,6 +100,7 @@ class _UserInventoryState extends State<UserInventory> {
                           removeFromInventory(individualPlant),
                       sellTapped: (context) =>
                           navigateToSellInfoPage(individualPlant),
+                      selectedImage: individualPlant.selectedImage,
                     ),
                   );
                 },

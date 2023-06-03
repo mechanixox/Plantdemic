@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 //import 'package:provider/provider.dart';
+import '../components/image_picker.dart';
 import '../models/plant.dart';
 //import '../classes/inventory.dart';
+//import 'package:camera/camera.dart';
 
 class AddPlantPage extends StatefulWidget {
   final Plant plant;
@@ -58,13 +61,16 @@ class _AddPlantPageState extends State<AddPlantPage> {
 
     return false; // No plant with the same name found
   }*/
-
+  File? _imageFile;
   void addToInventory() {
     String name = _nameController.text;
     String cost = _costController.text;
     String price = _priceController.text;
     String quantity = _quantityController.text;
-    String imagePath = 'assets/icons/plant.png';
+    ImageProvider<Object>? selectedImage =
+        _imageFile != null ? FileImage(_imageFile!) : null;
+    String imagePath =
+        _imageFile != null ? _imageFile!.path : 'assets/icons/peso.png';
 
     bool isValid = true; // Track if all fields are valid
 
@@ -153,6 +159,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
           price: price,
           quantity: quantity,
           imagePath: imagePath,
+          selectedImage: selectedImage,
         );
 
         // Pass the new plant back to the previous screen
@@ -205,7 +212,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
             contentPadding: EdgeInsets.only(
                 bottom: 14), // Remove the default content padding
             shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             backgroundColor: Colors.green.shade50.withOpacity(0.80),
             content: Container(
               height: MediaQuery.of(context).size.width / 5,
@@ -235,60 +242,79 @@ class _AddPlantPageState extends State<AddPlantPage> {
   }
 
   void restrictFields(Plant plant) {
+    List<String> invalidFields = [];
+    String cost = _costController.text;
+    String price = _priceController.text;
+    String quantity = _quantityController.text;
+
+    int parsedQuantity = int.tryParse(quantity) ?? 0;
+    double parsedPrice = double.tryParse(price) ?? 0;
+    double parsedCost = double.tryParse(cost) ?? 0;
+
+    if (parsedQuantity <= 0 || quantity.contains(RegExp(r'[^0-9]'))) {
+      invalidFields.add("quantity");
+    }
+    if (parsedPrice <= 0 || price.contains(RegExp(r'[^0-9]'))) {
+      invalidFields.add("price");
+    }
+    if (parsedCost <= 0 || cost.contains(RegExp(r'[^0-9]'))) {
+      invalidFields.add("cost");
+    }
+    // Add other invalid fields here
+
     showDialog(
       useSafeArea: true,
       context: context,
       builder: (context) {
-        Timer(Duration(seconds: 2), () {
-          if (mounted) {
-            Navigator.of(context).pop();
-          }
-        });
         return BackdropFilter(
-          filter:
-              ImageFilter.blur(sigmaX: 0.2, sigmaY: 0.2), // Apply blur effect
-          child: AlertDialog(
-            contentPadding: EdgeInsets.only(
-                bottom: 14), // Remove the default content padding
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            backgroundColor: Colors.green.shade50.withOpacity(0.80),
-            content: Container(
-              height: MediaQuery.of(context).size.width / 4,
-              width: MediaQuery.of(context).size.height / 6,
-              alignment: Alignment.center,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 1),
-                    child: Column(
-                      children: [
-                        Text(
-                          'Please enter a valid number',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey.shade800,
-                          ),
-                        ),
-                        Text(
-                          'greater than 0.',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey.shade800,
-                          ),
-                        ),
-                        //SizedBox(height: 5)
-                      ],
+            filter:
+                ImageFilter.blur(sigmaX: 0.2, sigmaY: 0.2), // Apply blur effect
+            child: AlertDialog(
+              backgroundColor: Colors.green.shade50.withOpacity(0.90),
+              contentPadding: EdgeInsets.only(
+                  bottom: 20), // Remove the default content padding
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18),
+              ),
+              title: Padding(
+                padding: const EdgeInsets.only(bottom: 11.0),
+                child: Text(
+                  'Invalid input',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey.shade800,
+                  ),
+                ),
+              ),
+
+              content: Padding(
+                padding: const EdgeInsets.only(left: 25.0),
+                child: Text(
+                  'Please enter a valid number \nfor ${invalidFields.join(", ")}.',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey.shade800,
+                  ),
+                ),
+              ),
+              actions: [
+                Container(
+                  alignment: Alignment.center,
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.pop(context); // Close the dialog
+                    },
+                    child: Text(
+                      'Got it',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.blue.shade700,
+                      ),
                     ),
                   ),
-                ],
-              ),
-            ),
-          ),
-        );
+                ),
+              ],
+            ));
       },
     );
   }
@@ -300,389 +326,391 @@ class _AddPlantPageState extends State<AddPlantPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: ConstrainedBox(
-          constraints:
-              BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            width: double.infinity,
-            color: Color.fromRGBO(106, 136, 86, 1),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+      backgroundColor: Color.fromARGB(255, 239, 239, 239),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            toolbarHeight: 70,
+            title: Row(
               children: [
-                SizedBox(height: 60),
-                Padding(
-                  padding: const EdgeInsets.only(left: 0.0),
-                  child: Text(
-                    'Add plant to inventory',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 30), //add space below text
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 239, 239, 239),
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30),
-                            topRight: Radius.circular(30))),
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.only(top: 30.0, left: 30, right: 30),
-                      child: Form(
-                        child: Column(
-                          children: [
-                            Container(
-                              height: MediaQuery.of(context).size.height / 1.5,
-                              width: MediaQuery.of(context).size.width,
-                              padding: EdgeInsets.only(top: 2),
-                              // ignore: sized_box_for_whitespace
-                              child: Column(
-                                children: [
-                                  //
-                                  //enter plant name box
-                                  //
-                                  Container(
-                                    width:
-                                        MediaQuery.of(context).size.width / 1.2,
-                                    //height: 50,
-                                    padding: EdgeInsets.only(
-                                        left: 15, right: 20, top: 7, bottom: 7),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(
-                                            10), //circular radius of add plant text field
-                                        color:
-                                            Color.fromARGB(255, 239, 239, 239),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Color.fromARGB(
-                                                255, 191, 191, 191),
-                                            offset: Offset(2.0, 2.0),
-                                            blurRadius: 10,
-                                            spreadRadius: 0,
-                                          ),
-                                          BoxShadow(
-                                            color: Color.fromARGB(
-                                                255, 255, 255, 255),
-                                            offset: Offset(-4.0, -4.0),
-                                            blurRadius: 15,
-                                            spreadRadius: 1,
-                                          ),
-                                        ]),
-                                    child: TextField(
-                                      cursorColor: Colors.grey[800],
-                                      textInputAction: TextInputAction.next,
-                                      decoration: InputDecoration(
-                                        suffixIcon: isNameEmpty
-                                            ? AnimatedOpacity(
-                                                opacity:
-                                                    showWarningIcon ? 1.0 : 0.0,
-                                                duration:
-                                                    Duration(milliseconds: 100),
-                                                child: Icon(
-                                                  Icons.warning_rounded,
-                                                  color: Colors.red.shade400,
-                                                ),
-                                              )
-                                            : null,
-                                        icon: Icon(
-                                          Icons.energy_savings_leaf_outlined,
-                                          color:
-                                              Color.fromARGB(255, 84, 153, 86),
-                                        ),
-                                        border: InputBorder.none,
-                                        hintText: 'Enter plant name',
-                                        hintStyle: TextStyle(
-                                          color: Colors.grey,
-                                        ),
-                                      ),
-                                      controller: _nameController,
-                                    ),
-                                  ),
-                                  //
-                                  // enter cost box
-                                  //
-                                  Container(
-                                    width:
-                                        MediaQuery.of(context).size.width / 1.2,
-                                    //height: 50,
-                                    padding: EdgeInsets.only(
-                                        left: 15, right: 20, top: 7, bottom: 7),
-                                    margin: EdgeInsets.only(top: 25),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color:
-                                            Color.fromARGB(255, 239, 239, 239),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Color.fromARGB(
-                                                255, 191, 191, 191),
-                                            offset: Offset(2.0, 2.0),
-                                            blurRadius: 10,
-                                            spreadRadius: 0,
-                                          ),
-                                          BoxShadow(
-                                            color: Color.fromARGB(
-                                                255, 255, 255, 255),
-                                            offset: Offset(-4.0, -4.0),
-                                            blurRadius: 15,
-                                            spreadRadius: 1,
-                                          ),
-                                        ]),
-                                    child: TextField(
-                                      cursorColor: Colors.grey[800],
-                                      textInputAction: TextInputAction.next,
-                                      keyboardType: TextInputType.number,
-                                      decoration: InputDecoration(
-                                        suffixIcon: isCostEmpty
-                                            ? AnimatedOpacity(
-                                                opacity:
-                                                    showWarningIcon ? 1.0 : 0.0,
-                                                duration:
-                                                    Duration(milliseconds: 100),
-                                                child: Icon(
-                                                  Icons.warning_rounded,
-                                                  color: Colors.red.shade400,
-                                                ),
-                                              )
-                                            : null,
-                                        icon: Icon(
-                                          Icons.money_outlined,
-                                          color:
-                                              Color.fromARGB(255, 84, 153, 86),
-                                        ),
-                                        border: InputBorder.none,
-                                        hintText: 'Enter cost',
-                                        hintStyle: TextStyle(
-                                          color: Colors.grey,
-                                        ),
-                                      ),
-                                      controller: _costController,
-                                    ),
-                                  ),
-                                  //
-                                  //
-                                  // enter amount box
-                                  //
-                                  Container(
-                                    width:
-                                        MediaQuery.of(context).size.width / 1.2,
-                                    //height: 50,
-                                    padding: EdgeInsets.only(
-                                        left: 15, right: 20, top: 7, bottom: 7),
-                                    margin: EdgeInsets.only(top: 25),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color:
-                                            Color.fromARGB(255, 239, 239, 239),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Color.fromARGB(
-                                                255, 191, 191, 191),
-                                            offset: Offset(2.0, 2.0),
-                                            blurRadius: 10,
-                                            spreadRadius: 0,
-                                          ),
-                                          BoxShadow(
-                                            color: Color.fromARGB(
-                                                255, 255, 255, 255),
-                                            offset: Offset(-4.0, -4.0),
-                                            blurRadius: 15,
-                                            spreadRadius: 1,
-                                          ),
-                                        ]),
-                                    child: TextField(
-                                      cursorColor: Colors.grey[800],
-                                      textInputAction: TextInputAction.next,
-                                      keyboardType: TextInputType.number,
-                                      decoration: InputDecoration(
-                                        suffixIcon: isPriceEmpty
-                                            ? AnimatedOpacity(
-                                                opacity:
-                                                    showWarningIcon ? 1.0 : 0.0,
-                                                duration:
-                                                    Duration(milliseconds: 100),
-                                                child: Icon(
-                                                  Icons.warning_rounded,
-                                                  color: Colors.red.shade400,
-                                                ),
-                                              )
-                                            : null,
-                                        icon: Icon(
-                                          Icons.attach_money_rounded,
-                                          color:
-                                              Color.fromARGB(255, 84, 153, 86),
-                                        ),
-                                        border: InputBorder.none,
-                                        hintText: 'Enter price',
-                                        hintStyle: TextStyle(
-                                          color: Colors.grey,
-                                        ),
-                                      ),
-                                      controller: _priceController,
-                                    ),
-                                  ),
-                                  //
-                                  //  enter quantity box
-                                  //
-                                  Container(
-                                    width:
-                                        MediaQuery.of(context).size.width / 1.2,
-                                    //height: 50,
-                                    padding: EdgeInsets.only(
-                                        left: 15, right: 20, top: 7, bottom: 7),
-                                    margin: EdgeInsets.only(top: 25),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color:
-                                            Color.fromARGB(255, 239, 239, 239),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Color.fromARGB(
-                                                255, 191, 191, 191),
-                                            offset: Offset(2.0, 2.0),
-                                            blurRadius: 10,
-                                            spreadRadius: 0,
-                                          ),
-                                          BoxShadow(
-                                            color: Color.fromARGB(
-                                                255, 255, 255, 255),
-                                            offset: Offset(-4.0, -4.0),
-                                            blurRadius: 15,
-                                            spreadRadius: 1,
-                                          ),
-                                        ]),
-                                    child: TextField(
-                                      cursorColor: Colors.grey[800],
-                                      textInputAction: TextInputAction.next,
-                                      keyboardType: TextInputType.number,
-                                      decoration: InputDecoration(
-                                        suffixIcon: isQuantityEmpty
-                                            ? AnimatedOpacity(
-                                                opacity:
-                                                    showWarningIcon ? 1.0 : 0.0,
-                                                duration:
-                                                    Duration(milliseconds: 100),
-                                                child: Icon(
-                                                  Icons.warning_rounded,
-                                                  color: Colors.red.shade400,
-                                                ),
-                                              )
-                                            : null,
-                                        icon: Icon(
-                                          Icons.numbers_rounded,
-                                          color:
-                                              Color.fromARGB(255, 84, 153, 86),
-                                        ),
-                                        border: InputBorder.none,
-                                        hintText: 'Enter quantity',
-                                        hintStyle: TextStyle(
-                                          color: Colors.grey,
-                                        ),
-                                      ),
-                                      controller: _quantityController,
-                                    ),
-                                  ),
-                                  //
-                                  //cancel and add button
-                                  //
-                                  //SizedBox(height: 180), // add space below text fields
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 100),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        //
-                                        //cancel
-                                        //
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                          child: Stack(children: <Widget>[
-                                            Positioned.fill(
-                                                child: Container(
-                                              decoration: const BoxDecoration(
-                                                  gradient: LinearGradient(
-                                                      colors: <Color>[
-                                                    Color.fromRGBO(
-                                                        204, 112, 88, 1),
-                                                    Color.fromRGBO(
-                                                        204, 119, 97, 1),
-                                                    Color.fromRGBO(
-                                                        224, 148, 129, 1),
-                                                  ])),
-                                            )),
-                                            TextButton(
-                                              style: TextButton.styleFrom(
-                                                foregroundColor: Colors.white,
-                                                padding:
-                                                    const EdgeInsets.all(15),
-                                                textStyle: const TextStyle(
-                                                    fontSize: 16),
-                                              ),
-                                              onPressed: () =>
-                                                  Navigator.pop(context),
-                                              child: const Text(
-                                                  '     Cancel     '),
-                                            ),
-                                          ]),
-                                        ),
-                                        SizedBox(width: 30),
-                                        //
-                                        //add button
-                                        //
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                          child: Stack(children: <Widget>[
-                                            Positioned.fill(
-                                                child: Container(
-                                              decoration: const BoxDecoration(
-                                                  gradient: LinearGradient(
-                                                      colors: <Color>[
-                                                    Color.fromRGBO(
-                                                        127, 159, 88, 1),
-                                                    Color.fromRGBO(
-                                                        134, 164, 97, 1),
-                                                    Color.fromRGBO(
-                                                        157, 189, 117, 1),
-                                                  ])),
-                                            )),
-                                            TextButton(
-                                              style: TextButton.styleFrom(
-                                                foregroundColor: Colors.white,
-                                                padding:
-                                                    const EdgeInsets.all(15),
-                                                textStyle: const TextStyle(
-                                                    fontSize: 16),
-                                              ),
-                                              onPressed: () => addToInventory(),
-                                              child:
-                                                  const Text('   Add plant   '),
-                                            ),
-                                          ]),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 5.0),
+                    child: Icon(
+                      Icons.arrow_back_ios_new_rounded,
+                      color: Colors.grey.shade500,
                     ),
                   ),
                 ),
               ],
             ),
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(20),
+              child: Container(
+                width: double.maxFinite,
+                padding: EdgeInsets.only(top: 15, bottom: 10),
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 239, 239, 239),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    "Select a photo",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey.shade700,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            pinned: true,
+            automaticallyImplyLeading: false,
+            expandedHeight: 250,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color.fromRGBO(204, 252, 211, 1),
+                      Color.fromRGBO(18, 206, 158, 1),
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                ),
+                child: Center(
+                  child: SafeArea(
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 30.0),
+                      child: Center(
+                        child: Text(
+                          'Add your plants',
+                          style: TextStyle(
+                            color: Colors.grey.shade900,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ),
-        ),
+          SliverToBoxAdapter(
+            child: Column(
+              children: [
+                //
+                // Image picker
+                //
+                ImagePickerWidget(
+                  onImageSelected: (ImageProvider<Object>? selectedImage) {
+                    setState(() {
+                      widget.plant.selectedImage = selectedImage;
+                    });
+                  },
+                ),
+                SizedBox(height: 20),
+                //
+                //enter plant name box
+                //
+                Container(
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  //height: 50,
+                  padding:
+                      EdgeInsets.only(left: 15, right: 20, top: 7, bottom: 7),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                          10), //circular radius of add plant text field
+                      color: Color.fromARGB(255, 239, 239, 239),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color.fromARGB(255, 191, 191, 191),
+                          offset: Offset(2.0, 2.0),
+                          blurRadius: 10,
+                          spreadRadius: 0,
+                        ),
+                        BoxShadow(
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          offset: Offset(-4.0, -4.0),
+                          blurRadius: 15,
+                          spreadRadius: 1,
+                        ),
+                      ]),
+                  child: TextField(
+                    cursorColor: Colors.grey[800],
+                    textInputAction: TextInputAction.next,
+                    decoration: InputDecoration(
+                      suffixIcon: isNameEmpty
+                          ? AnimatedOpacity(
+                              opacity: showWarningIcon ? 1.0 : 0.0,
+                              duration: Duration(milliseconds: 100),
+                              child: Icon(
+                                Icons.warning_rounded,
+                                color: Colors.red.shade400,
+                              ),
+                            )
+                          : null,
+                      icon: Icon(
+                        Icons.energy_savings_leaf_outlined,
+                        color: Color.fromARGB(255, 84, 153, 86),
+                      ),
+                      border: InputBorder.none,
+                      hintText: 'Enter plant name',
+                      hintStyle: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    controller: _nameController,
+                  ),
+                ),
+                //
+                // enter cost box
+                //
+                Container(
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  //height: 50,
+                  padding:
+                      EdgeInsets.only(left: 15, right: 20, top: 7, bottom: 7),
+                  margin: EdgeInsets.only(top: 25),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Color.fromARGB(255, 239, 239, 239),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color.fromARGB(255, 191, 191, 191),
+                          offset: Offset(2.0, 2.0),
+                          blurRadius: 10,
+                          spreadRadius: 0,
+                        ),
+                        BoxShadow(
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          offset: Offset(-4.0, -4.0),
+                          blurRadius: 15,
+                          spreadRadius: 1,
+                        ),
+                      ]),
+                  child: TextField(
+                    cursorColor: Colors.grey[800],
+                    textInputAction: TextInputAction.next,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      suffixIcon: isCostEmpty
+                          ? AnimatedOpacity(
+                              opacity: showWarningIcon ? 1.0 : 0.0,
+                              duration: Duration(milliseconds: 100),
+                              child: Icon(
+                                Icons.warning_rounded,
+                                color: Colors.red.shade400,
+                              ),
+                            )
+                          : null,
+                      icon: Icon(
+                        Icons.money_outlined,
+                        color: Color.fromARGB(255, 84, 153, 86),
+                      ),
+                      border: InputBorder.none,
+                      hintText: 'Enter cost',
+                      hintStyle: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    controller: _costController,
+                  ),
+                ),
+                //
+                //
+                // enter amount box
+                //
+                Container(
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  //height: 50,
+                  padding:
+                      EdgeInsets.only(left: 15, right: 20, top: 7, bottom: 7),
+                  margin: EdgeInsets.only(top: 25),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Color.fromARGB(255, 239, 239, 239),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color.fromARGB(255, 191, 191, 191),
+                          offset: Offset(2.0, 2.0),
+                          blurRadius: 10,
+                          spreadRadius: 0,
+                        ),
+                        BoxShadow(
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          offset: Offset(-4.0, -4.0),
+                          blurRadius: 15,
+                          spreadRadius: 1,
+                        ),
+                      ]),
+                  child: TextField(
+                    cursorColor: Colors.grey[800],
+                    textInputAction: TextInputAction.next,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      suffixIcon: isPriceEmpty
+                          ? AnimatedOpacity(
+                              opacity: showWarningIcon ? 1.0 : 0.0,
+                              duration: Duration(milliseconds: 100),
+                              child: Icon(
+                                Icons.warning_rounded,
+                                color: Colors.red.shade400,
+                              ),
+                            )
+                          : null,
+                      icon: Icon(
+                        Icons.attach_money_rounded,
+                        color: Color.fromARGB(255, 84, 153, 86),
+                      ),
+                      border: InputBorder.none,
+                      hintText: 'Enter price',
+                      hintStyle: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    controller: _priceController,
+                  ),
+                ),
+                //
+                //  enter quantity box
+                //
+                Container(
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  //height: 50,
+                  padding:
+                      EdgeInsets.only(left: 15, right: 20, top: 7, bottom: 7),
+                  margin: EdgeInsets.only(top: 25),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Color.fromARGB(255, 239, 239, 239),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color.fromARGB(255, 191, 191, 191),
+                          offset: Offset(2.0, 2.0),
+                          blurRadius: 10,
+                          spreadRadius: 0,
+                        ),
+                        BoxShadow(
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          offset: Offset(-4.0, -4.0),
+                          blurRadius: 15,
+                          spreadRadius: 1,
+                        ),
+                      ]),
+                  child: TextField(
+                    cursorColor: Colors.grey[800],
+                    textInputAction: TextInputAction.next,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      suffixIcon: isQuantityEmpty
+                          ? AnimatedOpacity(
+                              opacity: showWarningIcon ? 1.0 : 0.0,
+                              duration: Duration(milliseconds: 100),
+                              child: Icon(
+                                Icons.warning_rounded,
+                                color: Colors.red.shade400,
+                              ),
+                            )
+                          : null,
+                      icon: Icon(
+                        Icons.numbers_rounded,
+                        color: Color.fromARGB(255, 84, 153, 86),
+                      ),
+                      border: InputBorder.none,
+                      hintText: 'Enter quantity',
+                      hintStyle: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    controller: _quantityController,
+                  ),
+                ),
+                //
+                //cancel and add button
+                //
+                //SizedBox(height: 180), // add space below text fields
+                Padding(
+                  padding: const EdgeInsets.only(top: 50, bottom: 50),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      //
+                      //cancel
+                      //
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(30),
+                        child: Stack(
+                          children: <Widget>[
+                            Positioned.fill(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.red.shade400,
+                                    width: 1.5,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                backgroundColor: Colors.transparent,
+                                foregroundColor: Colors.red.shade600,
+                                padding: const EdgeInsets.all(15),
+                                textStyle: const TextStyle(fontSize: 16),
+                              ),
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text('     Cancel     '),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      SizedBox(width: 30),
+                      //
+                      //add button
+                      //
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(30),
+                        child: Stack(
+                          children: <Widget>[
+                            Positioned.fill(
+                                child: Container(
+                              decoration: const BoxDecoration(
+                                  gradient: LinearGradient(colors: <Color>[
+                                Color.fromRGBO(134, 164, 97, 1),
+                                Color.fromRGBO(157, 189, 117, 1),
+                              ])),
+                            )),
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                foregroundColor: Colors.white,
+                                padding: const EdgeInsets.all(15),
+                                textStyle: const TextStyle(fontSize: 16),
+                              ),
+                              onPressed: () => addToInventory(),
+                              child: const Text('   Add plant   '),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

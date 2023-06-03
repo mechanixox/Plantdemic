@@ -4,16 +4,18 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import '../models/plant.dart';
 
 // ignore: must_be_immutable
-class PlantTile extends StatelessWidget {
+class InventoryTile extends StatelessWidget {
   final Plant plant;
+  final ImageProvider<Object>? selectedImage;
   void Function()? onTap;
   final Widget trailing;
   final Function(BuildContext)? deleteTapped;
   final Function(BuildContext)? sellTapped;
 
-  PlantTile({
+  InventoryTile({
     Key? key,
     required this.plant,
+    required this.selectedImage,
     required this.onTap,
     required this.trailing,
     required this.deleteTapped,
@@ -39,7 +41,7 @@ class PlantTile extends StatelessWidget {
                 onPressed: sellTapped,
                 backgroundColor: Colors.teal.shade800,
                 icon: Icons.sell_rounded,
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(25),
               ),
               SizedBox(width: 5),
               //delete tile
@@ -47,7 +49,7 @@ class PlantTile extends StatelessWidget {
                 onPressed: deleteTapped,
                 backgroundColor: Colors.red.shade400,
                 icon: Icons.delete_rounded,
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(25),
               ),
             ],
           ),
@@ -68,11 +70,17 @@ class PlantTile extends StatelessWidget {
                 subtitle: Text(
                   '₱${plant.price}',
                 ),
-                leading: Image.asset(
-                  plant.imagePath,
-                  width: 60,
-                  height: 60,
-                ),
+                leading: selectedImage != null
+                    ? Image(
+                        image: selectedImage!,
+                        width: 60,
+                        height: 60,
+                      )
+                    : Image.asset(
+                        plant.imagePath,
+                        width: 60,
+                        height: 60,
+                      ),
                 trailing: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [

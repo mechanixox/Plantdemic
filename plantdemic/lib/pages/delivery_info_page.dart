@@ -95,7 +95,7 @@ class _ManageDeliveryPageState extends State<ManageDeliveryPage> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 5.0),
                       child: Icon(Icons.arrow_back_ios_new_rounded,
-                          color: Colors.grey.shade700),
+                          color: Colors.grey.shade500),
                     ),
                   ),
                 ],
@@ -108,8 +108,8 @@ class _ManageDeliveryPageState extends State<ManageDeliveryPage> {
                   decoration: BoxDecoration(
                     color: Color.fromRGBO(255, 251, 255, 1),
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
                     ),
                   ),
                   child: Center(
@@ -124,20 +124,31 @@ class _ManageDeliveryPageState extends State<ManageDeliveryPage> {
               ),
               pinned: true,
               automaticallyImplyLeading: false,
-              backgroundColor: Color.fromARGB(255, 216, 248, 216),
               expandedHeight: 250,
               flexibleSpace: FlexibleSpaceBar(
-                background: Center(
-                  child: SafeArea(
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 30.0),
-                      child: Center(
-                        child: Text(
-                          widget.plant.name,
-                          style: TextStyle(
-                              color: Colors.grey.shade800,
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold),
+                background: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color.fromRGBO(219, 233, 234, 1),
+                        Color.fromRGBO(234, 214, 239, 1),
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
+                  ),
+                  child: Center(
+                    child: SafeArea(
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 30.0),
+                        child: Center(
+                          child: Text(
+                            widget.plant.name,
+                            style: TextStyle(
+                                color: Colors.grey.shade800,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
                     ),
@@ -177,9 +188,9 @@ class _ManageDeliveryPageState extends State<ManageDeliveryPage> {
                               decoration: const BoxDecoration(
                                 gradient: LinearGradient(
                                   colors: <Color>[
-                                    Color.fromRGBO(127, 159, 88, 1),
-                                    Color.fromRGBO(145, 177, 106, 1),
-                                    Color.fromRGBO(157, 189, 117, 1),
+                                    Color.fromARGB(255, 46, 166, 240),
+                                    Color.fromARGB(255, 81, 171, 244),
+                                    Color.fromARGB(255, 106, 184, 248),
                                   ],
                                 ),
                               ),

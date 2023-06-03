@@ -97,6 +97,9 @@ class _SellInfoPageState extends State<SellInfoPage> {
     } else if (quantity.contains(RegExp(r'[^0-9]'))) {
       restrictQuantity(widget.plant);
       return;
+    } else if (price.contains(RegExp(r'[^0-9]'))) {
+      restrictPrice(widget.plant);
+      return;
     }
 
     Provider.of<Plantdemic>(context, listen: false).addToDelivery(widget.plant);
@@ -161,7 +164,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
             contentPadding: EdgeInsets.only(
                 bottom: 14), // Remove the default content padding
             shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             backgroundColor: Colors.green.shade50.withOpacity(0.80),
             content: Container(
               height: MediaQuery.of(context).size.width / 5,
@@ -174,7 +177,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 0),
                     child: Text(
-                      'All fields must be filled!',
+                      'Fill all required fields.',
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.grey.shade800,
@@ -429,7 +432,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
               },
               child: Text(
                 'Save',
-                style: TextStyle(fontSize: 16, color: Colors.blue.shade400),
+                style: TextStyle(fontSize: 16, color: Colors.blue.shade500),
               ),
             ),
           ],
@@ -509,7 +512,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
               },
               child: Text(
                 'Save',
-                style: TextStyle(fontSize: 16, color: Colors.blue.shade400),
+                style: TextStyle(fontSize: 16, color: Colors.blue.shade500),
               ),
             ),
           ],
@@ -616,7 +619,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
               },
               child: Text(
                 'Save',
-                style: TextStyle(fontSize: 16, color: Colors.blue.shade400),
+                style: TextStyle(fontSize: 16, color: Colors.blue.shade500),
               ),
             ),
           ],
@@ -742,9 +745,13 @@ class _SellInfoPageState extends State<SellInfoPage> {
                               decoration: const BoxDecoration(
                                 gradient: LinearGradient(
                                   colors: <Color>[
-                                    Color.fromRGBO(127, 159, 88, 1),
-                                    Color.fromRGBO(145, 177, 106, 1),
-                                    Color.fromRGBO(157, 189, 117, 1),
+                                    Color.fromARGB(255, 46, 166, 240),
+                                    Color.fromARGB(255, 81, 171, 244),
+                                    Color.fromARGB(255, 106, 184, 248),
+                                    //Color.fromRGBO(120, 148, 165, 1),
+                                    //Color.fromRGBO(120, 148, 165, 1),
+                                    //Color.fromRGBO(207, 217, 223, 1),
+                                    //Color.fromRGBO(226, 235, 240, 1),
                                   ],
                                 ),
                               ),

@@ -44,7 +44,7 @@ class PlantInfoTile extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 color: Color.fromRGBO(252, 252, 252, 1),
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(15),
               ),
               margin: EdgeInsets.only(top: 30, bottom: 10, left: 20, right: 20),
               padding: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
@@ -69,7 +69,7 @@ class PlantInfoTile extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 color: Color.fromRGBO(252, 252, 252, 1),
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(15),
               ),
               margin: EdgeInsets.only(top: 2, bottom: 10, left: 20, right: 20),
               padding: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
@@ -94,7 +94,7 @@ class PlantInfoTile extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 color: Color.fromRGBO(252, 252, 252, 1),
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(15),
               ),
               margin: EdgeInsets.only(top: 2, bottom: 10, left: 20, right: 20),
               padding: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
@@ -120,7 +120,7 @@ class PlantInfoTile extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 color: Color.fromRGBO(252, 252, 252, 1),
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(15),
               ),
               margin: EdgeInsets.only(top: 2, bottom: 10, left: 20, right: 20),
               padding: EdgeInsets.symmetric(vertical: 5, horizontal: 0),

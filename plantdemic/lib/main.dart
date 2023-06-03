@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-//import 'package:hive_flutter/adapters.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:plantdemic/models/plantdemic.dart';
 import 'pages/home_page.dart';
 import 'pages/splash.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
-  //WidgetsFlutterBinding.ensureInitialized();
-  //await Hive.initFlutter();
-  //await Hive.openBox('plantdemic');
+  await Hive.initFlutter();
+  await Hive.openBox("plantdemic");
 
   runApp(MyApp());
 }
@@ -23,7 +22,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<Plantdemic>(
           create: (context) => Plantdemic(),
         ),
-        
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

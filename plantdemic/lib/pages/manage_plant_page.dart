@@ -161,7 +161,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
             content: Padding(
               padding: const EdgeInsets.only(top: 15.0),
               child: Text(
-                'Please enter a valid price greater than 0.',
+                'Please provide a valid input for price. ',
                 style: TextStyle(fontSize: 16),
               ),
             ),
@@ -211,7 +211,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
             content: Padding(
               padding: const EdgeInsets.only(top: 15.0),
               child: Text(
-                'Please enter a valid quantity greater than 0.',
+                'Please provide a valid input for quantity.',
                 style: TextStyle(fontSize: 16),
               ),
             ),
@@ -267,7 +267,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                       child: Text(
                         'Clear all',
                         style:
-                            TextStyle(fontSize: 15, color: Colors.red.shade400),
+                            TextStyle(fontSize: 15, color: Colors.red.shade300),
                       ),
                     ),
                   ],
@@ -405,7 +405,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
               },
               child: Text(
                 'Save',
-                style: TextStyle(fontSize: 16, color: Colors.blue.shade400),
+                style: TextStyle(fontSize: 16, color: Colors.blue.shade600),
               ),
             ),
           ],
@@ -435,20 +435,19 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
   Widget build(BuildContext context) {
     return Consumer<Plantdemic>(
       builder: (context, value, child) => Scaffold(
-        backgroundColor: Color.fromARGB(255, 236, 241, 236),
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Padding(
             padding: const EdgeInsets.only(top: 10.0),
             child: Text(
-              ' Plant information',
+              'Plant information',
               style: TextStyle(
                 color: Colors.black,
               ),
             ),
           ),
           centerTitle: true,
-          backgroundColor: Color.fromARGB(255, 236, 241, 236),
+          backgroundColor: Colors.transparent,
           leading: InkWell(
             onTap: () {
               Navigator.pop(context);
@@ -457,79 +456,95 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
               padding: const EdgeInsets.only(left: 8.0, top: 10),
               child: Icon(
                 Icons.arrow_back_ios_new_rounded,
-                color: Colors.grey.shade700,
+                color: Colors.grey.shade600,
               ),
             ),
           ),
         ),
-        //
-        //
-        //
-        body: SingleChildScrollView(
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Image.asset(
-                    widget.plant.imagePath,
-                    width: 150,
-                    height: 150,
-                  ),
-                  const SizedBox(height: 10),
-                  //
-                  // plant information tile
-                  //
-                  PlantInfoTile(
-                    plant: widget.plant,
-                    editTapped: (context) => editPlantInfo(widget.plant),
-                  ),
-                  //
-                  // sell plant -> button
-                  //
-                  const SizedBox(height: 38), // space
-                  Padding(
-                    padding: const EdgeInsets.only(left: 90.0, right: 90),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(30),
-                      child: Stack(
-                        children: <Widget>[
-                          Positioned.fill(
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: <Color>[
-                                    Color.fromRGBO(127, 159, 88, 1),
-                                    Color.fromRGBO(145, 177, 106, 1),
-                                    Color.fromRGBO(157, 189, 117, 1),
+        backgroundColor: Color.fromARGB(255, 236, 241, 236),
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color.fromARGB(255, 236, 241, 236),
+                Color.fromRGBO(235, 237, 238, 1),
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: SingleChildScrollView(
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 20, bottom: 100),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Image.asset(
+                        widget.plant.imagePath,
+                        width: 150,
+                        height: 150,
+                      ),
+                      const SizedBox(height: 10),
+                      //
+                      // plant information tile
+                      //
+                      PlantInfoTile(
+                        plant: widget.plant,
+                        editTapped: (context) => editPlantInfo(widget.plant),
+                      ),
+                      //
+                      // sell plant -> button
+                      //
+                      const SizedBox(height: 45), // space
+                      Padding(
+                        padding: const EdgeInsets.only(left: 90.0, right: 90),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(30),
+                          child: Stack(
+                            children: <Widget>[
+                              Positioned.fill(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.green.shade400,
+                                      width: 1.5,
+                                    ),
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                ),
+                              ),
+                              TextButton(
+                                style: TextButton.styleFrom(
+                                  backgroundColor: Colors.transparent,
+                                  foregroundColor: Colors.green.shade500,
+                                  padding: const EdgeInsets.only(
+                                    top: 15,
+                                    bottom: 15,
+                                    left: 5,
+                                    right: 5,
+                                  ),
+                                  textStyle: const TextStyle(fontSize: 16),
+                                ),
+                                onPressed: () => navigateToSellInfoPage(),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Text(' Sell plant   ',
+                                        style: TextStyle(fontSize: 18)),
+                                    Icon(Icons.arrow_forward),
                                   ],
                                 ),
                               ),
-                            ),
+                            ],
                           ),
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              padding: const EdgeInsets.only(
-                                  top: 15, bottom: 15, left: 5, right: 5),
-                              textStyle: const TextStyle(fontSize: 16),
-                            ),
-                            onPressed: () => navigateToSellInfoPage(),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text(' Sell plant   ',
-                                    style: TextStyle(fontSize: 18)),
-                                Icon(Icons.arrow_forward)
-                              ],
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ),

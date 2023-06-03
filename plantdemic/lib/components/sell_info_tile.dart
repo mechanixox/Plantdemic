@@ -29,8 +29,15 @@ class SellInfoTile extends StatelessWidget {
           //
           Container(
             decoration: BoxDecoration(
-              color: Color.fromRGBO(248, 237, 235, 1),
-              borderRadius: BorderRadius.circular(10),
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromRGBO(226, 235, 240, 1),
+                  Color.fromRGBO(221, 229, 235, 1),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+              borderRadius: BorderRadius.circular(15),
             ),
             margin: EdgeInsets.only(top: 20, bottom: 10, left: 20, right: 20),
             padding: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
@@ -51,7 +58,7 @@ class SellInfoTile extends StatelessWidget {
                 trailing: IconButton(
                   icon: Icon(
                     Icons.edit_rounded,
-                    color: Color.fromRGBO(138, 158, 127, 0.7),
+                    color: Color.fromRGBO(180, 189, 194, 1),
                     size: 22,
                   ),
                   onPressed: () => editPriceTapped!(context),
@@ -64,8 +71,15 @@ class SellInfoTile extends StatelessWidget {
           //
           Container(
             decoration: BoxDecoration(
-              color: Color.fromRGBO(248, 237, 235, 1),
-              borderRadius: BorderRadius.circular(10),
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromRGBO(226, 235, 240, 1),
+                  Color.fromRGBO(221, 229, 235, 1),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+              borderRadius: BorderRadius.circular(15),
             ),
             margin: EdgeInsets.only(top: 2, bottom: 10, left: 20, right: 20),
             padding: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
@@ -86,7 +100,7 @@ class SellInfoTile extends StatelessWidget {
                 trailing: IconButton(
                   icon: Icon(
                     Icons.edit_rounded,
-                    color: Color.fromRGBO(138, 158, 127, 0.7),
+                    color: Color.fromRGBO(180, 189, 194, 1),
                     size: 22,
                   ),
                   onPressed: () => editQuantityTapped!(context),
@@ -99,8 +113,15 @@ class SellInfoTile extends StatelessWidget {
           //
           Container(
             decoration: BoxDecoration(
-              color: Color.fromRGBO(248, 237, 235, 1),
-              borderRadius: BorderRadius.circular(10),
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromRGBO(226, 235, 240, 1),
+                  Color.fromRGBO(221, 229, 235, 1),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+              borderRadius: BorderRadius.circular(15),
             ),
             margin: EdgeInsets.only(top: 2, bottom: 10, left: 20, right: 20),
             padding: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
@@ -119,7 +140,7 @@ class SellInfoTile extends StatelessWidget {
                 trailing: IconButton(
                   icon: Icon(
                     Icons.edit_rounded,
-                    color: Color.fromRGBO(138, 158, 127, 0.7),
+                    color: Color.fromRGBO(180, 189, 194, 1),
                     size: 22,
                   ),
                   onPressed: () => editBuyerTapped!(context),
@@ -132,8 +153,15 @@ class SellInfoTile extends StatelessWidget {
           //
           Container(
             decoration: BoxDecoration(
-              color: Color.fromRGBO(248, 237, 235, 1),
-              borderRadius: BorderRadius.circular(10),
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromRGBO(226, 235, 240, 1),
+                  Color.fromRGBO(221, 229, 235, 1),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+              borderRadius: BorderRadius.circular(15),
             ),
             margin: EdgeInsets.only(top: 2, bottom: 10, left: 20, right: 20),
             padding: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
@@ -152,7 +180,7 @@ class SellInfoTile extends StatelessWidget {
                 trailing: IconButton(
                   icon: Icon(
                     Icons.edit_rounded,
-                    color: Color.fromRGBO(138, 158, 127, 0.7),
+                    color: Color.fromRGBO(180, 189, 194, 1),
                     size: 22,
                   ),
                   onPressed: () => editDateTapped!(context),

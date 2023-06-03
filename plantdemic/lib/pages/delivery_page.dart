@@ -101,7 +101,7 @@ class _UserDeliverState extends State<UserDelivery> {
         child: SafeArea(
           child: Padding(
             padding:
-                const EdgeInsets.only(right: 15, bottom: 1, top: 15, left: 15),
+                const EdgeInsets.only(right: 15, bottom: 1, top: 0, left: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

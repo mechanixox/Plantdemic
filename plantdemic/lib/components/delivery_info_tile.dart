@@ -22,7 +22,14 @@ class DeliveryInfoTile extends StatelessWidget {
           //
           Container(
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 229, 233, 229),
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromRGBO(160, 241, 234, 0.6),
+                  Color.fromRGBO(234, 214, 239, 0.6),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
               borderRadius: BorderRadius.circular(10),
             ),
             margin: EdgeInsets.only(top: 20, bottom: 10, left: 20, right: 20),
@@ -49,7 +56,14 @@ class DeliveryInfoTile extends StatelessWidget {
           //
           Container(
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 229, 233, 229),
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromRGBO(160, 241, 234, 0.6),
+                  Color.fromRGBO(234, 214, 239, 0.6),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
               borderRadius: BorderRadius.circular(10),
             ),
             margin: EdgeInsets.only(top: 2, bottom: 10, left: 20, right: 20),
@@ -78,7 +92,14 @@ class DeliveryInfoTile extends StatelessWidget {
           //
           Container(
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 229, 233, 229),
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromRGBO(160, 241, 234, 0.6),
+                  Color.fromRGBO(234, 214, 239, 0.6),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
               borderRadius: BorderRadius.circular(10),
             ),
             margin: EdgeInsets.only(top: 2, bottom: 10, left: 20, right: 20),
@@ -103,7 +124,14 @@ class DeliveryInfoTile extends StatelessWidget {
           //
           Container(
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 229, 233, 229),
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromRGBO(160, 241, 234, 0.6),
+                  Color.fromRGBO(234, 214, 239, 0.6),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
               borderRadius: BorderRadius.circular(10),
             ),
             margin: EdgeInsets.only(top: 2, bottom: 10, left: 20, right: 20),
@@ -125,10 +153,10 @@ class DeliveryInfoTile extends StatelessWidget {
           ),
           Padding(
             padding:
-                const EdgeInsets.only(left: 20.0, right: 20, bottom: 4, top: 2),
+                const EdgeInsets.only(left: 22.0, right: 22, bottom: 4, top: 2),
             child: Divider(
               thickness: 2,
-              color: Colors.grey[300],
+              color: Colors.teal.shade100,
             ),
           ),
           //
@@ -136,7 +164,14 @@ class DeliveryInfoTile extends StatelessWidget {
           //
           Container(
             decoration: BoxDecoration(
-              color: Colors.green.shade100,
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromRGBO(160, 241, 234, 0.6),
+                  Color.fromRGBO(234, 214, 239, 0.6),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
               borderRadius: BorderRadius.circular(10),
             ),
             margin: EdgeInsets.only(top: 2, bottom: 10, left: 20, right: 20),
@@ -164,7 +199,14 @@ class DeliveryInfoTile extends StatelessWidget {
           //
           Container(
             decoration: BoxDecoration(
-              color: Colors.green.shade100,
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromRGBO(160, 241, 234, 0.6),
+                  Color.fromRGBO(234, 214, 239, 0.6),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
               borderRadius: BorderRadius.circular(10),
             ),
             margin: EdgeInsets.only(top: 2, bottom: 10, left: 20, right: 20),

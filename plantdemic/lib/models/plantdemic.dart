@@ -100,7 +100,7 @@ class Plantdemic extends ChangeNotifier {
                     Navigator.pop(context); // Close the dialog
                   },
                   child: Text(
-                    'Got it!',
+                    'Got it',
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.blue.shade700,
@@ -306,7 +306,6 @@ class Plantdemic extends ChangeNotifier {
     for (int i = 0; i < 7; i++) {
       if (getDayName(today.subtract(Duration(days: i))) == 'Sun') {
         startOfWeek = today.subtract(Duration(days: i));
-        
       }
     }
 

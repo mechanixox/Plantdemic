@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Plant {
   String name;
   String cost;
@@ -8,6 +10,7 @@ class Plant {
   String? buyer;
   String? deliveryDate;
   double? profit;
+  ImageProvider<Object>? selectedImage;
 
   Plant({
     required this.name,
@@ -19,6 +22,7 @@ class Plant {
     this.buyer,
     this.deliveryDate,
     this.profit,
+    this.selectedImage,
   });
   double calculateSellTotal() {
     final double priceValue = double.parse(price);

@@ -36,7 +36,7 @@ class DeliveryTile extends StatelessWidget {
               onPressed: deleteTapped,
               backgroundColor: Colors.red.shade400,
               icon: Icons.delete_rounded,
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(25),
             ),
           ],
         ),

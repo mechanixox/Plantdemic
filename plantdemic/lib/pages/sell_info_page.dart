@@ -54,7 +54,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
   // track if the text fields are empty
   bool isPriceEmpty = false;
   bool isQuantityEmpty = false;
-  bool isBuyerEmpty = false;
+  //bool isBuyerEmpty = false;
   bool isDeliveryDateEmpty = false;
   //
   //
@@ -62,12 +62,12 @@ class _SellInfoPageState extends State<SellInfoPage> {
   void addToDelivery() {
     String price = _priceController.text;
     String quantity = _quantityController.text;
-    String buyer = _buyerController.text;
+    //String buyer = _buyerController.text;
     String date = _dateController.text;
 
     isPriceEmpty = false;
     isQuantityEmpty = false;
-    isBuyerEmpty = false;
+    //isBuyerEmpty = false;
     isDeliveryDateEmpty = false;
 
     // Check if any text field is empty
@@ -78,14 +78,14 @@ class _SellInfoPageState extends State<SellInfoPage> {
     if (quantity.isEmpty) {
       isQuantityEmpty = true;
     }
-    if (buyer.isEmpty) {
+    /*if (buyer.isEmpty) {
       isQuantityEmpty = true;
-    }
+    }*/
     if (date.isEmpty) {
       isQuantityEmpty = true;
     }
 
-    if (isQuantityEmpty || isBuyerEmpty || isDeliveryDateEmpty) {
+    if (isQuantityEmpty || isDeliveryDateEmpty) {
       fillFields(widget.plant);
 
       return;
@@ -580,7 +580,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
                   selectDate();
                 },
                 child: AnimatedTextField(
-                  label: "m/d/yyyy",
+                  label: "Select date",
                   suffix: IconButton(
                     icon: Icon(Icons.calendar_today_outlined),
                     onPressed: () {
@@ -643,7 +643,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
                       padding: const EdgeInsets.only(left: 5.0),
                       child: Icon(
                         Icons.arrow_back_ios_new_rounded,
-                        color: Colors.white,
+                        color: Colors.grey.shade500,
                       ),
                     ),
                   ),
@@ -657,8 +657,8 @@ class _SellInfoPageState extends State<SellInfoPage> {
                   decoration: BoxDecoration(
                     color: Color.fromRGBO(255, 251, 255, 1),
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
                     ),
                   ),
                   child: Center(
@@ -673,19 +673,31 @@ class _SellInfoPageState extends State<SellInfoPage> {
               ),
               pinned: true,
               automaticallyImplyLeading: false,
-              backgroundColor: Color.fromRGBO(88, 129, 87, 1),
+              //backgroundColor: Color.fromRGBO(88, 129, 87, 1),
               expandedHeight: 250,
               flexibleSpace: FlexibleSpaceBar(
-                background: Center(
-                  child: SafeArea(
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 30.0),
-                      child: Text(
-                        widget.plant.name,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold),
+                background: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color.fromRGBO(226, 235, 240, 1),
+                        Color.fromRGBO(207, 217, 223, 1),
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
+                  ),
+                  child: Center(
+                    child: SafeArea(
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 30.0),
+                        child: Text(
+                          widget.plant.name,
+                          style: TextStyle(
+                              color: Colors.grey.shade800,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                   ),

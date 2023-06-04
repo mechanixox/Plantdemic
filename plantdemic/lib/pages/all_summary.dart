@@ -38,7 +38,7 @@ class _AllSummaryState extends State<AllSummary> {
           title: Padding(
             padding: const EdgeInsets.only(top: 10.0),
             child: Text(
-              'Detailed summary',
+              '  Detailed summary',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 19,
@@ -52,7 +52,7 @@ class _AllSummaryState extends State<AllSummary> {
               Navigator.pop(context);
             },
             child: Padding(
-              padding: const EdgeInsets.only(left: 8.0, top: 10),
+              padding: const EdgeInsets.only(left: 5.0, top: 10),
               child: Icon(
                 Icons.arrow_back_ios_new_rounded,
                 color: Colors.grey.shade600,
@@ -77,7 +77,8 @@ class _AllSummaryState extends State<AllSummary> {
             children: [
               SizedBox(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 5.0, left: 15, right: 15),
+                  padding:
+                      const EdgeInsets.only(top: 10.0, left: 20, right: 20),
                   child: TableCalendar(
                     locale: "en_US",
                     rowHeight: 50,
@@ -85,10 +86,15 @@ class _AllSummaryState extends State<AllSummary> {
                     daysOfWeekStyle: DaysOfWeekStyle(
                       decoration: BoxDecoration(
                         color: Colors.green.shade100.withOpacity(0.5),
-                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                     calendarStyle: CalendarStyle(
+                      rowDecoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.3),
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(2),
+                            bottomRight: Radius.circular(2),
+                          )),
                       selectedDecoration: BoxDecoration(
                         color: Colors.green,
                         shape: BoxShape.circle,
@@ -108,9 +114,19 @@ class _AllSummaryState extends State<AllSummary> {
                       leftChevronVisible: false,
                       rightChevronVisible: false,
                       formatButtonVisible: false,
-                      titleTextStyle:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                      titleTextStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22,
+                        color: Colors.white,
+                      ),
                       titleCentered: true,
+                      decoration: BoxDecoration(
+                        color: Colors.green.shade400,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15),
+                        ),
+                      ),
                     ),
                     availableGestures: AvailableGestures.all,
                     selectedDayPredicate: (day) => isSameDay(day, today),
@@ -122,14 +138,7 @@ class _AllSummaryState extends State<AllSummary> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 18),
-                child: Divider(
-                  thickness: 1,
-                  color: Colors.grey.shade400.withOpacity(0.8),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15, top: 10),
+                padding: const EdgeInsets.only(left: 20, top: 10),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -138,6 +147,13 @@ class _AllSummaryState extends State<AllSummary> {
                       fontSize: 16,
                     ),
                   ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 22),
+                child: Divider(
+                  thickness: 1,
+                  color: Colors.grey.shade400.withOpacity(0.8),
                 ),
               ),
             ],

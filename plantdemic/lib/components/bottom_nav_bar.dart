@@ -13,13 +13,13 @@ class MyBottomNavBar extends StatelessWidget {
       child: Container(
         color: Colors.grey.shade200,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 12),
+          padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 12),
           child: GNav(
             onTabChange: (value) => onTabChange!(value),
             backgroundColor: Colors.grey.shade200,
             activeColor: Color.fromARGB(255, 255, 255, 255),
             tabBackgroundColor: Colors.green.shade400,
-            padding: EdgeInsets.only(left: 15, right: 15, top: 13, bottom: 13),
+            padding: EdgeInsets.only(left: 20, right: 20, top: 13, bottom: 13),
             tabBorderRadius: 30,
             haptic: true,
             gap: 10,
@@ -46,7 +46,7 @@ class MyBottomNavBar extends StatelessWidget {
                   fontSize: 16,
                 ),
               ),
-              GButton(
+              /*GButton(
                 icon: Icons.receipt_outlined,
                 iconColor: Color.fromARGB(255, 111, 109, 109),
                 text: 'Receipt',
@@ -56,7 +56,7 @@ class MyBottomNavBar extends StatelessWidget {
                   color: Colors.white,
                   fontSize: 16,
                 ),
-              ),
+              ),*/
               GButton(
                 icon: Icons.analytics_outlined,
                 iconColor: Color.fromARGB(255, 111, 109, 109),

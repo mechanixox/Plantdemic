@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:plantdemic/components/bottom_nav_bar.dart';
 import 'package:plantdemic/pages/delivery_page.dart';
 import 'package:plantdemic/pages/inventory_page.dart';
-import 'package:plantdemic/pages/receipt_page.dart';
+//import 'package:plantdemic/pages/receipt_page.dart';
 import 'package:plantdemic/pages/records_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,14 +24,14 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> tabs = [
     UserInventory(),
     UserDelivery(),
-    UserReceipt(),
-    UserRecords(),
+    UserRecords(), 
+    //UserReceipt(),
   ];
   final List<String> appBarTitles = [
     'Inventory',
     'Delivery',
-    'Receipt',
     'Records',
+      //'Receipt',
   ];
 
   @override

@@ -298,7 +298,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
                       Navigator.pop(context); // Close the dialog
                     },
                     child: Text(
-                      'Got it',
+                      'OK',
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.blue.shade700,

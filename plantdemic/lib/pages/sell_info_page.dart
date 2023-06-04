@@ -156,39 +156,54 @@ class _SellInfoPageState extends State<SellInfoPage> {
       useSafeArea: true,
       context: context,
       builder: (context) {
-        Timer(Duration(seconds: 2), () {
-          Navigator.of(context).pop();
-        });
         return BackdropFilter(
           filter:
               ImageFilter.blur(sigmaX: 0.2, sigmaY: 0.2), // Apply blur effect
           child: AlertDialog(
+            backgroundColor: Colors.green.shade50.withOpacity(0.90),
             contentPadding: EdgeInsets.only(
-                bottom: 14), // Remove the default content padding
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            backgroundColor: Colors.green.shade50.withOpacity(0.80),
-            content: Container(
-              height: MediaQuery.of(context).size.width / 5,
-              width: MediaQuery.of(context).size.height / 6,
-              alignment: Alignment.center,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 0),
-                    child: Text(
-                      'All fields must be filled.',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey.shade800,
-                      ),
-                    ),
-                  ),
-                ],
+                bottom: 20), // Remove the default content padding
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18),
+            ),
+            title: Padding(
+              padding: const EdgeInsets.only(bottom: 11.0),
+              child: Text(
+                'Empty field(s)',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey.shade800,
+                ),
               ),
             ),
+
+            content: Padding(
+              padding: const EdgeInsets.only(left: 25.0, right: 20),
+              child: Text(
+                'Please ensure that all fields \nare filled out.',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey.shade800,
+                ),
+              ),
+            ),
+            actions: [
+              Container(
+                alignment: Alignment.center,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pop(context); // Close the dialog
+                  },
+                  child: Text(
+                    'OK',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.blue.shade700,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         );
       },
@@ -200,39 +215,54 @@ class _SellInfoPageState extends State<SellInfoPage> {
       useSafeArea: true,
       context: context,
       builder: (context) {
-        Timer(Duration(seconds: 1), () {
-          Navigator.of(context).pop();
-        });
         return BackdropFilter(
           filter:
               ImageFilter.blur(sigmaX: 0.2, sigmaY: 0.2), // Apply blur effect
           child: AlertDialog(
+            backgroundColor: Colors.green.shade50.withOpacity(0.90),
             contentPadding: EdgeInsets.only(
-                bottom: 14), // Remove the default content padding
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            backgroundColor: Colors.green.shade50.withOpacity(0.80),
-            content: Container(
-              height: MediaQuery.of(context).size.width / 5,
-              width: MediaQuery.of(context).size.height / 6,
-              alignment: Alignment.center,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 0),
-                    child: Text(
-                      'Please enter a valid quantity.',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey.shade800,
-                      ),
-                    ),
-                  ),
-                ],
+                bottom: 20), // Remove the default content padding
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18),
+            ),
+            title: Padding(
+              padding: const EdgeInsets.only(bottom: 11.0),
+              child: Text(
+                'Invalid quantity',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey.shade800,
+                ),
               ),
             ),
+
+            content: Padding(
+              padding: const EdgeInsets.only(left: 25.0, right: 20),
+              child: Text(
+                'Quantity must be greater than 0, and should not exceed the current inventory quantity.',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey.shade800,
+                ),
+              ),
+            ),
+            actions: [
+              Container(
+                alignment: Alignment.center,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pop(context); // Close the dialog
+                  },
+                  child: Text(
+                    'OK',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.blue.shade700,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         );
       },
@@ -244,39 +274,54 @@ class _SellInfoPageState extends State<SellInfoPage> {
       useSafeArea: true,
       context: context,
       builder: (context) {
-        Timer(Duration(seconds: 1), () {
-          Navigator.of(context).pop();
-        });
         return BackdropFilter(
           filter:
               ImageFilter.blur(sigmaX: 0.2, sigmaY: 0.2), // Apply blur effect
           child: AlertDialog(
+            backgroundColor: Colors.green.shade50.withOpacity(0.90),
             contentPadding: EdgeInsets.only(
-                bottom: 14), // Remove the default content padding
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            backgroundColor: Colors.green.shade50.withOpacity(0.80),
-            content: Container(
-              height: MediaQuery.of(context).size.width / 5,
-              width: MediaQuery.of(context).size.height / 6,
-              alignment: Alignment.center,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 0),
-                    child: Text(
-                      'Please enter a valid price.',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey.shade800,
-                      ),
-                    ),
-                  ),
-                ],
+                bottom: 20), // Remove the default content padding
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18),
+            ),
+            title: Padding(
+              padding: const EdgeInsets.only(bottom: 11.0),
+              child: Text(
+                'Invalid price',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey.shade800,
+                ),
               ),
             ),
+
+            content: Padding(
+              padding: const EdgeInsets.only(left: 25.0, right: 20),
+              child: Text(
+                'Please provide a valid input \nfor price. It should be greater\nthan 0.',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey.shade800,
+                ),
+              ),
+            ),
+            actions: [
+              Container(
+                alignment: Alignment.center,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pop(context); // Close the dialog
+                  },
+                  child: Text(
+                    'OK',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.blue.shade700,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         );
       },

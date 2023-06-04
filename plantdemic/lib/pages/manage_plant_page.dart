@@ -61,7 +61,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
             content: Padding(
               padding: const EdgeInsets.only(top: 10.0),
               child: Text(
-                'All fields must be filled.',
+                'Please ensure that all fields \nare filled out.',
                 style: TextStyle(fontSize: 16),
               ),
             ),
@@ -498,7 +498,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                       //
                       // sell plant -> button
                       //
-                      const SizedBox(height: 45), // space
+                      const SizedBox(height: 37), // space
                       Padding(
                         padding: const EdgeInsets.only(left: 90.0, right: 90),
                         child: ClipRRect(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -24,6 +25,12 @@ class _AllSummaryState extends State<AllSummary> {
   //
   @override
   Widget build(BuildContext context) {
+    String getMonthProfit() {
+      // Logic to calculate the profit for the selected month
+      // Replace with your own implementation
+      return '₱1,500';
+    }
+
     return Consumer<Plantdemic>(
       builder: (context, value, child) => Scaffold(
         appBar: AppBar(
@@ -119,6 +126,18 @@ class _AllSummaryState extends State<AllSummary> {
                 child: Divider(
                   thickness: 1,
                   color: Colors.grey.shade400.withOpacity(0.8),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 15, top: 10),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    '${DateFormat('MMMM').format(today)} profit: ${getMonthProfit()}',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
                 ),
               ),
             ],

@@ -39,10 +39,10 @@ dependencies:
   lottie: ^1.4.3
   flutter_slidable: ^1.2.0
   fl_chart: ^0.62.0
-  intl: ^0.17.0
+  intl: ^0.18.0
   #camera: ^0.9.4
   image_picker: ^0.8.7+5
-
+  table_calendar: ^3.0.9
 
 
 dev_dependencies:

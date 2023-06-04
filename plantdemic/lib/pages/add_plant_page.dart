@@ -3,11 +3,8 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-//import 'package:provider/provider.dart';
 import '../components/image_picker.dart';
 import '../models/plant.dart';
-//import '../classes/inventory.dart';
-//import 'package:camera/camera.dart';
 
 class AddPlantPage extends StatefulWidget {
   final Plant plant;
@@ -125,10 +122,11 @@ class _AddPlantPageState extends State<AddPlantPage> {
 
       if (parsedQuantity <= 0 ||
           parsedPrice <= 0 ||
-          parsedCost <= 0 ||
+          parsedCost < 0 ||
+          cost == "." ||
           quantity.contains(RegExp(r'[^0-9]')) ||
-          price.contains(RegExp(r'[^0-9]')) ||
-          cost.contains(RegExp(r'[^0-9]'))) {
+          price.contains(RegExp(r'[^0-9\.]')) ||
+          cost.contains(RegExp(r'[^0-9\.]'))) {
         restrictFields(widget.plant);
         // Show the warning icon and blink it
         setState(() {
@@ -164,10 +162,6 @@ class _AddPlantPageState extends State<AddPlantPage> {
 
         // Pass the new plant back to the previous screen
         Navigator.pop(context, newPlant);
-
-        // Add the new plant to the inventory
-        /*Provider.of<PlantdemicInventory>(context, listen: false)
-              .addToInventory(context,newPlant);*/
       }
     } else {
       fillFields(widget.plant);
@@ -254,13 +248,12 @@ class _AddPlantPageState extends State<AddPlantPage> {
     if (parsedQuantity <= 0 || quantity.contains(RegExp(r'[^0-9]'))) {
       invalidFields.add("quantity");
     }
-    if (parsedPrice <= 0 || price.contains(RegExp(r'[^0-9]'))) {
+    if (parsedPrice <= 0 || (price.contains(RegExp(r'[^0-9\.]')))) {
       invalidFields.add("price");
     }
-    if (parsedCost <= 0 || cost.contains(RegExp(r'[^0-9]'))) {
+    if (parsedCost < 0 || cost == "." || cost.contains(RegExp(r'[^0-9\.]'))) {
       invalidFields.add("cost");
     }
-    // Add other invalid fields here
 
     showDialog(
       useSafeArea: true,

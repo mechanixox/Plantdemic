@@ -23,7 +23,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
   final TextEditingController _quantityController = TextEditingController();
   final TextEditingController _buyerController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
-  int price = 0;
+  double price = 0;
   int quantity = 0;
   @override
   void initState() {
@@ -36,9 +36,10 @@ class _SellInfoPageState extends State<SellInfoPage> {
     setState(() {
       quantity = initialQuantity;
     });
-    int initialPrice = int.tryParse(widget.plant.price) ?? 0;
+    double initialPrice = double.tryParse(widget.plant.price) ?? 0.0;
     setState(() {
       price = initialPrice;
+      _priceController.text = initialPrice.toString();
     });
   }
 
@@ -54,7 +55,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
   // track if the text fields are empty
   bool isPriceEmpty = false;
   bool isQuantityEmpty = false;
-  //bool isBuyerEmpty = false;
+  bool isBuyerEmpty = false;
   bool isDeliveryDateEmpty = false;
   //
   //
@@ -62,12 +63,12 @@ class _SellInfoPageState extends State<SellInfoPage> {
   void addToDelivery() {
     String price = _priceController.text;
     String quantity = _quantityController.text;
-    //String buyer = _buyerController.text;
+    String buyer = _buyerController.text;
     String date = _dateController.text;
 
     isPriceEmpty = false;
     isQuantityEmpty = false;
-    //isBuyerEmpty = false;
+    isBuyerEmpty = false;
     isDeliveryDateEmpty = false;
 
     // Check if any text field is empty
@@ -78,16 +79,15 @@ class _SellInfoPageState extends State<SellInfoPage> {
     if (quantity.isEmpty) {
       isQuantityEmpty = true;
     }
-    /*if (buyer.isEmpty) {
-      isQuantityEmpty = true;
-    }*/
+    if (buyer.isEmpty) {
+      isBuyerEmpty = true;
+    }
     if (date.isEmpty) {
-      isQuantityEmpty = true;
+      isDeliveryDateEmpty = true;
     }
 
-    if (isQuantityEmpty || isDeliveryDateEmpty) {
+    if (isQuantityEmpty || isBuyerEmpty || isDeliveryDateEmpty) {
       fillFields(widget.plant);
-
       return;
     } else if (int.tryParse(quantity) == null ||
         int.tryParse(quantity)! > int.tryParse(widget.plant.quantity)! ||
@@ -97,7 +97,9 @@ class _SellInfoPageState extends State<SellInfoPage> {
     } else if (quantity.contains(RegExp(r'[^0-9]'))) {
       restrictQuantity(widget.plant);
       return;
-    } else if (price.contains(RegExp(r'[^0-9]'))) {
+    } else if (double.tryParse(price) == null ||
+        double.tryParse(price)! <= 0 ||
+        price.contains(RegExp(r'[^0-9\.]'))) {
       restrictPrice(widget.plant);
       return;
     }
@@ -177,7 +179,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 0),
                     child: Text(
-                      'Fill all required fields.',
+                      'All fields must be filled.',
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.grey.shade800,

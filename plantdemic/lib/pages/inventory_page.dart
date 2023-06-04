@@ -69,13 +69,73 @@ class _UserInventoryState extends State<UserInventory> {
           slivers: [
             SliverAppBar(
               title: Padding(
-                padding: const EdgeInsets.only(left: 8.0, bottom: 10),
-                child: Text(
-                  'Manage your plants',
-                  style: TextStyle(
-                    fontSize: 17,
-                    color: Colors.grey.shade800,
-                  ),
+                padding: const EdgeInsets.only(left: 8.0, bottom: 20, top: 5),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 30.0),
+                      child: Text(
+                        'Manage your plants',
+                        style: TextStyle(
+                          fontSize: 17,
+                          color: Colors.grey.shade800,
+                        ),
+                      ),
+                    ),
+                    Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 35.0),
+                      child: Text(
+                        'Sort by: ',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey.shade800,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(top: 35.0, left: 2, right: 5),
+                      child: DropdownButton<String>(
+                        value: value.sortOption,
+                        underline: Container(),
+                        borderRadius: BorderRadius.circular(10),
+                        elevation: 1,
+                        enableFeedback: true,
+                        focusColor: Colors.transparent,
+                        icon: Icon(Icons
+                            .arrow_drop_down_outlined), // Add an arrow icon
+                        iconSize: 24, // Adjust the icon size as desired
+                        dropdownColor: Color.fromARGB(248, 246, 250, 251)
+                            .withOpacity(0.95),
+                        isDense: true,
+                        items: <String>['None', 'Name', 'Price', 'Quantity']
+                            .map<DropdownMenuItem<String>>(
+                          (String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(
+                                value,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey
+                                      .shade800, // Adjust the text size as desired
+                                  decoration: TextDecoration
+                                      .none, // Remove the underline
+                                ),
+                              ),
+                            );
+                          },
+                        ).toList(),
+                        onChanged: (String? newValue) {
+                          if (newValue != null) {
+                            value.sortInventory(
+                                newValue); // Call the sortInventory method with the selected sort option
+                          }
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
               floating: true,

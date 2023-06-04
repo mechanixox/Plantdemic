@@ -103,7 +103,7 @@ class ProfitSummary extends StatelessWidget {
                     child: Row(
                       children: [
                         Text(
-                          'Weekly Profit Summary',
+                          'Weekly Profit',
                           style: TextStyle(
                             fontSize: 18,
                             //fontWeight: FontWeight.bold,
@@ -113,7 +113,7 @@ class ProfitSummary extends StatelessWidget {
                         GestureDetector(
                           onTap: () => goToAllSummary(context),
                           child: Text(
-                            'View all',
+                            'View all  ',
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.blue.shade500,

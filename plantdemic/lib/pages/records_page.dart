@@ -25,7 +25,7 @@ class _UserRecordsState extends State<UserRecords> {
         color: Color.fromRGBO(242, 243, 245, 1),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.only(right: 15, top: 15, left: 15),
+            padding: const EdgeInsets.only(right: 15, top: 3, left: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

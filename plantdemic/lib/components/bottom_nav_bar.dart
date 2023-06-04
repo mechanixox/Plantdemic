@@ -8,61 +8,68 @@ class MyBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.grey.shade200,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 12),
-        child: GNav(
-          onTabChange: (value) => onTabChange!(value),
-          backgroundColor: Colors.grey.shade200,
-          activeColor: Color.fromARGB(255, 255, 255, 255),
-          tabBackgroundColor: Colors.green.shade400,
-          padding: EdgeInsets.only(left: 15, right: 15, top: 13, bottom: 13),
-          tabBorderRadius: 30,
-          haptic: true,
-          gap: 8,
-          tabs: [
-            GButton(
-              icon: Icons.inventory_2_outlined,
-              iconColor: Color.fromARGB(255, 111, 109, 109),
-              text: 'Inventory',
-              textStyle: TextStyle(
+    return Material(
+      elevation: 5,
+      child: Container(
+        color: Colors.grey.shade200,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 12),
+          child: GNav(
+            onTabChange: (value) => onTabChange!(value),
+            backgroundColor: Colors.grey.shade200,
+            activeColor: Color.fromARGB(255, 255, 255, 255),
+            tabBackgroundColor: Colors.green.shade400,
+            padding: EdgeInsets.only(left: 15, right: 15, top: 13, bottom: 13),
+            tabBorderRadius: 30,
+            haptic: true,
+            gap: 10,
+            tabs: [
+              GButton(
+                icon: Icons.inventory_2_outlined,
+                iconColor: Color.fromARGB(255, 111, 109, 109),
+                text: 'Inventory',
+                textStyle: TextStyle(
                   fontFamily: 'Arial',
                   //fontWeight: FontWeight.bold,
                   color: Colors.white,
-                  fontSize: 16),
-            ),
-            GButton(
-              icon: Icons.shopping_basket_outlined,
-              iconColor: Color.fromARGB(255, 111, 109, 109),
-              text: 'Delivery',
-              textStyle: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              GButton(
+                icon: Icons.shopping_basket_outlined,
+                iconColor: Color.fromARGB(255, 111, 109, 109),
+                text: 'Delivery',
+                textStyle: TextStyle(
                   fontFamily: 'Arial',
                   //fontWeight: FontWeight.bold,
                   color: Colors.white,
-                  fontSize: 16),
-            ),
-            GButton(
-              icon: Icons.receipt_outlined,
-              iconColor: Color.fromARGB(255, 111, 109, 109),
-              text: 'Receipt',
-              textStyle: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              GButton(
+                icon: Icons.receipt_outlined,
+                iconColor: Color.fromARGB(255, 111, 109, 109),
+                text: 'Receipt',
+                textStyle: TextStyle(
                   fontFamily: 'Arial',
                   //fontWeight: FontWeight.bold,
                   color: Colors.white,
-                  fontSize: 16),
-            ),
-            GButton(
-              icon: Icons.analytics_outlined,
-              iconColor: Color.fromARGB(255, 111, 109, 109),
-              text: 'Records',
-              textStyle: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              GButton(
+                icon: Icons.analytics_outlined,
+                iconColor: Color.fromARGB(255, 111, 109, 109),
+                text: 'Records',
+                textStyle: TextStyle(
                   fontFamily: 'Arial',
                   //fontWeight: FontWeight.bold,
                   color: Colors.white,
-                  fontSize: 16),
-            ),
-          ],
+                  fontSize: 16,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

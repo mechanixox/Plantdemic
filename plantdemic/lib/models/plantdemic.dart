@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'plant.dart';
 import 'package:plantdemic/models/profit_item.dart';
@@ -113,9 +114,16 @@ class Plantdemic extends ChangeNotifier {
         },
       );
     } else {
-      _inventory.add(plant);
-      notifyListeners();
+      Provider.of<Plantdemic>(context, listen: false)
+          .addPlantToInventorySorted(plant);
     }
+  }
+
+  void addPlantToInventorySorted(Plant newPlant) {
+    _inventory.add(newPlant);
+    sortInventory(
+        sortOption); // Sort the inventory based on the current sort option
+    notifyListeners();
   }
 
   void updatePlantInfo(BuildContext context, Plant plant) {
@@ -183,6 +191,35 @@ class Plantdemic extends ChangeNotifier {
     notifyListeners();
   }
 
+  String _sortOption = 'None';
+  String get sortOption => _sortOption;
+
+  void sortInventory(String sortOption) {
+    _sortOption =
+        sortOption; // Update the _sortOption value with the selected sort option
+    if (sortOption == 'None') {
+      // If 'None' is selected, do not perform any sorting
+      notifyListeners();
+      return;
+    }
+    _inventory.sort((a, b) {
+      switch (sortOption) {
+        case 'Name':
+          return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+        case 'Price':
+          final double priceA = double.parse(a.price);
+          final double priceB = double.parse(b.price);
+          return priceA.compareTo(priceB);
+        case 'Quantity':
+          return a.quantity.compareTo(b.quantity);
+        default:
+          return 0;
+      }
+    });
+
+    notifyListeners();
+  }
+
   //list of plants in delivery page
   final List<Plant> _delivery = [];
 
@@ -209,6 +246,8 @@ class Plantdemic extends ChangeNotifier {
       int newQuantity = currentQuantity + deliveryQuantity;
 
       _inventory[selectedPlantIndex].quantity = newQuantity.toString();
+      sortInventory(
+          sortOption); // Sort the inventory based on the current sort option
       notifyListeners();
     } else {
       Plant newPlant = Plant(
@@ -219,6 +258,8 @@ class Plantdemic extends ChangeNotifier {
         imagePath: plant.imagePath,
       );
       _inventory.add(newPlant);
+      sortInventory(
+          sortOption); // Sort the inventory based on the current sort option
       notifyListeners();
     }
   }

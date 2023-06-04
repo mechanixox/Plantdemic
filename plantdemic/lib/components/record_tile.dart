@@ -66,7 +66,7 @@ class RecordsTile extends StatelessWidget {
               height: 60,
             ),
             trailing: SizedBox(
-              width: 60,
+              width: 50,
               height: 40,
               child: Column(
                 children: [

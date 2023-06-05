@@ -123,7 +123,8 @@ class _AddPlantPageState extends State<AddPlantPage> {
       if (parsedQuantity <= 0 ||
           parsedPrice <= 0 ||
           parsedCost < 0 ||
-          cost == "." ||
+          (!cost.startsWith('0') && !cost.startsWith(RegExp(r'^[1-9]'))) ||
+          cost.split('.').length > 2 ||
           quantity.contains(RegExp(r'[^0-9]')) ||
           price.contains(RegExp(r'[^0-9\.]')) ||
           cost.contains(RegExp(r'[^0-9\.]'))) {
@@ -251,7 +252,10 @@ class _AddPlantPageState extends State<AddPlantPage> {
     if (parsedPrice <= 0 || (price.contains(RegExp(r'[^0-9\.]')))) {
       invalidFields.add("price");
     }
-    if (parsedCost < 0 || cost == "." || cost.contains(RegExp(r'[^0-9\.]'))) {
+    if (parsedCost < 0 ||
+        (!cost.startsWith('0') && !cost.startsWith(RegExp(r'^[1-9]'))) ||
+        cost.split('.').length > 2 ||
+        cost.contains(RegExp(r'[^0-9\.]'))) {
       invalidFields.add("cost");
     }
 

@@ -24,14 +24,14 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> tabs = [
     UserInventory(),
     UserDelivery(),
-    UserRecords(), 
+    UserRecords(),
     //UserReceipt(),
   ];
   final List<String> appBarTitles = [
     'Inventory',
     'Delivery',
     'Records',
-      //'Receipt',
+    //'Receipt',
   ];
 
   @override

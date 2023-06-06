@@ -115,14 +115,18 @@ class Plantdemic extends ChangeNotifier {
       );
     } else {
       Provider.of<Plantdemic>(context, listen: false)
-          .addPlantToInventorySorted(plant);
+          .addPlantToInventorySorted(plant, addToTop: true);
     }
   }
 
-  void addPlantToInventorySorted(Plant newPlant) {
-    _inventory.add(newPlant);
-    sortInventory(
-        sortOption); // Sort the inventory based on the current sort option
+  void addPlantToInventorySorted(Plant newPlant, {bool addToTop = false}) {
+    if (addToTop) {
+      _inventory.insert(0, newPlant); // Add at the beginning of the list
+    } else {
+      _inventory.add(newPlant);
+      sortInventory(
+          sortOption); // Sort the inventory based on the current sort option
+    }
     notifyListeners();
   }
 
@@ -191,6 +195,16 @@ class Plantdemic extends ChangeNotifier {
     notifyListeners();
   }
 
+  List<Plant> searchResults = [];
+
+  void searchPlants(String query) {
+    String lowercaseQuery = query.toLowerCase();
+    searchResults = _inventory
+        .where((plant) => plant.name.toLowerCase().contains(lowercaseQuery))
+        .toList();
+    notifyListeners();
+  }
+
   String _sortOption = 'None';
   String get sortOption => _sortOption;
 
@@ -211,7 +225,9 @@ class Plantdemic extends ChangeNotifier {
           final double priceB = double.parse(b.price);
           return priceA.compareTo(priceB);
         case 'Quantity':
-          return a.quantity.compareTo(b.quantity);
+          final int quantityA = int.parse(a.quantity);
+          final int quantityB = int.parse(b.quantity);
+          return quantityA.compareTo(quantityB);
         default:
           return 0;
       }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:plantdemic/models/plantdemic.dart';
 import 'package:plantdemic/pages/sell_info_page.dart';
 import 'package:provider/provider.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../models/plant.dart';
 import '../components/plant_info_tile.dart';
@@ -425,8 +426,10 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
 
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => SellInfoPage(plant: sellPlant),
+      PageTransition(
+        type: PageTransitionType.rightToLeft,
+        child: SellInfoPage(plant: sellPlant),
+        curve: Curves.easeInOutExpo,
       ),
     );
   }

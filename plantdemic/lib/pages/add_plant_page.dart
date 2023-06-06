@@ -127,7 +127,8 @@ class _AddPlantPageState extends State<AddPlantPage> {
           cost.split('.').length > 2 ||
           quantity.contains(RegExp(r'[^0-9]')) ||
           price.contains(RegExp(r'[^0-9\.]')) ||
-          cost.contains(RegExp(r'[^0-9\.]'))) {
+          cost.contains(RegExp(r'[^0-9\.]')) ||
+          name.contains(RegExp(r'[^a-zA-z]'))) {
         restrictFields(widget.plant);
         // Show the warning icon and blink it
         setState(() {
@@ -238,6 +239,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
 
   void restrictFields(Plant plant) {
     List<String> invalidFields = [];
+    String name = _nameController.text;
     String cost = _costController.text;
     String price = _priceController.text;
     String quantity = _quantityController.text;
@@ -245,7 +247,9 @@ class _AddPlantPageState extends State<AddPlantPage> {
     int parsedQuantity = int.tryParse(quantity) ?? 0;
     double parsedPrice = double.tryParse(price) ?? 0;
     double parsedCost = double.tryParse(cost) ?? 0;
-
+    if (name.contains(RegExp(r'[^a-zA-z]'))) {
+      invalidFields.add("name");
+    }
     if (parsedQuantity <= 0 || quantity.contains(RegExp(r'[^0-9]'))) {
       invalidFields.add("quantity");
     }
@@ -287,7 +291,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
               content: Padding(
                 padding: const EdgeInsets.only(left: 25.0),
                 child: Text(
-                  'Please enter a valid number \nfor ${invalidFields.join(", ")}.',
+                  'Please enter a valid input \nfor ${invalidFields.join(", ")}.',
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.grey.shade800,

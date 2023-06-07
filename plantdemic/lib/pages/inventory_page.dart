@@ -70,10 +70,16 @@ class _UserInventoryState extends State<UserInventory> {
   void searchPlants(String query) {
     setState(() {
       String lowercaseQuery = query.toLowerCase();
-      searchResults = Provider.of<Plantdemic>(context, listen: false)
-          .inventory
-          .where((plant) => plant.name.toLowerCase().contains(lowercaseQuery))
-          .toList();
+      if (query.isEmpty) {
+        searchResults = [];
+      } else {
+        searchResults = Provider.of<Plantdemic>(context, listen: false)
+            .inventory
+            .where((plant) => plant.name.toLowerCase().contains(lowercaseQuery))
+            .toList();
+      }
+      Provider.of<Plantdemic>(context, listen: false).sortInventory(
+          Provider.of<Plantdemic>(context, listen: false).sortOption);
     });
   }
 
@@ -129,7 +135,7 @@ class _UserInventoryState extends State<UserInventory> {
                     cursorColor: Colors.grey,
                     focusNode: _searchFocusNode,
                     controller: searchController,
-                    onChanged: (query) => searchPlants(query),
+                    onChanged: (query) => searchPlants(query.trim()),
                     decoration: InputDecoration(
                       hintText: 'Search plants',
                       hintStyle: TextStyle(
@@ -218,7 +224,7 @@ class _UserInventoryState extends State<UserInventory> {
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
-                  Plant individualPlant = value.inventory[index];
+                  Plant individualPlant;
                   if (searchResults.isEmpty) {
                     individualPlant = value.inventory[index];
                   } else {

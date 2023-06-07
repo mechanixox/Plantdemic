@@ -122,14 +122,15 @@ class _UserInventoryState extends State<UserInventory> {
         body: CustomScrollView(
           slivers: [
             SliverAppBar(
-              toolbarHeight: 60,
+              scrolledUnderElevation: 0,
+              toolbarHeight: 70,
               title: Padding(
                 padding: const EdgeInsets.only(
-                    left: 0.0, right: 0, top: 0, bottom: 10),
+                    left: 3.0, right: 3.0, top: 2, bottom: 10),
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.90),
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(25),
                   ),
                   child: Row(
                     children: [
@@ -139,7 +140,7 @@ class _UserInventoryState extends State<UserInventory> {
                             color: _isSearchFocused
                                 ? Colors.transparent
                                 : Colors.white.withOpacity(0.90),
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(25),
                           ),
                           child: TextField(
                             cursorColor: Colors.grey,
@@ -166,10 +167,10 @@ class _UserInventoryState extends State<UserInventory> {
                         child: GestureDetector(
                           onTap: clearSearchField,
                           child: Padding(
-                            padding: const EdgeInsets.only(right: 12.0),
+                            padding: const EdgeInsets.only(right: 18.0),
                             child: Icon(
                               Icons.close,
-                              color: Colors.grey,
+                              color: Colors.grey.shade500,
                               size: 20,
                             ),
                           ),

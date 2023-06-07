@@ -439,6 +439,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
     return Consumer<Plantdemic>(
       builder: (context, value, child) => Scaffold(
         appBar: AppBar(
+          scrolledUnderElevation: 0,
           automaticallyImplyLeading: false,
           title: Padding(
             padding: const EdgeInsets.only(top: 10.0),
@@ -450,7 +451,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
             ),
           ),
           centerTitle: true,
-          backgroundColor: Colors.transparent,
+          backgroundColor: Color.fromARGB(255, 236, 241, 236),
           leading: InkWell(
             onTap: () {
               Navigator.pop(context);
@@ -523,7 +524,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                       //
                       // sell plant -> button
                       //
-                      const SizedBox(height: 45), // space
+                      const SizedBox(height: 55), // space
                       Padding(
                         padding: const EdgeInsets.only(left: 90.0, right: 90),
                         child: ClipRRect(

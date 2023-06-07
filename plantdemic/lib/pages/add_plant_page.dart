@@ -342,7 +342,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
                     padding: const EdgeInsets.only(left: 5.0),
                     child: Icon(
                       Icons.arrow_back_ios_new_rounded,
-                      color: Colors.grey.shade500,
+                      color: Color.fromRGBO(17, 195, 150, 1),
                     ),
                   ),
                 ),

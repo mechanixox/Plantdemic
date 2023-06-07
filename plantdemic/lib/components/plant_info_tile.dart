@@ -32,7 +32,7 @@ class PlantInfoTile extends StatelessWidget {
               backgroundColor: Colors.green.shade400.withOpacity(0.9),
               icon: Icons.edit_rounded,
               foregroundColor: Color.fromARGB(250, 250, 250, 250),
-              borderRadius: BorderRadius.circular(100),
+              borderRadius: BorderRadius.circular(200),
             ),
           ],
         ),

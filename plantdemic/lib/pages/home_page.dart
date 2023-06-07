@@ -39,6 +39,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         backgroundColor: Color.fromRGBO(242, 243, 245, 1),
         elevation: 0,
         /*

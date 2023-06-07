@@ -241,7 +241,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
             content: Padding(
               padding: const EdgeInsets.only(left: 25.0, right: 20),
               child: Text(
-                'Quantity must be greater than 0, and should not exceed the current inventory quantity.',
+                'Quantity must be greater than 0, and should not exceed the current inventory quantity.\n\nAvailable Qty: ${widget.plant.quantity}',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.grey.shade800,

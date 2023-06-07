@@ -65,17 +65,24 @@ class DeliveryTile extends StatelessWidget {
                         style: TextStyle(fontSize: 14),
                       ),
                       SizedBox(
-                          width:
-                              0), // Add some spacing between price and quantity
+                        width: 0,
+                      ),
                       Text(
                         '${plant.sellQuantity}x',
                         style: TextStyle(fontSize: 14),
                       ),
                     ],
                   ),
-                  Text(
-                    '${plant.deliveryDate}',
-                  ),
+                  plant.deliveryDate?.isNotEmpty == true
+                      ? Text(
+                          '${plant.deliveryDate}',
+                        )
+                      : Text(
+                          'No date',
+                          style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
                 ],
               ),
               leading: Image.asset(
@@ -87,7 +94,6 @@ class DeliveryTile extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Expanded(child: trailing),
-                  //SizedBox(height: 20),
                 ],
               ),
             ),

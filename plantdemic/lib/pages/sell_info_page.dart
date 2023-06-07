@@ -55,21 +55,21 @@ class _SellInfoPageState extends State<SellInfoPage> {
   // track if the text fields are empty
   bool isPriceEmpty = false;
   bool isQuantityEmpty = false;
-  bool isBuyerEmpty = false;
-  bool isDeliveryDateEmpty = false;
+  //bool isBuyerEmpty = false;
+  //bool isDeliveryDateEmpty = false;
   //
   //
   //
   void addToDelivery() {
     String price = _priceController.text;
     String quantity = _quantityController.text;
-    String buyer = _buyerController.text;
-    String date = _dateController.text;
+    //String buyer = _buyerController.text;
+    //String date = _dateController.text;
 
     isPriceEmpty = false;
     isQuantityEmpty = false;
-    isBuyerEmpty = false;
-    isDeliveryDateEmpty = false;
+    //isBuyerEmpty = false;
+    //isDeliveryDateEmpty = false;
 
     // Check if any text field is empty
 
@@ -79,14 +79,16 @@ class _SellInfoPageState extends State<SellInfoPage> {
     if (quantity.isEmpty) {
       isQuantityEmpty = true;
     }
+    /*
     if (buyer.isEmpty) {
       isBuyerEmpty = true;
     }
     if (date.isEmpty) {
       isDeliveryDateEmpty = true;
     }
+    */
 
-    if (isQuantityEmpty || isBuyerEmpty || isDeliveryDateEmpty) {
+    if (isQuantityEmpty) {
       fillFields(widget.plant);
       return;
     } else if (int.tryParse(quantity) == null ||
@@ -180,7 +182,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
             content: Padding(
               padding: const EdgeInsets.only(left: 25.0, right: 20),
               child: Text(
-                'Please ensure that all fields \nare filled out.',
+                'Please ensure that price and quantity fields are filled out.',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.grey.shade800,

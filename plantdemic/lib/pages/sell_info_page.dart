@@ -761,7 +761,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
                 children: [
                   SizedBox(height: 15),
                   Padding(
-                    padding: EdgeInsets.only(right: 15.0),
+                    padding: EdgeInsets.only(right: 5.0),
                     child: Image.asset(
                       widget.plant.imagePath,
                       width: 300,
@@ -772,7 +772,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
                   //
                   // sell info tile
                   //
-                  SizedBox(height: 0),
+                  SizedBox(height: 10),
                   SellInfoTile(
                     plant: widget.plant,
                     editPriceTapped: (context) =>

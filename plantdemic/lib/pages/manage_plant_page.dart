@@ -485,11 +485,33 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Image.asset(
-                        widget.plant.imagePath,
-                        width: 150,
-                        height: 150,
+                      Stack(
+                        children: [
+                          Container(
+                            width: 256,
+                            height: 256,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.25),
+                                  spreadRadius: 4,
+                                  blurRadius: 30,
+                                  offset: Offset(6, 7),
+                                ),
+                              ],
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(30),
+                              child: Image.asset(
+                                widget.plant.imagePath,
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
+
                       const SizedBox(height: 10),
                       //
                       // plant information tile

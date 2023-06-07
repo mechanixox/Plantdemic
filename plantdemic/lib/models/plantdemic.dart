@@ -8,48 +8,90 @@ import 'package:plantdemic/components/date_time_helper.dart';
 class Plantdemic extends ChangeNotifier {
   //list of plants available
   final List<Plant> _inventory = [
-    //Cactus
-    Plant(
-        name: 'Cactus',
-        cost: '50.00',
-        price: '70.90',
-        quantity: '6',
-        imagePath: 'assets/icons/cactus.png'),
-    //Caladium
-    Plant(
-        name: 'Caladium',
-        cost: '50.00',
-        price: '150.00',
-        quantity: '2',
-        imagePath: 'assets/icons/caladium.png'),
-    //Monstera
     Plant(
         name: 'Monstera',
-        cost: '50.00',
-        price: '300.00',
+        cost: '400.00',
+        price: '550.00',
+        quantity: '4',
+        imagePath: 'assets/icons/new/monstera.jpg'),
+    Plant(
+        name: 'Adansonii Albo',
+        cost: '600.00',
+        price: '850.00',
+        quantity: '1',
+        imagePath: 'assets/icons/new/adansonii-albo.jpg'),
+    Plant(
+        name: 'Red Stardust ',
+        cost: '800.00',
+        price: '950.00',
         quantity: '3',
-        imagePath: 'assets/icons/monstera.png'),
-
-    //Rosemary
+        imagePath: 'assets/icons/new/red-stardust.jpg'),
     Plant(
-        name: 'Rosemary',
-        cost: '20.00',
-        price: '60.00',
+        name: 'Tricolor',
+        cost: '799.50',
+        price: '950.00',
+        quantity: '4',
+        imagePath: 'assets/icons/new/tricolor.jpg'),
+    Plant(
+        name: 'Suksom Jaipong',
+        cost: '700.00',
+        price: '1100.00',
+        quantity: '2',
+        imagePath: 'assets/icons/new/red-suksom.jpg'),
+    Plant(
+        name: 'Mahaseti',
+        cost: '700.00',
+        price: '850.00',
+        quantity: '5',
+        imagePath: 'assets/icons/new/mahaseti.jpg'),
+    Plant(
+        name: 'Mutated Pink Emerald',
+        cost: '880.00',
+        price: '1200.00',
+        quantity: '6',
+        imagePath: 'assets/icons/new/mutated-pink-emerald.jpg'),
+    Plant(
+        name: 'Pink Moonlight',
+        cost: '1500.00',
+        price: '1850.00',
+        quantity: '7',
+        imagePath: 'assets/icons/new/pink-moon.jpg'),
+    Plant(
+        name: 'Anthurium Foliage',
+        cost: '3150.00',
+        price: '3500.00',
         quantity: '8',
-        imagePath: 'assets/icons/rosemary.png'),
-    //Sunflower
+        imagePath: 'assets/icons/new/anthurium-foliage.jpg'),
     Plant(
-        name: 'Sunflower',
-        cost: '50.00',
-        price: '54.95',
-        quantity: '4',
-        imagePath: 'assets/icons/sunflower.png'),
+        name: 'Peru Variegated',
+        cost: '300.00',
+        price: '350.00',
+        quantity: '9',
+        imagePath: 'assets/icons/new/peru-variegated.jpg'),
     Plant(
-        name: 'Tanom',
+        name: 'Epipremnum Marble',
+        cost: '400.00',
+        price: '550.00',
+        quantity: '10',
+        imagePath: 'assets/icons/new/Epipremnum-Marble.jpg'),
+    Plant(
+        name: 'Tineke Rubber Tree',
         cost: '50.00',
-        price: '124.95',
-        quantity: '4',
-        imagePath: 'assets/icons/plant.png'),
+        price: '120.00',
+        quantity: '11',
+        imagePath: 'assets/icons/new/tineke-rubber-tree.jpg'),
+    Plant(
+        name: 'Samia Fern',
+        cost: '150.00',
+        price: '200.00',
+        quantity: '12',
+        imagePath: 'assets/icons/new/Samia-fern.png'),
+    Plant(
+        name: 'Lucky Bird',
+        cost: '150.00',
+        price: '200.00',
+        quantity: '12',
+        imagePath: 'assets/icons/new/lucky-bird.jpg'),
   ];
   @override
   void notifyListeners() {

@@ -759,16 +759,20 @@ class _SellInfoPageState extends State<SellInfoPage> {
             SliverToBoxAdapter(
               child: Column(
                 children: [
-                  SizedBox(height: 30),
-                  Image.asset(
-                      width: 210,
-                      height: 210,
-                      //'assets/icons/earning.png',
-                      widget.plant.imagePath),
+                  SizedBox(height: 15),
+                  Padding(
+                    padding: EdgeInsets.only(right: 15.0),
+                    child: Image.asset(
+                      widget.plant.imagePath,
+                      width: 300,
+                      height: 300,
+                      // ...
+                    ),
+                  ),
                   //
                   // sell info tile
                   //
-                  SizedBox(height: 30),
+                  SizedBox(height: 0),
                   SellInfoTile(
                     plant: widget.plant,
                     editPriceTapped: (context) =>

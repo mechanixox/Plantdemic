@@ -75,6 +75,7 @@ flutter_icons:
 flutter:
   assets:
   - assets/icons/
+  - assets/icons/new/
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -83,6 +84,7 @@ flutter:
 
 assets:
   - assets/icons/
+  - assets/icons/new/
   # To add assets to your application, add an assets section, like this:
   #   - images/a_dot_ham.jpeg
 

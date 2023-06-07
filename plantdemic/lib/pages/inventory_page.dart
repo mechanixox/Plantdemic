@@ -20,7 +20,6 @@ class _UserInventoryState extends State<UserInventory> {
   ImageProvider<Object>? selectedImage;
   List<Plant> searchResults = [];
   TextEditingController searchController = TextEditingController();
-  final FocusNode _searchFocusNode = FocusNode();
   final ScrollController _scrollController = ScrollController();
   bool _isSearchFocused = false;
 
@@ -90,28 +89,29 @@ class _UserInventoryState extends State<UserInventory> {
   }
 
   void _handleScroll() {
-    if (_scrollController.position.userScrollDirection ==
-        ScrollDirection.reverse) {
-      if (_searchFocusNode.hasFocus) {
-        FocusScope.of(context).unfocus();
-        setState(() {
-          _isSearchFocused = false;
-        });
-      }
-    } else {
-      if (!_searchFocusNode.hasFocus) {
-        setState(() {
-          _isSearchFocused = true;
-        });
-      }
+    if (_scrollController.position.userScrollDirection !=
+        ScrollDirection.idle) {
+      clearSearchField();
     }
   }
 
   @override
   void dispose() {
     searchController.dispose();
-    _searchFocusNode.dispose();
+    _scrollController.dispose();
     super.dispose();
+  }
+
+  void clearSearchField() {
+    setState(() {
+      searchController.clear();
+      _isSearchFocused = false;
+      searchResults = []; // Clear search results
+      Provider.of<Plantdemic>(context, listen: false).sortInventory(
+        Provider.of<Plantdemic>(context, listen: false).sortOption,
+      );
+    });
+    FocusScope.of(context).unfocus();
   }
 
   @override
@@ -131,26 +131,58 @@ class _UserInventoryState extends State<UserInventory> {
                     color: Colors.white.withOpacity(0.90),
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: TextField(
-                    cursorColor: Colors.grey,
-                    focusNode: _searchFocusNode,
-                    controller: searchController,
-                    onChanged: (query) => searchPlants(query.trim()),
-                    decoration: InputDecoration(
-                      hintText: 'Search plants',
-                      hintStyle: TextStyle(
-                        color: Colors.grey,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: _isSearchFocused
+                                ? Colors.transparent
+                                : Colors.white.withOpacity(0.90),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: TextField(
+                            cursorColor: Colors.grey,
+                            controller: searchController,
+                            onChanged: (query) {
+                              setState(() {
+                                searchPlants(query.trim());
+                                _isSearchFocused = query.isNotEmpty;
+                              });
+                            },
+                            decoration: InputDecoration(
+                              hintText: 'Search plants',
+                              hintStyle: TextStyle(
+                                color: Colors.grey,
+                              ),
+                              prefixIcon: Icon(Icons.search_rounded),
+                              border: InputBorder.none, // Disable underline
+                            ),
+                          ),
+                        ),
                       ),
-                      prefixIcon: Icon(Icons.search_rounded),
-                      border: InputBorder.none, // Disable underline
-                    ),
+                      Visibility(
+                        visible: _isSearchFocused,
+                        child: GestureDetector(
+                          onTap: clearSearchField,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 12.0),
+                            child: Icon(
+                              Icons.close,
+                              color: Colors.grey,
+                              size: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
               floating: true,
               snap: true,
               backgroundColor: _isSearchFocused
-                  ? Colors.white.withOpacity(0.90)
+                  ? Colors.transparent
                   : Color.fromRGBO(242, 243, 245, 1),
               elevation: 0,
             ),

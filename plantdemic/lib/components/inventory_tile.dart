@@ -74,17 +74,13 @@ class InventoryTile extends StatelessWidget {
                         subtitle: Text(
                           '₱${plant.price}',
                         ),
-                        leading: selectedImage != null
+                        leading: plant.selectedImage != null
                             ? Image(
-                                image: selectedImage!,
+                                image: plant.selectedImage!,
                                 width: 60,
-                                height: 60,
-                              )
-                            : Image.asset(
-                                plant.imagePath,
-                                width: 60,
-                                height: 60,
-                              ),
+                                height: 60)
+                            : Image.asset(plant.imagePath,
+                                width: 60, height: 60),
                         trailing: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [

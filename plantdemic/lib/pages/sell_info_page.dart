@@ -764,8 +764,8 @@ class _SellInfoPageState extends State<SellInfoPage> {
                     padding: EdgeInsets.only(right: 5.0),
                     child: Image.asset(
                       widget.plant.imagePath,
-                      width: 300,
-                      height: 300,
+                      width: 280,
+                      height: 280,
                       // ...
                     ),
                   ),

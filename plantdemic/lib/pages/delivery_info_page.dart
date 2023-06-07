@@ -161,8 +161,8 @@ class _ManageDeliveryPageState extends State<ManageDeliveryPage> {
                 children: [
                   SizedBox(height: 20),
                   Image.asset(
-                      width: 150,
-                      height: 150,
+                      width: 250,
+                      height: 250,
                       //'assets/icons/earning.png',
                       widget.plant.imagePath),
                   //

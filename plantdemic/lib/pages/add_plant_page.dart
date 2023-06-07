@@ -64,8 +64,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
     String cost = _costController.text;
     String price = _priceController.text;
     String quantity = _quantityController.text;
-    ImageProvider<Object>? selectedImage =
-        _imageFile != null ? FileImage(_imageFile!) : null;
+    File? selectedImage = _imageFile;
     String imagePath =
         _imageFile != null ? _imageFile!.path : 'assets/icons/peso.png';
 
@@ -159,7 +158,8 @@ class _AddPlantPageState extends State<AddPlantPage> {
           price: price,
           quantity: quantity,
           imagePath: imagePath,
-          selectedImage: selectedImage,
+          selectedImage:
+              selectedImage != null ? FileImage(selectedImage) : null,
         );
 
         // Pass the new plant back to the previous screen
@@ -413,12 +413,15 @@ class _AddPlantPageState extends State<AddPlantPage> {
                 // Image picker
                 //
                 ImagePickerWidget(
-                  onImageSelected: (ImageProvider<Object>? selectedImage) {
+                  onImageSelected: (File? selectedImage) {
                     setState(() {
-                      widget.plant.selectedImage = selectedImage;
+                      widget.plant.selectedImage = selectedImage != null
+                          ? FileImage(selectedImage)
+                          : null;
                     });
                   },
                 ),
+
                 SizedBox(height: 20),
                 //
                 //enter plant name box

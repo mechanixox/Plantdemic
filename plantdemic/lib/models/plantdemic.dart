@@ -251,10 +251,8 @@ class Plantdemic extends ChangeNotifier {
   String get sortOption => _sortOption;
 
   void sortInventory(String sortOption) {
-    _sortOption =
-        sortOption; // Update the _sortOption value with the selected sort option
+    _sortOption = sortOption;
     if (sortOption == 'None') {
-      // If 'None' is selected, do not perform any sorting
       notifyListeners();
       return;
     }

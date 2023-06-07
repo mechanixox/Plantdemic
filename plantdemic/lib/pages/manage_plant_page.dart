@@ -481,38 +481,38 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
             child: SingleChildScrollView(
               child: Center(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 20, bottom: 100),
+                  padding: const EdgeInsets.only(top: 25, bottom: 100),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Stack(
-                        children: [
-                          Container(
-                            width: 256,
-                            height: 256,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.25),
-                                  spreadRadius: 4,
-                                  blurRadius: 30,
-                                  offset: Offset(6, 7),
-                                ),
-                              ],
+                      Container(
+                        alignment: Alignment.center,
+                        height: 256,
+                        width: 256,
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.25),
+                              spreadRadius: 4,
+                              blurRadius: 30,
+                              offset: Offset(6, 7),
                             ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(30),
-                              child: Image.asset(
-                                widget.plant.imagePath,
-                                fit: BoxFit.contain,
-                              ),
-                            ),
+                          ],
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(30),
+                          child: Image.asset(
+                            widget.plant.imagePath,
+                            width: 200, // Adjust the width of the image
+                            height: 200, // Adjust the height of the image
+                            fit: BoxFit.contain,
                           ),
-                        ],
+                        ),
                       ),
 
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 20),
                       //
                       // plant information tile
                       //
@@ -523,7 +523,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                       //
                       // sell plant -> button
                       //
-                      const SizedBox(height: 37), // space
+                      const SizedBox(height: 45), // space
                       Padding(
                         padding: const EdgeInsets.only(left: 90.0, right: 90),
                         child: ClipRRect(

@@ -55,8 +55,24 @@ class RecordsTile extends StatelessWidget {
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Row(
+                  children: [
+                    Text(
+                      '₱${plant.price} •',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                    SizedBox(
+                      width: 0,
+                    ),
+                    Text(
+                      '${plant.sellQuantity}x',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  ],
+                ),
                 Text(
                   '${DateTime.now().month.toString().padLeft(2, '0')}/${DateTime.now().day.toString().padLeft(2, '0')}/${DateTime.now().year.toString()}',
+                  style: TextStyle(fontSize: 14),
                 ),
               ],
             ),

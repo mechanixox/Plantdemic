@@ -127,7 +127,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
           quantity.contains(RegExp(r'[^0-9]')) ||
           price.contains(RegExp(r'[^0-9\.]')) ||
           cost.contains(RegExp(r'[^0-9\.]')) ||
-          name.contains(RegExp(r'[^a-zA-z]'))) {
+          name.contains(RegExp(r'[^a-zA-z\ ]'))) {
         restrictFields(widget.plant);
         // Show the warning icon and blink it
         setState(() {
@@ -151,6 +151,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
           }
         });
       } else {
+        name = name.trim();
         // All fields are valid, create a new Plant object
         Plant newPlant = Plant(
           name: name,
@@ -247,7 +248,8 @@ class _AddPlantPageState extends State<AddPlantPage> {
     int parsedQuantity = int.tryParse(quantity) ?? 0;
     double parsedPrice = double.tryParse(price) ?? 0;
     double parsedCost = double.tryParse(cost) ?? 0;
-    if (name.contains(RegExp(r'[^a-zA-z]'))) {
+    if (name.contains(RegExp(r'[^a-zA-z\ ]'))) {
+      name = name.trim();
       invalidFields.add("name");
     }
     if (parsedQuantity <= 0 || quantity.contains(RegExp(r'[^0-9]'))) {

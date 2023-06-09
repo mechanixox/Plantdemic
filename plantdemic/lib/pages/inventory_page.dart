@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../models/plant.dart';
 import 'add_plant_page.dart';
-import 'manage_plant_page.dart';
+import 'plant_info_page.dart';
 
 class UserInventory extends StatefulWidget {
   const UserInventory({Key? key}) : super(key: key);

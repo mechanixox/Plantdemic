@@ -129,9 +129,9 @@ class Plantdemic extends ChangeNotifier {
               ),
             ),
             content: Padding(
-              padding: const EdgeInsets.only(left: 25.0),
+              padding: const EdgeInsets.only(left: 25.0, top: 5),
               child: Text(
-                'A plant with the same name already exists in the inventory.',
+                'The plant "$newPlantName" is already present\nin your inventory.',
                 style: TextStyle(fontSize: 16),
               ),
             ),

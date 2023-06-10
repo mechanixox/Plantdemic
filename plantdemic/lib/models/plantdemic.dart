@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../database/hive_database.dart';
 import 'plant.dart';
 import 'package:plantdemic/models/profit_item.dart';
 import 'package:plantdemic/components/date_time_helper.dart';
 
 class Plantdemic extends ChangeNotifier {
+  void setState(Null Function() param0) {}
+  final db = HiveDatabase();
+  void prepareData() {
+    if (db.readData().isNotEmpty) {
+      setState(() {
+        _inventory = db.readData();
+      });
+    }
+  }
+
   //list of plants available
-  final List<Plant> _inventory = [
+  List<Plant> _inventory = [
     Plant(
         name: 'Monstera',
         cost: '400.00',
@@ -159,6 +170,7 @@ class Plantdemic extends ChangeNotifier {
       Provider.of<Plantdemic>(context, listen: false)
           .addPlantToInventorySorted(plant, addToTop: true);
     }
+    db.saveData(_inventory);
   }
 
   void addPlantToInventorySorted(Plant newPlant, {bool addToTop = false}) {
@@ -230,11 +242,13 @@ class Plantdemic extends ChangeNotifier {
       _inventory.add(plant);
       notifyListeners();
     }
+    db.saveData(_inventory);
   }
 
   void removeFromInventory(Plant plant) {
     _inventory.remove(plant);
     notifyListeners();
+    db.saveData(_inventory);
   }
 
   List<Plant> searchResults = [];
@@ -286,6 +300,7 @@ class Plantdemic extends ChangeNotifier {
   void addToDelivery(Plant plant) {
     _delivery.add(plant);
     notifyListeners();
+    db.saveData(_inventory);
   }
 
   //remove plant from delivery
@@ -318,6 +333,7 @@ class Plantdemic extends ChangeNotifier {
           sortOption); // Sort the inventory based on the current sort option
       notifyListeners();
     }
+    db.saveData(_inventory);
   }
 
   void removeFromDeliveryToRecords(Plant plant) {

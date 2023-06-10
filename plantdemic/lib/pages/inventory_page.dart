@@ -17,6 +17,13 @@ class UserInventory extends StatefulWidget {
 }
 
 class _UserInventoryState extends State<UserInventory> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<Plantdemic>(context, listen: false).prepareData();
+    _scrollController.addListener(_handleScroll);
+  }
+
   ImageProvider<Object>? selectedImage;
   List<Plant> searchResults = [];
   TextEditingController searchController = TextEditingController();
@@ -80,12 +87,6 @@ class _UserInventoryState extends State<UserInventory> {
       Provider.of<Plantdemic>(context, listen: false).sortInventory(
           Provider.of<Plantdemic>(context, listen: false).sortOption);
     });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController.addListener(_handleScroll);
   }
 
   void _handleScroll() {
@@ -269,7 +270,10 @@ class _UserInventoryState extends State<UserInventory> {
                       plant: individualPlant,
                       onTap: () => goToManagePlantPage(individualPlant),
                       trailing: IconButton(
-                        icon: Icon(Icons.arrow_forward),
+                        icon: Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          size: 20,
+                        ),
                         onPressed: () => goToManagePlantPage(individualPlant),
                       ),
                       deleteTapped: (context) =>

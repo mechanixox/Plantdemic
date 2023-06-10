@@ -684,6 +684,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
         body: CustomScrollView(
           slivers: [
             SliverAppBar(
+              scrolledUnderElevation: 0,
               toolbarHeight: 70,
               title: Row(
                 children: [

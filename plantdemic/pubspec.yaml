@@ -59,7 +59,7 @@ flutter_icons:
   ios: true
   image_path: "assets/logo/plantdemic-logo.png"
   adaptive_icon_background: "assets/logo/ic_launcher_background.png"
-  adaptive_icon_foreground: "assets/logo/ic_launcher_foreground.png"
+  adaptive_icon_foreground: "assets/logo/ic_launcher_adaptive_fore.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

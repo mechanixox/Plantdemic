@@ -28,6 +28,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
   @override
   void initState() {
     super.initState();
+    Provider.of<Plantdemic>(context, listen: false).prepareData();
     //_priceController.text = widget.plant.price;
     _buyerController.text = widget.plant.buyer ?? '';
     _dateController.text = widget.plant.deliveryDate ?? '';
@@ -151,6 +152,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
         );
       },
     );
+    //db.saveData(_inventory);
   }
 
   void fillFields(Plant plant) {

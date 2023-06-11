@@ -21,6 +21,12 @@ class UserDelivery extends StatefulWidget {
 }
 
 class _UserDeliverState extends State<UserDelivery> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<Plantdemic>(context, listen: false).prepareData();
+  }
+
   void removeFromDelivery(Plant plant) {
     Provider.of<Plantdemic>(context, listen: false).removeFromDelivery(plant);
   }

@@ -6,6 +6,7 @@ import 'package:plantdemic/pages/sell_info_page.dart';
 import 'package:provider/provider.dart';
 import 'package:page_transition/page_transition.dart';
 
+import '../database/plantdemic_database.dart';
 import '../models/plant.dart';
 import '../components/plant_info_tile.dart';
 import 'package:plantdemic/textfield_utility/animated_textfield.dart';
@@ -26,6 +27,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
   @override
   void initState() {
     super.initState();
+    Provider.of<Plantdemic>(context, listen: false).prepareData();
     _nameController.text = widget.plant.name;
     _priceController.text = widget.plant.price;
     _quantityController.text = widget.plant.quantity;
@@ -239,6 +241,8 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
     );
   }
 
+  PlantdemicDatabase db = PlantdemicDatabase();
+
   void editPlantInfo(Plant individualPlant) {
     showDialog(
       context: context,
@@ -400,6 +404,9 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                   individualPlant.price = newPrice;
                   individualPlant.quantity = newQuantity;
                 });
+                List<Plant> inventoryPlants =
+                    Provider.of<Plantdemic>(context, listen: false).inventory;
+                db.saveInventoryData(inventoryPlants);
                 Provider.of<Plantdemic>(context, listen: false)
                     .notifyListeners();
                 Navigator.pop(context);

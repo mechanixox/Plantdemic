@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../database/hive_database.dart';
+import '../database/plantdemic_database.dart';
+
 import 'plant.dart';
 import 'package:plantdemic/models/profit_item.dart';
 import 'package:plantdemic/components/date_time_helper.dart';
 
 class Plantdemic extends ChangeNotifier {
-  void setState(Null Function() param0) {}
-  final db = HiveDatabase();
+  final db = PlantdemicDatabase();
   void prepareData() {
-    if (db.readData().isNotEmpty) {
-      setState(() {
-        _inventory = db.readData();
-      });
+    if (db.readInventoryData().isNotEmpty) {
+      _inventory = db.readInventoryData();
+      _delivery = db.readDeliveryData();
     }
   }
 
   //list of plants available
   List<Plant> _inventory = [
+    /*
     Plant(
         name: 'Monstera',
         cost: '400.00',
@@ -103,13 +103,14 @@ class Plantdemic extends ChangeNotifier {
         price: '200.00',
         quantity: '12',
         imagePath: 'assets/icons/new/lucky-bird.jpg'),
+    */
   ];
   @override
   void notifyListeners() {
     super.notifyListeners();
   }
 
-  //get plants for sale
+  //get plants
   List<Plant> get inventory => _inventory;
 
   void addToInventory(BuildContext context, Plant plant) {
@@ -170,7 +171,13 @@ class Plantdemic extends ChangeNotifier {
       Provider.of<Plantdemic>(context, listen: false)
           .addPlantToInventorySorted(plant, addToTop: true);
     }
-    db.saveData(_inventory);
+    db.saveInventoryData(_inventory);
+  }
+
+  void removeFromInventory(Plant plant) {
+    _inventory.remove(plant);
+    notifyListeners();
+    db.saveInventoryData(_inventory);
   }
 
   void addPlantToInventorySorted(Plant newPlant, {bool addToTop = false}) {
@@ -182,8 +189,10 @@ class Plantdemic extends ChangeNotifier {
           sortOption); // Sort the inventory based on the current sort option
     }
     notifyListeners();
+    db.saveInventoryData(_inventory);
   }
 
+//unused method
   void updatePlantInfo(BuildContext context, Plant plant) {
     String newPlantName = plant.name.trim().toLowerCase();
 
@@ -242,13 +251,7 @@ class Plantdemic extends ChangeNotifier {
       _inventory.add(plant);
       notifyListeners();
     }
-    db.saveData(_inventory);
-  }
-
-  void removeFromInventory(Plant plant) {
-    _inventory.remove(plant);
-    notifyListeners();
-    db.saveData(_inventory);
+    db.saveInventoryData(_inventory);
   }
 
   List<Plant> searchResults = [];
@@ -288,10 +291,11 @@ class Plantdemic extends ChangeNotifier {
     });
 
     notifyListeners();
+    db.saveInventoryData(_inventory);
   }
 
   //list of plants in delivery page
-  final List<Plant> _delivery = [];
+  List<Plant> _delivery = [];
 
   //get to deliver plants
   List<Plant> get delivery => _delivery;
@@ -300,7 +304,7 @@ class Plantdemic extends ChangeNotifier {
   void addToDelivery(Plant plant) {
     _delivery.add(plant);
     notifyListeners();
-    db.saveData(_inventory);
+    db.saveDeliveryData(_delivery);
   }
 
   //remove plant from delivery
@@ -333,12 +337,14 @@ class Plantdemic extends ChangeNotifier {
           sortOption); // Sort the inventory based on the current sort option
       notifyListeners();
     }
-    db.saveData(_inventory);
+    db.saveInventoryData(_inventory);
+    db.saveDeliveryData(_delivery);
   }
 
   void removeFromDeliveryToRecords(Plant plant) {
     _delivery.remove(plant);
     notifyListeners();
+    db.saveDeliveryData(_delivery);
   }
 
   final List<Plant> _records = [];
@@ -369,12 +375,12 @@ class Plantdemic extends ChangeNotifier {
 
       if (newQuantity > 0) {
         _inventory[selectedPlantIndex].quantity = newQuantity.toString();
-        notifyListeners();
       } else {
         removeFromInventory(_inventory[selectedPlantIndex]);
         notifyListeners();
       }
     }
+    db.saveInventoryData(_inventory);
   }
 
   List<ProfitItem> overallProfitList = [];
@@ -385,6 +391,7 @@ class Plantdemic extends ChangeNotifier {
 
   void addNewProfit(ProfitItem newProfit) {
     overallProfitList.add(newProfit);
+    //db.saveInventoryData(overallProfitList);
   }
 
   void deleteProfit(ProfitItem profit) {

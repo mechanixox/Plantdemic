@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:plantdemic/models/plantdemic.dart';
 import 'package:plantdemic/components/inventory_tile.dart';
+import 'package:plantdemic/pages/plant_info_page.dart';
 import 'package:plantdemic/pages/sell_info_page.dart';
 import 'package:provider/provider.dart';
 
 import '../models/plant.dart';
 import 'add_plant_page.dart';
-import 'plant_info_page.dart';
 
 class UserInventory extends StatefulWidget {
   const UserInventory({Key? key}) : super(key: key);
@@ -17,18 +17,18 @@ class UserInventory extends StatefulWidget {
 }
 
 class _UserInventoryState extends State<UserInventory> {
+  ImageProvider<Object>? selectedImage;
+  List<Plant> searchResults = [];
+  TextEditingController searchController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+  bool _isSearchFocused = false;
+
   @override
   void initState() {
     super.initState();
     Provider.of<Plantdemic>(context, listen: false).prepareData();
     _scrollController.addListener(_handleScroll);
   }
-
-  ImageProvider<Object>? selectedImage;
-  List<Plant> searchResults = [];
-  TextEditingController searchController = TextEditingController();
-  final ScrollController _scrollController = ScrollController();
-  bool _isSearchFocused = false;
 
   void goToManagePlantPage(Plant plant) {
     Navigator.push(
@@ -270,10 +270,7 @@ class _UserInventoryState extends State<UserInventory> {
                       plant: individualPlant,
                       onTap: () => goToManagePlantPage(individualPlant),
                       trailing: IconButton(
-                        icon: Icon(
-                          Icons.arrow_forward_ios_rounded,
-                          size: 20,
-                        ),
+                        icon: Icon(Icons.arrow_forward),
                         onPressed: () => goToManagePlantPage(individualPlant),
                       ),
                       deleteTapped: (context) =>

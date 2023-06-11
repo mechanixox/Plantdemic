@@ -124,9 +124,9 @@ class _AddPlantPageState extends State<AddPlantPage> {
           parsedCost < 0 ||
           (!cost.startsWith('0') && !cost.startsWith(RegExp(r'^[1-9]'))) ||
           cost.split('.').length > 2 ||
-          quantity.contains(RegExp(r'[^0-9]')) ||
-          price.contains(RegExp(r'[^0-9\.]')) ||
-          cost.contains(RegExp(r'[^0-9\.]')) ||
+          quantity.contains(RegExp(r'[^0-9\ ]')) ||
+          price.contains(RegExp(r'[^0-9\. ]')) ||
+          cost.contains(RegExp(r'[^0-9\. ]')) ||
           name.contains(RegExp(r'[^a-zA-z\ ]'))) {
         restrictFields(widget.plant);
         // Show the warning icon and blink it
@@ -152,6 +152,9 @@ class _AddPlantPageState extends State<AddPlantPage> {
         });
       } else {
         name = name.trim();
+        price = price.replaceAll(' ', '').trim();
+        cost = cost.replaceAll(' ', '').trim();
+        quantity = quantity.replaceAll(' ', '').trim();
         // All fields are valid, create a new Plant object
         Plant newPlant = Plant(
           name: name,
@@ -252,16 +255,19 @@ class _AddPlantPageState extends State<AddPlantPage> {
       name = name.trim();
       invalidFields.add("name");
     }
-    if (parsedQuantity <= 0 || quantity.contains(RegExp(r'[^0-9]'))) {
+    if (parsedQuantity <= 0 || quantity.contains(RegExp(r'[^0-9\ ]'))) {
+      quantity = quantity.replaceAll(' ', '').trim();
       invalidFields.add("quantity");
     }
-    if (parsedPrice <= 0 || (price.contains(RegExp(r'[^0-9\.]')))) {
+    if (parsedPrice <= 0 || (price.contains(RegExp(r'[^0-9\. ]')))) {
+      price = price.replaceAll(' ', '').trim();
       invalidFields.add("price");
     }
     if (parsedCost < 0 ||
         (!cost.startsWith('0') && !cost.startsWith(RegExp(r'^[1-9]'))) ||
         cost.split('.').length > 2 ||
-        cost.contains(RegExp(r'[^0-9\.]'))) {
+        cost.contains(RegExp(r'[^0-9\. ]'))) {
+      cost = cost.replaceAll(' ', '').trim();
       invalidFields.add("cost");
     }
 

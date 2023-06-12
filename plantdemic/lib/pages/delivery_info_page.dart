@@ -3,6 +3,7 @@ import 'dart:ui';
 //import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:plantdemic/models/plant.dart';
 import 'package:provider/provider.dart';
@@ -20,10 +21,10 @@ class ManageDeliveryPage extends StatefulWidget {
 }
 
 class _ManageDeliveryPageState extends State<ManageDeliveryPage> {
-  void addToRecords() {
-    /*final DateFormat inputFormat = DateFormat('M/d/yyyy');
-    final DateTime deliveryDate = inputFormat.parse(plant.deliveryDate ?? '');*/
-    final DateTime deliveryDate = DateTime.now();
+  void addToRecords(Plant plant) {
+    final DateFormat inputFormat = DateFormat('MM/dd/yyyy');
+    final DateTime deliveryDate = inputFormat.parse(plant.deliveryDate ?? '');
+    //final DateTime deliveryDate = DateTime.now();
     double profitAmount = widget.plant.calculateProfit();
 
     final ProfitItem newProfit = ProfitItem(
@@ -33,7 +34,7 @@ class _ManageDeliveryPageState extends State<ManageDeliveryPage> {
     );
 
     Provider.of<Plantdemic>(context, listen: false)
-        .addToRecords(widget.plant, profitAmount);
+        .addToRecords(plant, profitAmount);
     Provider.of<Plantdemic>(context, listen: false).addNewProfit(newProfit);
     Provider.of<Plantdemic>(context, listen: false)
         .removeFromDeliveryToRecords(widget.plant);
@@ -204,7 +205,7 @@ class _ManageDeliveryPageState extends State<ManageDeliveryPage> {
                                   const EdgeInsets.only(top: 17, bottom: 17),
                               textStyle: const TextStyle(fontSize: 16),
                             ),
-                            onPressed: () => addToRecords(),
+                            onPressed: () => addToRecords(widget.plant),
                             child: const Text(
                               '              Sold               ',
                               style: TextStyle(fontSize: 17),

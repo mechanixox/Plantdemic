@@ -11,6 +11,7 @@ class Plant {
   String? deliveryDate;
   double? profit;
   ImageProvider<Object>? selectedImage;
+  DateTime dateAdded;
 
   Plant({
     required this.name,
@@ -23,7 +24,10 @@ class Plant {
     this.deliveryDate,
     this.profit,
     this.selectedImage,
-  });
+    DateTime? dateAdded,
+    
+  }) : dateAdded = dateAdded ?? DateTime.now();
+
   double calculateSellTotal() {
     final double priceValue = double.parse(price);
     final int sellQuantityValue = int.parse(sellQuantity ?? '');

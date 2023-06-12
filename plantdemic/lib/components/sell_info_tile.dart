@@ -170,7 +170,7 @@ class SellInfoTile extends StatelessWidget {
                   const EdgeInsets.only(top: 0, left: 10, bottom: 0, right: 0),
               child: ListTile(
                 leading: Text(
-                  'Delivery date:',
+                  'Date:',
                   style: TextStyle(
                     fontSize: 16, // Adjust the font size as desired
                     fontWeight: FontWeight.bold, // Make the text bold

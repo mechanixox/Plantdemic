@@ -38,34 +38,46 @@ class ProfitGraph extends StatelessWidget {
     myBarData.initializeBarData();
     return Padding(
       padding: const EdgeInsets.only(top: 5.0),
-      child: BarChart(BarChartData(
-        barTouchData: BarTouchData(
+      child: BarChart(
+        BarChartData(
+          barTouchData: BarTouchData(
             touchTooltipData: BarTouchTooltipData(
-          tooltipBgColor: Color.fromARGB(255, 255, 255, 255).withOpacity(0.8),
-          fitInsideVertically: true,
-        )),
-        maxY: maxY,
-        minY: 0,
-        gridData: FlGridData(
-          show: false,
-        ),
-        borderData: FlBorderData(
-          show: false,
-        ),
-        titlesData: FlTitlesData(
-          show: true,
-          topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-          leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-          rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-          bottomTitles: AxisTitles(
+              tooltipBgColor:
+                  Color.fromARGB(255, 255, 255, 255).withOpacity(0.8),
+              fitInsideVertically: true,
+              getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                String tooltipText =
+                    myBarData.barData[groupIndex].y.toInt().toString();
+                return BarTooltipItem(
+                    tooltipText,
+                    TextStyle(
+                        color: Colors.green.shade400,
+                        fontWeight: FontWeight.bold));
+              },
+            ),
+          ),
+          maxY: maxY,
+          minY: 0,
+          gridData: FlGridData(show: false),
+          borderData: FlBorderData(show: false),
+          titlesData: FlTitlesData(
+            show: true,
+            topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            bottomTitles: AxisTitles(
               sideTitles: SideTitles(
-            showTitles: true,
-            getTitlesWidget: getBottomTitles,
-          )),
-        ),
-        barGroups: myBarData.barData
-            .map((data) => BarChartGroupData(x: data.x, barRods: [
-                  BarChartRodData(
+                showTitles: true,
+                getTitlesWidget: getBottomTitles,
+              ),
+            ),
+          ),
+          barGroups: myBarData.barData
+              .map(
+                (data) => BarChartGroupData(
+                  x: data.x,
+                  barRods: [
+                    BarChartRodData(
                       toY: data.y,
                       color: Colors.green.shade600.withOpacity(0.8),
                       width: 25,
@@ -74,10 +86,14 @@ class ProfitGraph extends StatelessWidget {
                         show: true,
                         toY: 0,
                         color: Colors.green.shade100,
-                      )),
-                ]))
-            .toList(),
-      )),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+              .toList(),
+        ),
+      ),
     );
   }
 }

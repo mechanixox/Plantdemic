@@ -3,6 +3,7 @@ import 'dart:ui';
 //import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:plantdemic/models/plantdemic.dart';
 //import 'package:plantdemic/deliveryTabBar/delivery_tab.dart';
@@ -32,9 +33,9 @@ class _UserDeliverState extends State<UserDelivery> {
   }
 
   void addToRecordsWhenCheckPressed(Plant plant) {
-    /*final DateFormat inputFormat = DateFormat('M/d/yyyy');
-    final DateTime deliveryDate = inputFormat.parse(plant.deliveryDate ?? '');*/
-    final DateTime deliveryDate = DateTime.now();
+    final DateFormat inputFormat = DateFormat('MM/dd/yyyy');
+    final DateTime deliveryDate = inputFormat.parse(plant.deliveryDate ?? '');
+    //final DateTime deliveryDate = DateTime.now();
     double profitAmount = plant.calculateProfit();
 
     final ProfitItem newProfit = ProfitItem(

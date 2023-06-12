@@ -71,7 +71,8 @@ class RecordsTile extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  '${DateTime.now().month.toString().padLeft(2, '0')}/${DateTime.now().day.toString().padLeft(2, '0')}/${DateTime.now().year.toString()}',
+                  plant.deliveryDate??'',
+                  //'${plant.dateAdded.day.toString().padLeft(2, '0')}/${plant.dateAdded.month.toString().padLeft(2, '0')}/${plant.dateAdded.year.toString()}',
                   style: TextStyle(fontSize: 14),
                 ),
               ],

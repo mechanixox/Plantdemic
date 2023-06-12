@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:plantdemic/components/sell_info_tile.dart';
 import 'package:provider/provider.dart';
@@ -57,7 +58,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
   bool isPriceEmpty = false;
   bool isQuantityEmpty = false;
   //bool isBuyerEmpty = false;
-  //bool isDeliveryDateEmpty = false;
+  bool isDeliveryDateEmpty = false;
   //
   //
   //
@@ -65,12 +66,12 @@ class _SellInfoPageState extends State<SellInfoPage> {
     String price = _priceController.text;
     String quantity = _quantityController.text;
     //String buyer = _buyerController.text;
-    //String date = _dateController.text;
+    String date = _dateController.text;
 
     isPriceEmpty = false;
     isQuantityEmpty = false;
     //isBuyerEmpty = false;
-    //isDeliveryDateEmpty = false;
+    isDeliveryDateEmpty = false;
 
     // Check if any text field is empty
 
@@ -84,12 +85,12 @@ class _SellInfoPageState extends State<SellInfoPage> {
     if (buyer.isEmpty) {
       isBuyerEmpty = true;
     }
+    */
     if (date.isEmpty) {
       isDeliveryDateEmpty = true;
     }
-    */
 
-    if (isQuantityEmpty) {
+    if (isQuantityEmpty || isDeliveryDateEmpty) {
       fillFields(widget.plant);
       return;
     } else if (int.tryParse(quantity) == null ||
@@ -184,7 +185,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
             content: Padding(
               padding: const EdgeInsets.only(left: 25.0, right: 20),
               child: Text(
-                'Please ensure that price and quantity fields are filled out.',
+                'Please ensure that price, quantity, and date fields are filled out.',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.grey.shade800,
@@ -589,7 +590,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
             setState(() {
               selectedDate = picked;
               _dateController.text =
-                  "${selectedDate.month}/${selectedDate.day}/${selectedDate.year}";
+                  DateFormat('MM/dd/yyyy').format(selectedDate);
             });
           }
         }

@@ -152,6 +152,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
         });
       } else {
         name = name.trim();
+        name = capitalize(name);
         price = price.replaceAll(' ', '').trim();
         cost = cost.replaceAll(' ', '').trim();
         quantity = quantity.replaceAll(' ', '').trim();
@@ -241,6 +242,11 @@ class _AddPlantPageState extends State<AddPlantPage> {
     );
   }
 
+  String capitalize(String input) {
+    if (input.isEmpty) return input;
+    return input[0].toUpperCase() + input.substring(1);
+  }
+
   void restrictFields(Plant plant) {
     List<String> invalidFields = [];
     String name = _nameController.text;
@@ -253,6 +259,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
     double parsedCost = double.tryParse(cost) ?? 0;
     if (name.contains(RegExp(r'[^a-zA-z\ ]'))) {
       name = name.trim();
+      name = capitalize(name);
       invalidFields.add("name");
     }
     if (parsedQuantity <= 0 || quantity.contains(RegExp(r'[^0-9\ ]'))) {

@@ -94,81 +94,78 @@ class ProfitSummary extends StatelessWidget {
         convertDateTimeToString(startOfWeek.add(const Duration(days: 6)));
 
     return Consumer<Plantdemic>(
-        builder: (context, value, child) => Column(
-              children: [
-                Align(
-                  alignment: AlignmentDirectional.topStart,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 9.0),
-                    child: Row(
-                      children: [
-                        Text(
-                          'Weekly Profit',
-                          style: TextStyle(
-                            fontSize: 18,
-                            //fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Spacer(),
-                        GestureDetector(
-                          onTap: () => goToAllSummary(context),
-                          child: Text(
-                            'View all  ',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.blue.shade500,
-                            ),
-                          ),
-                        ),
-                      ],
+      builder: (context, value, child) => Column(
+        children: [
+          Align(
+            alignment: AlignmentDirectional.topStart,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 9.0),
+              child: Row(
+                children: [
+                  Text(
+                    'Weekly Profit',
+                    style: TextStyle(
+                      fontSize: 18,
+                      //fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.sell_outlined,
-                        size: 20,
+                  Spacer(),
+                  GestureDetector(
+                    onTap: () => goToAllSummary(context),
+                    child: Text(
+                      'View all  ',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.blue.shade500,
                       ),
-                      /*Text(
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.sell_outlined,
+                  size: 20,
+                ),
+                /*Text(
                         'Total: ',
                         style: TextStyle(
                           fontSize: 17,
                           //color: Colors.green.shade600,
                         ),
                       ),*/
-                      Text(
-                        ' ₱${calculateWeekTotal(value, sunday, monday, tuesday, wednesday, thursday, friday, saturday)}',
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                          //color: Colors.green.shade600,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 230,
-                  child: ProfitGraph(
-                    maxY: calculateMax(value, sunday, monday, tuesday,
-                        wednesday, thursday, friday, saturday),
-                    sunAmount: value.calculateDailyProfitSummary()[sunday] ?? 0,
-                    monAmount: value.calculateDailyProfitSummary()[monday] ?? 0,
-                    tueAmount:
-                        value.calculateDailyProfitSummary()[tuesday] ?? 0,
-                    wedAmount:
-                        value.calculateDailyProfitSummary()[wednesday] ?? 0,
-                    thuAmount:
-                        value.calculateDailyProfitSummary()[thursday] ?? 0,
-                    friAmount: value.calculateDailyProfitSummary()[friday] ?? 0,
-                    satAmount:
-                        value.calculateDailyProfitSummary()[saturday] ?? 0,
+                Text(
+                  ' ₱${calculateWeekTotal(value, sunday, monday, tuesday, wednesday, thursday, friday, saturday)}',
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    //color: Colors.green.shade600,
                   ),
                 ),
               ],
-            ));
+            ),
+          ),
+          SizedBox(
+            height: 230,
+            child: ProfitGraph(
+              maxY: calculateMax(value, sunday, monday, tuesday, wednesday,
+                  thursday, friday, saturday),
+              sunAmount: value.calculateDailyProfitSummary()[sunday] ?? 0,
+              monAmount: value.calculateDailyProfitSummary()[monday] ?? 0,
+              tueAmount: value.calculateDailyProfitSummary()[tuesday] ?? 0,
+              wedAmount: value.calculateDailyProfitSummary()[wednesday] ?? 0,
+              thuAmount: value.calculateDailyProfitSummary()[thursday] ?? 0,
+              friAmount: value.calculateDailyProfitSummary()[friday] ?? 0,
+              satAmount: value.calculateDailyProfitSummary()[saturday] ?? 0,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

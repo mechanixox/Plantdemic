@@ -46,7 +46,7 @@ class _AllSummaryState extends State<AllSummary> {
             ),
           ),
           centerTitle: true,
-          backgroundColor: Colors.transparent,
+          backgroundColor: Color.fromARGB(255, 236, 241, 236),
           leading: InkWell(
             onTap: () {
               Navigator.pop(context);

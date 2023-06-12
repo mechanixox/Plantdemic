@@ -64,6 +64,11 @@ class _UserInventoryState extends State<UserInventory> {
 
   void removeFromInventory(Plant plant) {
     Provider.of<Plantdemic>(context, listen: false).removeFromInventory(plant);
+    setState(() {
+      if (searchResults.contains(plant)) {
+        searchResults.remove(plant);
+      }
+    });
   }
 
   void navigateToSellInfoPage(Plant plant) {
@@ -268,15 +273,20 @@ class _UserInventoryState extends State<UserInventory> {
                     padding: const EdgeInsets.only(left: 15.0, right: 15),
                     child: InventoryTile(
                       plant: individualPlant,
-                      onTap: () => goToManagePlantPage(individualPlant),
+                      onTap: () {
+                        goToManagePlantPage(individualPlant);
+                        clearSearchField();
+                      },
                       trailing: IconButton(
                         icon: Icon(Icons.arrow_forward),
                         onPressed: () => goToManagePlantPage(individualPlant),
                       ),
                       deleteTapped: (context) =>
                           removeFromInventory(individualPlant),
-                      sellTapped: (context) =>
-                          navigateToSellInfoPage(individualPlant),
+                      sellTapped: (context) {
+                        navigateToSellInfoPage(individualPlant);
+                        clearSearchField();
+                      },
                       selectedImage: individualPlant.selectedImage,
                     ),
                   );

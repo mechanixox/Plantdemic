@@ -1,6 +1,7 @@
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../models/plant.dart';
+import '../models/profit_item.dart';
 
 class PlantdemicDatabase {
   //reference box
@@ -27,7 +28,7 @@ class PlantdemicDatabase {
     _myBox.put("INVENTORY_PLANTS", allInventoryPlantsFormatted);
   }
 
-  //read data\
+  //read data
   List<Plant> readInventoryData() {
     List savedInventoryPlants = _myBox.get("INVENTORY_PLANTS") ??
         [
@@ -170,7 +171,7 @@ class PlantdemicDatabase {
       String price = savedDeliveryPlants[i][2];
       String quantity = savedDeliveryPlants[i][3];
       String imagePath = savedDeliveryPlants[i][4];
-      String sellQuantity = savedDeliveryPlants[i][5];
+      String? sellQuantity = savedDeliveryPlants[i][5];
       String? buyer = savedDeliveryPlants[i][6];
       String? deliveryDate = savedDeliveryPlants[i][7];
       double? profit = savedDeliveryPlants[i][8];
@@ -189,5 +190,89 @@ class PlantdemicDatabase {
       allDeliveryPlants.add(plant);
     }
     return allDeliveryPlants;
+  }
+
+  void resetProfitList() {
+    _myBox.delete("PROFIT_LIST");
+  }
+
+  void saveRecordsData(List<ProfitItem> recordsData) {
+    List<List<dynamic>> savedRecordsData = recordsData.map((plant) {
+      return [
+        plant.name,
+        plant.date,
+        plant.profitAmount,
+      ];
+    }).toList();
+
+    _myBox.put("RECORDS_PLANTS", savedRecordsData);
+  }
+
+  List<ProfitItem> readRecordsData() {
+    List savedRecordsPlants = _myBox.get("RECORDS_PLANTS") ?? [];
+    List<ProfitItem> allRecordsPlants = [];
+
+    for (int i = 0; i < savedRecordsPlants.length; i++) {
+      String name = savedRecordsPlants[i][0];
+      DateTime date = savedRecordsPlants[i][1];
+      String profitAmount = savedRecordsPlants[i][2];
+
+      ProfitItem profitItem = ProfitItem(
+        name: name,
+        date: date,
+        profitAmount: profitAmount,
+      );
+      allRecordsPlants.add(profitItem);
+    }
+    return allRecordsPlants;
+  }
+
+  void saveRecordsTileData(List<Plant> recordsTileData) {
+    List<List<dynamic>> savedRecordsTileData = recordsTileData.map((plant) {
+      return [
+        plant.name,
+        plant.cost,
+        plant.price,
+        plant.quantity,
+        plant.imagePath,
+        plant.sellQuantity,
+        plant.buyer,
+        plant.deliveryDate,
+        plant.profit,
+      ];
+    }).toList();
+
+    _myBox.put("RECORDS_TILE_PLANTS", savedRecordsTileData);
+  }
+
+  List<Plant> readRecordsTileData() {
+    List savedRecordsTilePlants = _myBox.get("RECORDS_TILE_PLANTS") ?? [];
+    List<Plant> allRecordsTilePlants = [];
+
+    for (int i = 0; i < savedRecordsTilePlants.length; i++) {
+      String name = savedRecordsTilePlants[i][0];
+      String cost = savedRecordsTilePlants[i][1];
+      String price = savedRecordsTilePlants[i][2];
+      String quantity = savedRecordsTilePlants[i][3];
+      String imagePath = savedRecordsTilePlants[i][4];
+      String sellQuantity = savedRecordsTilePlants[i][5];
+      String? buyer = savedRecordsTilePlants[i][6];
+      String? deliveryDate = savedRecordsTilePlants[i][7];
+      double? profit = savedRecordsTilePlants[i][8];
+
+      Plant plant = Plant(
+        name: name,
+        cost: cost,
+        price: price,
+        quantity: quantity,
+        imagePath: imagePath,
+        sellQuantity: sellQuantity,
+        buyer: buyer,
+        deliveryDate: deliveryDate,
+        profit: profit,
+      );
+      allRecordsTilePlants.add(plant);
+    }
+    return allRecordsTilePlants;
   }
 }

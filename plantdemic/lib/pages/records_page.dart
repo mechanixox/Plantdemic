@@ -15,7 +15,8 @@ class UserRecords extends StatefulWidget {
 
 class _UserRecordsState extends State<UserRecords> {
   void removeFromRecords(Plant plant) {
-    Provider.of<Plantdemic>(context, listen: false).removeFromRecords(plant);
+    Provider.of<Plantdemic>(context, listen: false)
+        .removeRecordsDialog(context, plant);
   }
 
   @override
@@ -29,11 +30,14 @@ class _UserRecordsState extends State<UserRecords> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Profit summary chart
+                //
+                // Profit summary bar graph
+                //
                 ProfitSummary(startOfWeek: value.startOfWeekDate()),
                 SizedBox(height: 20),
-
-                // List of plant(s)
+                //
+                // List of plants
+                //
                 Expanded(
                   child: ListView.builder(
                     itemCount: value.records.length,

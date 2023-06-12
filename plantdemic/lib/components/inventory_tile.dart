@@ -42,8 +42,9 @@ class InventoryTile extends StatelessWidget {
                 //sell tile
                 SlidableAction(
                   onPressed: sellTapped,
-                  backgroundColor: Colors.teal.shade800,
+                  backgroundColor: Colors.blue.shade400,
                   icon: Icons.sell_rounded,
+                  foregroundColor: Colors.white,
                   borderRadius: BorderRadius.circular(25),
                 ),
                 SizedBox(width: 5),

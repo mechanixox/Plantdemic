@@ -13,12 +13,21 @@ class Plantdemic extends ChangeNotifier {
     if (db.readInventoryData().isNotEmpty) {
       _inventory = db.readInventoryData();
       _delivery = db.readDeliveryData();
+      _records = db.readRecordsTileData();
+      overallProfitList = db.readRecordsData();
+      //db.resetProfitList();
+      //overallProfitList = [];
     }
+  }
+
+  void resetProfitList() {
+    db.resetProfitList();
+    overallProfitList = [];
+    notifyListeners();
   }
 
   //list of plants available
   List<Plant> _inventory = [
-    /*
     Plant(
         name: 'Monstera',
         cost: '400.00',
@@ -103,7 +112,6 @@ class Plantdemic extends ChangeNotifier {
         price: '200.00',
         quantity: '12',
         imagePath: 'assets/icons/new/lucky-bird.jpg'),
-    */
   ];
   @override
   void notifyListeners() {
@@ -141,9 +149,9 @@ class Plantdemic extends ChangeNotifier {
               ),
             ),
             content: Padding(
-              padding: const EdgeInsets.only(left: 25.0, top: 5),
+              padding: const EdgeInsets.only(left: 25.0, top: 5, right: 20),
               child: Text(
-                'The plant "$newPlantName" is already present\nin your inventory.',
+                'The plant "$newPlantName" is already present in your inventory.',
                 style: TextStyle(fontSize: 16),
               ),
             ),
@@ -341,29 +349,6 @@ class Plantdemic extends ChangeNotifier {
     db.saveDeliveryData(_delivery);
   }
 
-  void removeFromDeliveryToRecords(Plant plant) {
-    _delivery.remove(plant);
-    notifyListeners();
-    db.saveDeliveryData(_delivery);
-  }
-
-  final List<Plant> _records = [];
-
-  //get to deliver plants
-  List<Plant> get records => _records;
-
-  //add plant to delivery
-  void addToRecords(Plant plant, double profit) {
-    plant.profit = profit;
-    _records.add(plant);
-    notifyListeners();
-  }
-
-  void removeFromRecords(Plant plant) {
-    _records.remove(plant);
-    notifyListeners();
-  }
-
   void decrementQuantity(Plant plant, int quantity) {
     final selectedPlantIndex =
         _inventory.indexWhere((p) => p.name == plant.name);
@@ -383,6 +368,162 @@ class Plantdemic extends ChangeNotifier {
     db.saveInventoryData(_inventory);
   }
 
+  void removeFromDeliveryToRecords(Plant plant) {
+    _delivery.remove(plant);
+    notifyListeners();
+    db.saveDeliveryData(_delivery);
+  }
+
+  List<Plant> _records = [];
+
+  //get to deliver plants
+  List<Plant> get records => _records;
+
+  //add plant to delivery
+  void addToRecords(Plant plant, double profit) {
+    plant.profit = profit;
+    _records.add(plant);
+    notifyListeners();
+    db.saveRecordsData(overallProfitList);
+    db.saveRecordsTileData(_records);
+  }
+
+  void subtractPlantProfitRecords(Plant plant) {
+    final plantIndex =
+        overallProfitList.lastIndexWhere((profit) => profit.name == plant.name);
+
+    if (plantIndex != -1) {
+      overallProfitList.removeAt(plantIndex);
+      notifyListeners();
+      db.saveRecordsData(overallProfitList);
+    }
+  }
+
+  void removeRecordsDialog(BuildContext context, Plant plant) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.green.shade50.withOpacity(0.90),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          contentPadding:
+              EdgeInsets.only(top: 10, bottom: 10, left: 5, right: 5),
+          content: Stack(
+            children: [
+              Positioned(
+                top: -5,
+                right: 0,
+                child: IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                        top: 20, left: 0, bottom: 10, right: 85),
+                    child: Text(
+                      'Remove record',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Colors.grey.shade800,
+                      ),
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      'Do you want to move the plant back to the delivery or only remove from records?',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          child: Text(
+                            'Remove',
+                            style: TextStyle(
+                                fontSize: 16, color: Colors.red.shade400),
+                          ),
+                          onPressed: () {
+                            // User chose not to move the plant to delivery
+                            removePlantFromRecords(plant);
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        SizedBox(width: 5),
+                        TextButton(
+                          child: Text(
+                            'Move',
+                            style: TextStyle(
+                                fontSize: 16, color: Colors.blue.shade600),
+                          ),
+                          onPressed: () {
+                            // User chose to move the plant to delivery
+                            movePlantToDelivery(plant);
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void removePlantFromRecords(Plant plant) {
+    _records.remove(plant);
+    subtractPlantProfitRecords(plant);
+    notifyListeners();
+
+    db.saveRecordsTileData(_records);
+  }
+
+  void movePlantToDelivery(Plant plant) {
+    _records.remove(plant);
+    subtractPlantProfitRecords(plant);
+
+    Plant existingPlant = Plant(
+      name: plant.name,
+      cost: plant.cost,
+      price: plant.price,
+      quantity: plant.quantity,
+      buyer: plant.buyer ?? '',
+      sellQuantity: plant.sellQuantity ?? '',
+      deliveryDate: plant.deliveryDate ?? '',
+      imagePath: plant.imagePath,
+    );
+
+    //int currentQuantity = int.tryParse(existingPlant.quantity) ?? 0;
+    int recordsQuantity = int.tryParse(plant.sellQuantity ?? '') ?? 0;
+    int newQuantity = recordsQuantity;
+
+    existingPlant.sellQuantity = newQuantity.toString();
+    _delivery.add(existingPlant);
+
+    notifyListeners();
+
+    db.saveRecordsTileData(_records);
+    db.saveDeliveryData(_delivery);
+  }
+
   List<ProfitItem> overallProfitList = [];
 
   List<ProfitItem> getAllProfitList() {
@@ -391,11 +532,14 @@ class Plantdemic extends ChangeNotifier {
 
   void addNewProfit(ProfitItem newProfit) {
     overallProfitList.add(newProfit);
-    //db.saveInventoryData(overallProfitList);
+    notifyListeners();
+    db.saveRecordsData(overallProfitList);
   }
 
   void deleteProfit(ProfitItem profit) {
     overallProfitList.remove(profit);
+    notifyListeners();
+    db.saveRecordsData(overallProfitList);
   }
 
   String getDayName(DateTime dateTime) {

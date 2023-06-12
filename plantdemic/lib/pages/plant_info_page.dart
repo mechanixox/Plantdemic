@@ -23,14 +23,19 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
   final TextEditingController _quantityController = TextEditingController();
-
+  PlantdemicDatabase db = PlantdemicDatabase();
+  List<Plant> inventoryPlants = [];
   @override
   void initState() {
     super.initState();
-    Provider.of<Plantdemic>(context, listen: false).prepareData();
+    fetchInventoryData();
     _nameController.text = widget.plant.name;
     _priceController.text = widget.plant.price;
     _quantityController.text = widget.plant.quantity;
+  }
+
+  void fetchInventoryData() {
+    inventoryPlants = db.readInventoryData();
   }
 
   @override
@@ -241,9 +246,10 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
     );
   }
 
-  PlantdemicDatabase db = PlantdemicDatabase();
-
   void editPlantInfo(Plant individualPlant) {
+    List<Plant> inventoryPlants =
+        Provider.of<Plantdemic>(context, listen: false).inventory;
+    //
     showDialog(
       context: context,
       builder: (context) {
@@ -359,6 +365,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                   setState(() {
                     individualPlant.price = newPrice;
                     individualPlant.quantity = newQuantity;
+                    db.saveInventoryData(inventoryPlants);
                   });
                   Provider.of<Plantdemic>(context, listen: false)
                       .notifyListeners();
@@ -404,9 +411,9 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                   individualPlant.price = newPrice;
                   individualPlant.quantity = newQuantity;
                 });
-                List<Plant> inventoryPlants =
-                    Provider.of<Plantdemic>(context, listen: false).inventory;
+
                 db.saveInventoryData(inventoryPlants);
+
                 Provider.of<Plantdemic>(context, listen: false)
                     .notifyListeners();
                 Navigator.pop(context);
@@ -498,24 +505,32 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                         height: 256,
                         width: 256,
                         decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.25),
-                              spreadRadius: 4,
-                              blurRadius: 30,
-                              offset: Offset(6, 7),
-                            ),
-                          ],
-                        ),
+                            borderRadius: BorderRadius.circular(20),
+                            color: Color.fromARGB(255, 255, 255, 255),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color.fromARGB(255, 191, 191, 191),
+                                offset: Offset(2.0, 2.0),
+                                blurRadius: 10,
+                                spreadRadius: 0,
+                              ),
+                              BoxShadow(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                offset: Offset(-4.0, -4.0),
+                                blurRadius: 20,
+                                spreadRadius: 3,
+                              ),
+                            ]),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(30),
-                          child: Image.asset(
-                            widget.plant.imagePath,
-                            width: 200, // Adjust the width of the image
-                            height: 200, // Adjust the height of the image
-                            fit: BoxFit.contain,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 5.0),
+                            child: Image.asset(
+                              widget.plant.imagePath,
+                              width: 200, // Adjust the width of the image
+                              height: 200, // Adjust the height of the image
+                              fit: BoxFit.contain,
+                            ),
                           ),
                         ),
                       ),

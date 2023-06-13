@@ -21,6 +21,7 @@ class ManagePlantPage extends StatefulWidget {
 
 class _ManagePlantPageState extends State<ManagePlantPage> {
   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _costController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
   final TextEditingController _quantityController = TextEditingController();
   PlantdemicDatabase db = PlantdemicDatabase();
@@ -30,6 +31,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
     super.initState();
     fetchInventoryData();
     _nameController.text = widget.plant.name;
+    _costController.text = widget.plant.cost;
     _priceController.text = widget.plant.price;
     _quantityController.text = widget.plant.quantity;
   }
@@ -41,6 +43,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
   @override
   void dispose() {
     _nameController.dispose();
+    _costController.dispose();
     _priceController.dispose();
     _quantityController.dispose();
     super.dispose();
@@ -61,6 +64,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
             ),
             title: Text(
               'Empty field(s)',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.grey.shade800,
@@ -70,6 +74,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
               padding: const EdgeInsets.only(top: 10.0),
               child: Text(
                 'Please ensure that all fields \nare filled out.',
+                textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 16),
               ),
             ),
@@ -111,6 +116,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
             ),
             title: Text(
               'Invalid name',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.grey.shade800,
@@ -120,6 +126,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
               padding: const EdgeInsets.only(top: 10.0),
               child: Text(
                 'Plant name already exists in your inventory. Please provide a unique one.',
+                textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 16),
               ),
             ),
@@ -161,6 +168,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
             ),
             title: Text(
               'Invalid price',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.grey.shade800,
@@ -169,7 +177,8 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
             content: Padding(
               padding: const EdgeInsets.only(top: 15.0),
               child: Text(
-                'Please provide a valid input for price. ',
+                'Please provide a valid input for price.',
+                textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 16),
               ),
             ),
@@ -211,6 +220,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
             ),
             title: Text(
               'Invalid quantity',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.grey.shade800,
@@ -220,6 +230,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
               padding: const EdgeInsets.only(top: 15.0),
               child: Text(
                 'Please provide a valid input for quantity.',
+                textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 16),
               ),
             ),
@@ -272,6 +283,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                     TextButton(
                       onPressed: () {
                         _nameController.clear();
+                        _costController.clear();
                         _priceController.clear();
                         _quantityController.clear();
                       },
@@ -286,47 +298,61 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
               ),
             ],
           ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              AnimatedTextField(
-                label: "Name",
-                suffix: Icon(
-                  Icons.energy_savings_leaf_outlined,
-                  size: 20,
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                AnimatedTextField(
+                  label: "Name",
+                  suffix: Icon(
+                    Icons.energy_savings_leaf_outlined,
+                    size: 20,
+                  ),
+                  controller: _nameController,
+                  keyboardType: TextInputType.text,
+                  inputAction: TextInputAction.next,
                 ),
-                controller: _nameController,
-                keyboardType: TextInputType.text,
-                inputAction: TextInputAction.next,
-              ),
-              SizedBox(height: 10),
-              AnimatedTextField(
-                label: "Price",
-                suffix: Icon(
-                  Icons.attach_money_rounded,
-                  size: 20,
+                SizedBox(height: 10),
+                AnimatedTextField(
+                  label: "Cost",
+                  suffix: Icon(
+                    Icons.money_outlined,
+                    size: 20,
+                  ),
+                  controller: _costController,
+                  keyboardType: TextInputType.text,
+                  inputAction: TextInputAction.next,
                 ),
-                controller: _priceController,
-                keyboardType: TextInputType.number,
-                inputAction: TextInputAction.next,
-              ),
-              SizedBox(height: 10),
-              AnimatedTextField(
-                label: "Quantity",
-                suffix: Icon(
-                  Icons.numbers_rounded,
-                  size: 20,
+                SizedBox(height: 10),
+                AnimatedTextField(
+                  label: "Price",
+                  suffix: Icon(
+                    Icons.sell_outlined,
+                    size: 20,
+                  ),
+                  controller: _priceController,
+                  keyboardType: TextInputType.number,
+                  inputAction: TextInputAction.next,
                 ),
-                controller: _quantityController,
-                keyboardType: TextInputType.number,
-                inputAction: TextInputAction.next,
-              ),
-            ],
+                SizedBox(height: 10),
+                AnimatedTextField(
+                  label: "Quantity",
+                  suffix: Icon(
+                    Icons.numbers_rounded,
+                    size: 20,
+                  ),
+                  controller: _quantityController,
+                  keyboardType: TextInputType.number,
+                  inputAction: TextInputAction.next,
+                ),
+              ],
+            ),
           ),
           actions: [
             TextButton(
               onPressed: () {
                 _nameController.text = widget.plant.name;
+                _costController.text = widget.plant.cost;
                 _priceController.text = widget.plant.price;
                 _quantityController.text = widget.plant.quantity;
                 Navigator.pop(context);
@@ -339,6 +365,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
             TextButton(
               onPressed: () {
                 String newName = _nameController.text.trim();
+                String newCost = _costController.text.trim();
                 String newPrice = _priceController.text.trim();
                 String newQuantity = _quantityController.text.trim();
 
@@ -363,6 +390,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                     return;
                   }
                   setState(() {
+                    individualPlant.cost = newCost;
                     individualPlant.price = newPrice;
                     individualPlant.quantity = newQuantity;
                     db.saveInventoryData(inventoryPlants);
@@ -390,7 +418,12 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                   restrictName(context, widget.plant);
                   return;
                 }
-
+                // Validate cost
+                if (double.tryParse(newCost) == null ||
+                    double.parse(newCost) <= 0) {
+                  restrictPrice(widget.plant);
+                  return;
+                }
                 // Validate price
                 if (double.tryParse(newPrice) == null ||
                     double.parse(newPrice) <= 0) {
@@ -408,6 +441,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                 // Update plant information
                 setState(() {
                   individualPlant.name = newName;
+                  individualPlant.cost = newCost;
                   individualPlant.price = newPrice;
                   individualPlant.quantity = newQuantity;
                 });

@@ -55,7 +55,7 @@ class RecordsTile extends StatelessWidget {
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
+                /*Row(
                   children: [
                     Text(
                       '₱${plant.price} •',
@@ -69,19 +69,21 @@ class RecordsTile extends StatelessWidget {
                       style: TextStyle(fontSize: 14),
                     ),
                   ],
-                ),
+                ),*/
                 Text(
-                  plant.deliveryDate??'',
+                  plant.deliveryDate ?? '',
                   //'${plant.dateAdded.day.toString().padLeft(2, '0')}/${plant.dateAdded.month.toString().padLeft(2, '0')}/${plant.dateAdded.year.toString()}',
                   style: TextStyle(fontSize: 14),
                 ),
               ],
             ),
+            /*
             leading: Image.asset(
               plant.imagePath,
               width: 60,
               height: 60,
-            ),
+            
+            ),*/
             trailing: SizedBox(
               width: 50,
               height: 40,

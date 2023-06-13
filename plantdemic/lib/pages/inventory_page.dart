@@ -299,7 +299,10 @@ class _UserInventoryState extends State<UserInventory> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => navigateToAddPlantPage(),
+          onPressed: () {
+            navigateToAddPlantPage();
+            clearSearchField();
+          },
           backgroundColor: Colors.green.shade400,
           shape: CircleBorder(),
           child: Icon(Icons.add_rounded, color: Colors.white, size: 32),

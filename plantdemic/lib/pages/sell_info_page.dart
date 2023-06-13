@@ -63,14 +63,15 @@ class _SellInfoPageState extends State<SellInfoPage> {
   //
   //
   void addToDelivery() {
+    List<String> invalidFields = [];
     String price = _priceController.text;
     String quantity = _quantityController.text;
-    //String buyer = _buyerController.text;
+    // String buyer = _buyerController.text;
     String date = _dateController.text;
 
     isPriceEmpty = false;
     isQuantityEmpty = false;
-    //isBuyerEmpty = false;
+    // isBuyerEmpty = false;
     isDeliveryDateEmpty = false;
 
     // Check if any text field is empty
@@ -82,10 +83,10 @@ class _SellInfoPageState extends State<SellInfoPage> {
       isQuantityEmpty = true;
     }
     /*
-    if (buyer.isEmpty) {
-      isBuyerEmpty = true;
-    }
-    */
+  if (buyer.isEmpty) {
+    isBuyerEmpty = true;
+  }
+  */
     if (date.isEmpty) {
       isDeliveryDateEmpty = true;
     }
@@ -94,17 +95,36 @@ class _SellInfoPageState extends State<SellInfoPage> {
       fillFields(widget.plant);
       return;
     } else if (int.tryParse(quantity) == null ||
-        int.tryParse(quantity)! > int.tryParse(widget.plant.quantity)! ||
-        int.tryParse(quantity)! <= 0) {
-      restrictQuantity(widget.plant);
+        int.tryParse(quantity)! > int.tryParse(widget.plant.quantity)!) {
+      invalidFields.add(
+          "should only contain numbers not exceeding the current inventory quantity.\n\nAvailable Qty: ${widget.plant.quantity}");
+      restrictQuantity(widget.plant, invalidFields);
       return;
-    } else if (quantity.contains(RegExp(r'[^0-9]'))) {
-      restrictQuantity(widget.plant);
+    } else if (int.tryParse(quantity)! <= 0) {
+      invalidFields.add("should be greater than 0.");
+      restrictQuantity(widget.plant, invalidFields);
       return;
-    } else if (double.tryParse(price) == null ||
-        double.tryParse(price)! <= 0 ||
-        price.contains(RegExp(r'[^0-9\.]'))) {
-      restrictPrice(widget.plant);
+    } else if (quantity.contains(RegExp(r'[^0-9\ ]'))) {
+      invalidFields.add("should only contain numbers.");
+      restrictQuantity(widget.plant, invalidFields);
+      return;
+    }
+    //
+    //
+    else if (double.tryParse(price) == null) {
+      invalidFields.add(
+          "Price is empty or contains invalid characters. Please ensure to provide a valid price");
+      restrictPrice(widget.plant, invalidFields);
+      return;
+    } else if (double.tryParse(price)! <= 0) {
+      invalidFields.add(
+          "Price should be greater than 0. Please ensure to provide a valid price");
+      restrictPrice(widget.plant, invalidFields);
+      return;
+    } else if (price.contains(RegExp(r'[^0-9\.]'))) {
+      invalidFields.add(
+          "Price should only contain numbers greater than 0. Please ensure to provide a valid price");
+      restrictPrice(widget.plant, invalidFields);
       return;
     }
 
@@ -153,7 +173,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
         );
       },
     );
-    //db.saveData(_inventory);
+    // db.saveData(_inventory);
   }
 
   void fillFields(Plant plant) {
@@ -215,18 +235,16 @@ class _SellInfoPageState extends State<SellInfoPage> {
     );
   }
 
-  void restrictQuantity(Plant plant) {
+  void restrictQuantity(Plant plant, List<String> invalidFields) {
     showDialog(
       useSafeArea: true,
       context: context,
       builder: (context) {
         return BackdropFilter(
-          filter:
-              ImageFilter.blur(sigmaX: 0.2, sigmaY: 0.2), // Apply blur effect
+          filter: ImageFilter.blur(sigmaX: 0.2, sigmaY: 0.2),
           child: AlertDialog(
             backgroundColor: Colors.green.shade50.withOpacity(0.90),
-            contentPadding: EdgeInsets.only(
-                bottom: 20), // Remove the default content padding
+            contentPadding: EdgeInsets.only(bottom: 20),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(18),
             ),
@@ -238,17 +256,18 @@ class _SellInfoPageState extends State<SellInfoPage> {
                   fontWeight: FontWeight.bold,
                   color: Colors.grey.shade800,
                 ),
+                textAlign: TextAlign.center,
               ),
             ),
-
             content: Padding(
               padding: const EdgeInsets.only(left: 25.0, right: 20),
               child: Text(
-                'Quantity must be greater than 0, and should not exceed the current inventory quantity.\n\nAvailable Qty: ${widget.plant.quantity}',
+                'Quantity ${invalidFields.join(", ")}',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.grey.shade800,
                 ),
+                textAlign: TextAlign.center,
               ),
             ),
             actions: [
@@ -256,7 +275,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
                 alignment: Alignment.center,
                 child: TextButton(
                   onPressed: () {
-                    Navigator.pop(context); // Close the dialog
+                    Navigator.pop(context);
                   },
                   child: Text(
                     'OK',
@@ -274,18 +293,16 @@ class _SellInfoPageState extends State<SellInfoPage> {
     );
   }
 
-  void restrictPrice(Plant plant) {
+  void restrictPrice(Plant plant, List<String> invalidFields) {
     showDialog(
       useSafeArea: true,
       context: context,
       builder: (context) {
         return BackdropFilter(
-          filter:
-              ImageFilter.blur(sigmaX: 0.2, sigmaY: 0.2), // Apply blur effect
+          filter: ImageFilter.blur(sigmaX: 0.2, sigmaY: 0.2),
           child: AlertDialog(
             backgroundColor: Colors.green.shade50.withOpacity(0.90),
-            contentPadding: EdgeInsets.only(
-                bottom: 20), // Remove the default content padding
+            contentPadding: EdgeInsets.only(bottom: 20),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(18),
             ),
@@ -297,17 +314,18 @@ class _SellInfoPageState extends State<SellInfoPage> {
                   fontWeight: FontWeight.bold,
                   color: Colors.grey.shade800,
                 ),
+                textAlign: TextAlign.center,
               ),
             ),
-
             content: Padding(
-              padding: const EdgeInsets.only(left: 25.0, right: 20),
+              padding: const EdgeInsets.only(left: 22.0, right: 22),
               child: Text(
-                'Please provide a valid input \nfor price. It should be greater\nthan 0.',
+                '${invalidFields.join(", ")}.',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.grey.shade800,
                 ),
+                textAlign: TextAlign.center,
               ),
             ),
             actions: [
@@ -315,7 +333,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
                 alignment: Alignment.center,
                 child: TextButton(
                   onPressed: () {
-                    Navigator.pop(context); // Close the dialog
+                    Navigator.pop(context);
                   },
                   child: Text(
                     'OK',
@@ -386,7 +404,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
               onPressed: () {
                 _priceController.text = widget.plant.price;
                 Navigator.pop(context);
-              }, // Cancel
+              },
               child: Text(
                 'Cancel',
                 style: TextStyle(fontSize: 16, color: Colors.red.shade400),
@@ -466,7 +484,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
                 _quantityController.text = widget.plant.sellQuantity ?? '';
 
                 Navigator.pop(context);
-              }, // Cancel
+              },
               child: Text(
                 'Cancel',
                 style: TextStyle(fontSize: 16, color: Colors.red.shade400),
@@ -583,8 +601,10 @@ class _SellInfoPageState extends State<SellInfoPage> {
           final DateTime? picked = await showDatePicker(
             context: context,
             initialDate: selectedDate,
-            firstDate: DateTime(2021),
-            lastDate: DateTime(2024),
+            firstDate:
+                DateTime.now().subtract(Duration(days: DateTime.now().weekday)),
+            lastDate: DateTime.now().add(Duration(
+                days: DateTime.daysPerWeek - DateTime.now().weekday - 1)),
           );
           if (picked != null && picked != selectedDate) {
             setState(() {
@@ -635,7 +655,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
                   selectDate();
                 },
                 child: AnimatedTextField(
-                  label: "Select date",
+                  label: "mm/dd/yyyy",
                   suffix: IconButton(
                     icon: Icon(Icons.calendar_today_outlined),
                     onPressed: () {
@@ -654,7 +674,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
               onPressed: () {
                 _dateController.text = widget.plant.deliveryDate ?? '';
                 Navigator.pop(context);
-              }, // Cancel
+              },
               child: Text(
                 'Cancel',
                 style: TextStyle(fontSize: 16, color: Colors.red.shade400),
@@ -662,12 +682,87 @@ class _SellInfoPageState extends State<SellInfoPage> {
             ),
             TextButton(
               onPressed: () {
-                setState(() {
-                  individualPlant.deliveryDate = _dateController.text;
-                });
-                Provider.of<Plantdemic>(context, listen: false)
-                    .notifyListeners(); // Notify listeners of the changes
-                Navigator.pop(context); // Done
+                if (_dateController.text.isEmpty) {
+                  setState(() {
+                    individualPlant.deliveryDate = null;
+                    _dateController.clear();
+                  });
+                  Navigator.pop(context);
+                } else {
+                  DateTime selectedDateTime = DateFormat('MM/dd/yyyy')
+                      .parse(_dateController.text, true);
+                  DateTime currentWeekStart = DateTime.now()
+                      .subtract(Duration(days: DateTime.now().weekday));
+                  DateTime currentWeekEnd = DateTime.now().add(Duration(
+                      days: DateTime.daysPerWeek - DateTime.now().weekday - 1));
+
+                  if (selectedDateTime.isAfter(currentWeekEnd) ||
+                      selectedDateTime.isBefore(currentWeekStart)) {
+                    // Date is beyond the current week, show an error message or handle it accordingly
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return BackdropFilter(
+                          filter: ImageFilter.blur(
+                              sigmaX: 10,
+                              sigmaY: 10,
+                              tileMode: TileMode.mirror),
+                          child: AlertDialog(
+                            backgroundColor:
+                                Colors.green.shade50.withOpacity(0.90),
+                            contentPadding: EdgeInsets.only(
+                                bottom: 20, left: 24, right: 24),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            title: Text(
+                              'Invalid date',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey.shade800,
+                              ),
+                            ),
+                            content: Padding(
+                              padding: const EdgeInsets.only(top: 15.0),
+                              child: Text(
+                                'Please select a date within the current week.',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ),
+                            actions: [
+                              Container(
+                                alignment: Alignment.center,
+                                child: TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    '  OK  ',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.blue.shade700,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  } else {
+                    setState(() {
+                      _dateController.text =
+                          DateFormat('MM/dd/yyyy').format(selectedDateTime);
+                      individualPlant.deliveryDate = _dateController.text;
+                    });
+                    Provider.of<Plantdemic>(context, listen: false)
+                        .notifyListeners();
+                    Navigator.pop(context);
+                  }
+                }
               },
               child: Text(
                 'Save',

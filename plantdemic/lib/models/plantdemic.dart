@@ -413,7 +413,7 @@ class Plantdemic extends ChangeNotifier {
           content: Stack(
             children: [
               Positioned(
-                top: -5,
+                top: -7,
                 right: 0,
                 child: IconButton(
                   icon: Icon(Icons.close),
@@ -426,8 +426,8 @@ class Plantdemic extends ChangeNotifier {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(
-                        top: 20, left: 0, bottom: 10, right: 85),
+                    padding:
+                        EdgeInsets.only(top: 40, left: 0, bottom: 10, right: 0),
                     child: Text(
                       'Remove record',
                       style: TextStyle(
@@ -435,21 +435,22 @@ class Plantdemic extends ChangeNotifier {
                         fontSize: 20,
                         color: Colors.grey.shade800,
                       ),
-                      textAlign: TextAlign.start,
+                      textAlign: TextAlign.center,
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
                       'Do you want to move the plant back to the delivery or only remove from records?',
+                      textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 16),
                     ),
                   ),
                   SizedBox(height: 20),
                   Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
+                    padding: const EdgeInsets.only(bottom: 10.0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         TextButton(
                           child: Text(

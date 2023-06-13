@@ -547,7 +547,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
                 ),
                 //
                 //
-                // enter amount box
+                // enter price box
                 //
                 Container(
                   width: MediaQuery.of(context).size.width / 1.2,
@@ -588,7 +588,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
                             )
                           : null,
                       icon: Icon(
-                        Icons.attach_money_rounded,
+                        Icons.sell_outlined,
                         color: Color.fromARGB(255, 84, 153, 86),
                       ),
                       border: InputBorder.none,

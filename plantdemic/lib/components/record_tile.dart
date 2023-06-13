@@ -47,7 +47,7 @@ class RecordsTile extends StatelessWidget {
           padding:
               const EdgeInsets.only(top: 5.0, left: 0, bottom: 5, right: 10),
           child: ListTile(
-            contentPadding: EdgeInsets.only(right: 10, left: 13),
+            contentPadding: EdgeInsets.only(right: 10, left: 16),
             title: Text(
               plant.name,
               style: TextStyle(fontSize: 18),

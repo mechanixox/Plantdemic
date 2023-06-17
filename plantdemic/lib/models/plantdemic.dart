@@ -143,15 +143,17 @@ class Plantdemic extends ChangeNotifier {
             ),
             title: Text(
               'Plant exists',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.grey.shade800,
               ),
             ),
             content: Padding(
-              padding: const EdgeInsets.only(left: 25.0, top: 5, right: 20),
+              padding: const EdgeInsets.only(left: 25.0, top: 10, right: 20),
               child: Text(
                 'The plant "$newPlantName" is already present in your inventory.',
+                textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 16),
               ),
             ),

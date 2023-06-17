@@ -195,6 +195,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
               padding: const EdgeInsets.only(bottom: 11.0),
               child: Text(
                 'Empty field(s)',
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.grey.shade800,
@@ -206,6 +207,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
               padding: const EdgeInsets.only(left: 25.0, right: 20),
               child: Text(
                 'Please ensure that price, quantity, and date fields are filled out.',
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.grey.shade800,
@@ -651,20 +653,17 @@ class _SellInfoPageState extends State<SellInfoPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               InkWell(
-                onTap: () {
-                  selectDate();
-                },
+                onTap: selectDate, // Modified this line
                 child: AnimatedTextField(
                   label: "mm/dd/yyyy",
                   suffix: IconButton(
                     icon: Icon(Icons.calendar_today_outlined),
-                    onPressed: () {
-                      selectDate();
-                    },
+                    onPressed: selectDate, // Modified this line
                   ),
                   controller: _dateController,
                   keyboardType: TextInputType.number,
                   inputAction: TextInputAction.next,
+                  onTap: selectDate, // New addition
                 ),
               ),
             ],
@@ -692,7 +691,7 @@ class _SellInfoPageState extends State<SellInfoPage> {
                   DateTime selectedDateTime = DateFormat('MM/dd/yyyy')
                       .parse(_dateController.text, true);
                   DateTime currentWeekStart = DateTime.now()
-                      .subtract(Duration(days: DateTime.now().weekday));
+                      .subtract(Duration(days: DateTime.now().weekday + 1));
                   DateTime currentWeekEnd = DateTime.now().add(Duration(
                       days: DateTime.daysPerWeek - DateTime.now().weekday - 1));
 

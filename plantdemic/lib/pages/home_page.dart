@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
   final List<String> appBarTitles = [
     'Inventory',
     'Delivery',
-    'Records',
+    'Reports',
     //'Receipt',
   ];
 

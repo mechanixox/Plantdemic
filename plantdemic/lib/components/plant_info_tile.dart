@@ -28,6 +28,7 @@ class PlantInfoTile extends StatelessWidget {
           children: [
             // edit tile
             SlidableAction(
+              
               onPressed: editTapped,
               backgroundColor: Colors.green.shade400.withOpacity(0.9),
               icon: Icons.edit_rounded,

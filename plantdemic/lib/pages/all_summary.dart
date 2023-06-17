@@ -20,6 +20,121 @@ class _AllSummaryState extends State<AllSummary> {
     });
   }
 
+  DateTime? _selectedDate;
+  CalendarFormat _calendarFormat = CalendarFormat.month;
+
+  Map<String, List> mySelectedEvents = {};
+  final titleController = TextEditingController();
+  final profitController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    loadPreviousEvents();
+  }
+
+  loadPreviousEvents() {
+    mySelectedEvents = {
+      "2022-09-13": [
+        {"eventDescp": "11", "eventTitle": "111"},
+        {"eventDescp": "22", "eventTitle": "22"}
+      ],
+      "2022-09-30": [
+        {"eventDescp": "22", "eventTitle": "22"}
+      ],
+      "2022-09-20": [
+        {"eventTitle": "ss", "eventDescp": "ss"}
+      ]
+    };
+  }
+
+  List _listOfDayEvents(DateTime dateTime) {
+    if (mySelectedEvents[DateFormat('yyyy-MM-dd').format(dateTime)] != null) {
+      return mySelectedEvents[DateFormat('yyyy-MM-dd').format(dateTime)]!;
+    } else {
+      return [];
+    }
+  }
+
+  _showAddEventDialog() async {
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text(
+          'Add plant to list',
+          textAlign: TextAlign.center,
+        ),
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: titleController,
+              textCapitalization: TextCapitalization.words,
+              decoration: const InputDecoration(
+                labelText: 'Plant name',
+              ),
+            ),
+            TextField(
+              controller: profitController,
+              textCapitalization: TextCapitalization.words,
+              decoration: const InputDecoration(labelText: 'Profit'),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            child: const Text('Add'),
+            onPressed: () {
+              if (titleController.text.isEmpty &&
+                  profitController.text.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Required title and description'),
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+                //Navigator.pop(context);
+                return;
+              } else {
+                setState(() {
+                  if (mySelectedEvents[
+                          DateFormat('yyyy-MM-dd').format(_selectedDate!)] !=
+                      null) {
+                    mySelectedEvents[
+                            DateFormat('yyyy-MM-dd').format(_selectedDate!)]
+                        ?.add({
+                      "eventTitle": titleController.text,
+                      "eventDescp": profitController.text,
+                    });
+                  } else {
+                    mySelectedEvents[
+                        DateFormat('yyyy-MM-dd').format(_selectedDate!)] = [
+                      {
+                        "eventTitle": titleController.text,
+                        "eventDescp": profitController.text,
+                      }
+                    ];
+                  }
+                });
+
+                titleController.clear();
+                profitController.clear();
+                Navigator.pop(context);
+                return;
+              }
+            },
+          )
+        ],
+      ),
+    );
+  }
+
   //
   //
   //
@@ -52,7 +167,7 @@ class _AllSummaryState extends State<AllSummary> {
               Navigator.pop(context);
             },
             child: Padding(
-              padding: const EdgeInsets.only(left: 5.0, top: 10),
+              padding: const EdgeInsets.only(left: 2.0, top: 10),
               child: Icon(
                 Icons.arrow_back_ios_new_rounded,
                 color: Colors.grey.shade600,
@@ -77,9 +192,9 @@ class _AllSummaryState extends State<AllSummary> {
             children: [
               SizedBox(
                 child: Padding(
-                  padding:
-                      const EdgeInsets.only(top: 10.0, left: 20, right: 20),
+                  padding: const EdgeInsets.only(top: 10.0, left: 0, right: 0),
                   child: TableCalendar(
+                    calendarFormat: _calendarFormat,
                     locale: "en_US",
                     rowHeight: 50,
                     daysOfWeekHeight: 40,
@@ -90,7 +205,7 @@ class _AllSummaryState extends State<AllSummary> {
                     ),
                     calendarStyle: CalendarStyle(
                       rowDecoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.3),
+                          color: Colors.transparent,
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(2),
                             bottomRight: Radius.circular(2),
@@ -123,17 +238,37 @@ class _AllSummaryState extends State<AllSummary> {
                       decoration: BoxDecoration(
                         color: Colors.green.shade400,
                         borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(15),
-                          topRight: Radius.circular(15),
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
                         ),
                       ),
                     ),
                     availableGestures: AvailableGestures.all,
-                    selectedDayPredicate: (day) => isSameDay(day, today),
                     focusedDay: today,
                     firstDay: DateTime.utc(2023, 01, 01),
                     lastDay: DateTime.utc(2030, 12, 30),
-                    onDaySelected: _onDaySelected,
+                    onDaySelected: (selectedDay, focusedDay) {
+                      if (!isSameDay(_selectedDate, selectedDay)) {
+                        setState(() {
+                          _selectedDate = selectedDay;
+                          today = focusedDay;
+                        });
+                      }
+                    },
+                    selectedDayPredicate: (day) {
+                      return isSameDay(_selectedDate, day);
+                    },
+                    onFormatChanged: (format) {
+                      if (_calendarFormat != format) {
+                        setState(() {
+                          _calendarFormat = format;
+                        });
+                      }
+                    },
+                    onPageChanged: (focusedDay) {
+                      today = focusedDay;
+                    },
+                    eventLoader: _listOfDayEvents,
                   ),
                 ),
               ),
@@ -156,7 +291,32 @@ class _AllSummaryState extends State<AllSummary> {
                   color: Colors.grey.shade400.withOpacity(0.8),
                 ),
               ),
+              if (_selectedDate != null)
+                ..._listOfDayEvents(_selectedDate!).map(
+                  (myEvents) => ListTile(
+                    leading: Padding(
+                      padding: EdgeInsets.only(left: 10),
+                      child: Image.asset(
+                        'assets/icons/02peso-currency.png',
+                        width: 30,
+                        height: 30,
+                      ),
+                    ),
+                    title: Text('Plant name: ${myEvents['eventTitle']}'),
+                    subtitle: Text('Profit: ${myEvents['eventDescp']}'),
+                  ),
+                ),
             ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () => _showAddEventDialog(),
+          elevation: 0,
+          // shape:  CircleBorder(),
+          backgroundColor: Colors.green.shade400,
+          label: const Text(
+            'Add',
+            style: TextStyle(color: Colors.white, fontSize: 16),
           ),
         ),
       ),

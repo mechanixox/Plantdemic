@@ -7,6 +7,7 @@ class AnimatedTextField extends StatefulWidget {
   final TextEditingController controller;
   final TextInputType? keyboardType;
   final TextInputAction inputAction;
+  final VoidCallback? onTap; // New addition
   const AnimatedTextField({
     Key? key,
     required this.label,
@@ -14,6 +15,7 @@ class AnimatedTextField extends StatefulWidget {
     required this.controller,
     required this.keyboardType,
     required this.inputAction,
+    this.onTap, // New addition
   }) : super(key: key);
 
   @override
@@ -71,17 +73,24 @@ class _AnimatedTextFieldState extends State<AnimatedTextField>
         ),
         child: CustomPaint(
           painter: CustomAnimateBorder(alpha.value),
-          child: TextField(
-            focusNode: focusNode,
-            controller: widget.controller,
-            keyboardType: widget.keyboardType,
-            textInputAction: widget.inputAction,
-            decoration: InputDecoration(
-              labelText: widget.label,
-              border: InputBorder.none,
-              contentPadding:
-                  EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-              suffixIcon: widget.suffix,
+          child: InkWell(
+            onTap: () {
+              focusNode.requestFocus();
+              widget.onTap?.call(); // New addition
+            },
+            child: TextField(
+              focusNode: focusNode,
+              controller: widget.controller,
+              keyboardType: widget.keyboardType,
+              textInputAction: widget.inputAction,
+              decoration: InputDecoration(
+                labelText: widget.label,
+                border: InputBorder.none,
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                suffixIcon: widget.suffix,
+              ),
+              onTap: widget.onTap, // New addition
             ),
           ),
         ),

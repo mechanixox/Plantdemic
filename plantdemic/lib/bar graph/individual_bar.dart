@@ -1,5 +1,5 @@
 class IndividualBar {
-  final int x; //the dates
+  final int x; //the days
   final double y; //profit values
 
   IndividualBar({

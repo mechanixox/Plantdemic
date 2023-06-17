@@ -153,6 +153,58 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
     );
   }
 
+  void restrictCost(Plant plant) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return BackdropFilter(
+          filter:
+              ImageFilter.blur(sigmaX: 5, sigmaY: 5, tileMode: TileMode.mirror),
+          child: AlertDialog(
+            backgroundColor: Colors.green.shade50.withOpacity(0.90),
+            contentPadding: EdgeInsets.only(bottom: 20, left: 24, right: 24),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            title: Text(
+              'Invalid cost',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.grey.shade800,
+              ),
+            ),
+            content: Padding(
+              padding: const EdgeInsets.only(top: 15.0),
+              child: Text(
+                'Please provide a valid input for cost.',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 16),
+              ),
+            ),
+            actions: [
+              Container(
+                alignment: Alignment.center,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    '  OK  ',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.blue.shade700,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   void restrictPrice(Plant plant) {
     showDialog(
       context: context,
@@ -372,7 +424,8 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                 // Validate name
                 if (newName == widget.plant.name &&
                     newPrice.isEmpty &&
-                    newQuantity.isEmpty) {
+                    newQuantity.isEmpty &&
+                    newCost.isEmpty) {
                   // Name is empty or unchanged
                   fillFields(context, widget.plant);
                   return;
@@ -380,6 +433,11 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                   if (double.tryParse(newPrice) == null ||
                       double.parse(newPrice) <= 0) {
                     restrictPrice(widget.plant);
+                    return;
+                  }
+                  if (double.tryParse(newCost) == null ||
+                      double.parse(newCost) < 0) {
+                    restrictCost(widget.plant);
                     return;
                   }
 

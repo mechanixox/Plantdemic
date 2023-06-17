@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:plantdemic/bar%20graph/profit_graph.dart';
 
 import 'package:plantdemic/models/plantdemic.dart';
@@ -71,7 +72,11 @@ class ProfitSummary extends StatelessWidget {
   void goToAllSummary(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => AllSummary()),
+      PageTransition(
+        type: PageTransitionType.rightToLeft,
+        child: AllSummary(),
+        curve: Curves.easeInOut,
+      ),
     );
   }
 

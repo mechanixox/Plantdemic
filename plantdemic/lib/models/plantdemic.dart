@@ -272,26 +272,27 @@ class Plantdemic extends ChangeNotifier {
     notifyListeners();
   }
 
-  String _sortOption = 'None';
+  String _sortOption = 'Default';
   String get sortOption => _sortOption;
 
   void sortInventory(String sortOption) {
     _sortOption = sortOption;
-    if (sortOption == 'None') {
+    if (sortOption == 'Default') {
       notifyListeners();
       return;
     }
+
     _inventory.sort((a, b) {
       switch (sortOption) {
         case 'Name':
           return a.name.toLowerCase().compareTo(b.name.toLowerCase());
         case 'Price':
-          final double priceA = double.parse(a.price);
-          final double priceB = double.parse(b.price);
+          final double priceA = double.tryParse(a.price) ?? 0;
+          final double priceB = double.tryParse(b.price) ?? 0;
           return priceA.compareTo(priceB);
         case 'Quantity':
-          final int quantityA = int.parse(a.quantity);
-          final int quantityB = int.parse(b.quantity);
+          final int quantityA = int.tryParse(a.quantity) ?? 0;
+          final int quantityB = int.tryParse(b.quantity) ?? 0;
           return quantityA.compareTo(quantityB);
         default:
           return 0;
@@ -446,9 +447,9 @@ class Plantdemic extends ChangeNotifier {
                       style: TextStyle(fontSize: 16),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 10),
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 10.0),
+                    padding: const EdgeInsets.only(bottom: 20.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

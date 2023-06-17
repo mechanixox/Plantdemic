@@ -18,7 +18,7 @@ class _SplashState extends State<Splash> {
   }
 
   startTimer() {
-    var duration = Duration(seconds: 1);
+    var duration = Duration(seconds: 7);
     return Timer(duration, route);
   }
 
@@ -51,7 +51,6 @@ class _SplashState extends State<Splash> {
             ),
             SizedBox(height: 0),
             FutureBuilder(
-              future: Future.delayed(Duration(seconds: 0)),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Container();

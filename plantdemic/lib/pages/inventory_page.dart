@@ -6,6 +6,7 @@ import 'package:plantdemic/pages/plant_info_page.dart';
 import 'package:plantdemic/pages/sell_info_page.dart';
 import 'package:provider/provider.dart';
 
+import '../database/plantdemic_database.dart';
 import '../models/plant.dart';
 import 'add_plant_page.dart';
 
@@ -17,6 +18,8 @@ class UserInventory extends StatefulWidget {
 }
 
 class _UserInventoryState extends State<UserInventory> {
+  PlantdemicDatabase db = PlantdemicDatabase();
+  List<Plant> inventoryPlants = [];
   ImageProvider<Object>? selectedImage;
   List<Plant> searchResults = [];
   TextEditingController searchController = TextEditingController();
@@ -26,8 +29,13 @@ class _UserInventoryState extends State<UserInventory> {
   @override
   void initState() {
     super.initState();
+    fetchInventoryData();
     Provider.of<Plantdemic>(context, listen: false).prepareData();
     _scrollController.addListener(_handleScroll);
+  }
+
+  void fetchInventoryData() {
+    inventoryPlants = db.readInventoryData();
   }
 
   void goToManagePlantPage(Plant plant) {
@@ -112,12 +120,143 @@ class _UserInventoryState extends State<UserInventory> {
     setState(() {
       searchController.clear();
       _isSearchFocused = false;
-      searchResults = []; // Clear search results
+      searchResults = []; // clear search results
       Provider.of<Plantdemic>(context, listen: false).sortInventory(
         Provider.of<Plantdemic>(context, listen: false).sortOption,
       );
     });
     FocusScope.of(context).unfocus();
+  }
+
+  String sortingOrder = 'Default';
+
+  void _displayBottomSheet() {
+    //clearSearchField();
+    db.saveInventoryData(inventoryPlants);
+    final animationController = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: Navigator.of(context),
+    );
+
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      backgroundColor: Colors.white,
+      transitionAnimationController: animationController,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            final animation = CurvedAnimation(
+              parent: animationController,
+              curve: Curves.easeInOut,
+            ).drive(Tween<Offset>(
+              begin: Offset(0, 1),
+              end: Offset.zero,
+            ));
+
+            return SlideTransition(
+              position: animation,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: SizedBox(
+                  height: 250,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        ListTile(
+                          onTap: () {
+                            Provider.of<Plantdemic>(context, listen: false)
+                                .sortInventory('Default');
+                            setState(() {
+                              sortingOrder =
+                                  sortingOrder == 'Default' ? '' : 'Default';
+                              db.saveInventoryData(inventoryPlants);
+                            });
+                            Navigator.pop(context);
+                          },
+                          leading: Icon(Icons.sort),
+                          title: Text('Default'),
+                        ),
+                        ListTile(
+                          onTap: () {
+                            Provider.of<Plantdemic>(context, listen: false)
+                                .sortInventory('Name');
+                            setState(() {
+                              sortingOrder =
+                                  sortingOrder == 'Name' ? '' : 'Name';
+                              db.saveInventoryData(inventoryPlants);
+                            });
+                            Navigator.pop(context);
+                          },
+                          leading: Icon(Icons.sort_by_alpha_outlined),
+                          title: Text('Name'),
+                          trailing: sortingOrder == 'Name'
+                              ? RotationTransition(
+                                  turns: Tween(begin: 0.5, end: 0.0)
+                                      .animate(animationController),
+                                  child: Icon(Icons.arrow_downward_outlined),
+                                )
+                              : null,
+                        ),
+                        ListTile(
+                          onTap: () {
+                            Provider.of<Plantdemic>(context, listen: false)
+                                .sortInventory('Price');
+                            setState(() {
+                              sortingOrder =
+                                  sortingOrder == 'Price' ? '' : 'Price';
+                              db.saveInventoryData(inventoryPlants);
+                            });
+                            Navigator.pop(context);
+                          },
+                          leading: Icon(Icons.sell_outlined),
+                          title: Text('Price'),
+                          trailing: sortingOrder == 'Price'
+                              ? RotationTransition(
+                                  turns: Tween(begin: 0.5, end: 0.0)
+                                      .animate(animationController),
+                                  child: Icon(Icons.arrow_downward_outlined),
+                                )
+                              : null,
+                        ),
+                        ListTile(
+                          onTap: () {
+                            Provider.of<Plantdemic>(context, listen: false)
+                                .sortInventory('Quantity');
+                            setState(() {
+                              sortingOrder =
+                                  sortingOrder == 'Quantity' ? '' : 'Quantity';
+                              db.saveInventoryData(inventoryPlants);
+                            });
+                            Navigator.pop(context);
+                          },
+                          leading: Icon(Icons.numbers_outlined),
+                          title: Text('Quantity'),
+                          trailing: sortingOrder == 'Quantity'
+                              ? RotationTransition(
+                                  turns: Tween(begin: 0.5, end: 0.0)
+                                      .animate(animationController),
+                                  child: Icon(Icons.arrow_downward_outlined),
+                                )
+                              : null,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+
+    animationController.forward();
   }
 
   @override
@@ -163,7 +302,7 @@ class _UserInventoryState extends State<UserInventory> {
                                 color: Colors.grey,
                               ),
                               prefixIcon: Icon(Icons.search_rounded),
-                              border: InputBorder.none, // Disable underline
+                              border: InputBorder.none,
                             ),
                           ),
                         ),
@@ -195,70 +334,68 @@ class _UserInventoryState extends State<UserInventory> {
             ),
             SliverAppBar(
               toolbarHeight: 40,
+              floating: true,
+              snap: true,
+              backgroundColor: Color.fromRGBO(242, 243, 245, 1),
+              elevation: 0,
               title: Padding(
                 padding: const EdgeInsets.only(left: 8.0, bottom: 20, top: 5),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 10.0),
-                      child: Text(
-                        'Sort by: ',
-                        style: TextStyle(
-                          fontSize: 14,
+                      child: GestureDetector(
+                        onTap: () {
+                          _displayBottomSheet();
+                        },
+                        child: Icon(
+                          Icons.sort,
+                          size: 20,
                           color: Colors.grey.shade800,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 4),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          _displayBottomSheet();
+                        },
+                        child: Text(
+                          'Sort by: ',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey.shade800,
+                          ),
                         ),
                       ),
                     ),
                     Padding(
                       padding:
                           const EdgeInsets.only(top: 10.0, left: 2, right: 5),
-                      child: DropdownButton<String>(
-                        value: value.sortOption,
-                        underline: Container(),
-                        borderRadius: BorderRadius.circular(10),
-                        elevation: 1,
-                        enableFeedback: true,
-                        focusColor: Colors.transparent,
-                        icon: Icon(Icons
-                            .arrow_drop_down_outlined), // Add an arrow icon
-                        iconSize: 24, // Adjust the icon size as desired
-                        dropdownColor: Color.fromARGB(248, 246, 250, 251)
-                            .withOpacity(0.95),
-                        isDense: true,
-                        items: <String>['None', 'Name', 'Price', 'Quantity']
-                            .map<DropdownMenuItem<String>>(
-                          (String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(
-                                value,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.grey
-                                      .shade800, // Adjust the text size as desired
-                                  decoration: TextDecoration
-                                      .none, // Remove the underline
-                                ),
-                              ),
-                            );
-                          },
-                        ).toList(),
-                        onChanged: (String? newValue) {
-                          if (newValue != null) {
-                            value.sortInventory(
-                                newValue); // Call the sortInventory method with the selected sort option
-                          }
+                      child: GestureDetector(
+                        onTap: () {
+                          _displayBottomSheet();
                         },
+                        child: Row(
+                          children: [
+                            Text(
+                              value.sortOption,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey.shade800,
+                                decoration: TextDecoration.none,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-              floating: true,
-              snap: true,
-              backgroundColor: Color.fromRGBO(242, 243, 245, 1),
-              elevation: 0,
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate(

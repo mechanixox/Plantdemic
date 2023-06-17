@@ -60,7 +60,7 @@ class MyBottomNavBar extends StatelessWidget {
               GButton(
                 icon: Icons.analytics_outlined,
                 iconColor: Color.fromARGB(255, 111, 109, 109),
-                text: 'Records',
+                text: 'Reports',
                 textStyle: TextStyle(
                   fontFamily: 'Arial',
                   //fontWeight: FontWeight.bold,

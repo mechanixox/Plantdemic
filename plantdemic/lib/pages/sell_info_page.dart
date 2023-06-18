@@ -601,14 +601,15 @@ class _SellInfoPageState extends State<SellInfoPage> {
 
         Future<void> selectDate() async {
           DateTime now = DateTime.now();
-          DateTime sunday = now.subtract(Duration(days: now.weekday));
-          DateTime saturday = sunday.add(Duration(days: 7));
+          DateTime currentWeekStart =
+              now.subtract(Duration(days: now.weekday % 7));
+          DateTime currentWeekEnd = currentWeekStart.add(Duration(days: 6));
 
           final DateTime? picked = await showDatePicker(
             context: context,
-            initialDate: selectedDate.isBefore(sunday) ? sunday : selectedDate,
-            firstDate: sunday,
-            lastDate: saturday,
+            initialDate: selectedDate,
+            firstDate: currentWeekStart,
+            lastDate: currentWeekEnd,
           );
 
           if (picked != null && picked != selectedDate) {
@@ -693,10 +694,11 @@ class _SellInfoPageState extends State<SellInfoPage> {
                 } else {
                   DateTime selectedDateTime = DateFormat('MM/dd/yyyy')
                       .parse(_dateController.text, true);
-                  DateTime currentWeekStart = DateTime.now()
-                      .subtract(Duration(days: DateTime.now().weekday));
+                  DateTime now = DateTime.now();
+                  DateTime currentWeekStart =
+                      now.subtract(Duration(days: now.weekday % 6));
                   DateTime currentWeekEnd =
-                      DateTime.now().add(Duration(days: 7));
+                      currentWeekStart.add(Duration(days: 7));
 
                   if (selectedDateTime.isAfter(currentWeekEnd) ||
                       selectedDateTime.isBefore(currentWeekStart)) {

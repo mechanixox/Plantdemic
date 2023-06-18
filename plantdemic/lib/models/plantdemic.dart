@@ -279,27 +279,37 @@ class Plantdemic extends ChangeNotifier {
 
   void sortInventory(String sortOption) {
     _sortOption = sortOption;
-    if (sortOption == 'Default') {
+    /*if (sortOption == 'Default') {
       notifyListeners();
       return;
-    }
+    }*/
 
-    _inventory.sort((a, b) {
-      switch (sortOption) {
-        case 'Name':
-          return a.name.toLowerCase().compareTo(b.name.toLowerCase());
-        case 'Price':
-          final double priceA = double.tryParse(a.price) ?? 0;
-          final double priceB = double.tryParse(b.price) ?? 0;
-          return priceA.compareTo(priceB);
-        case 'Quantity':
-          final int quantityA = int.tryParse(a.quantity) ?? 0;
-          final int quantityB = int.tryParse(b.quantity) ?? 0;
-          return quantityA.compareTo(quantityB);
-        default:
-          return 0;
-      }
-    });
+    _inventory.sort(
+      (a, b) {
+        switch (sortOption) {
+          case 'Default':
+            db.saveInventoryData(_inventory);
+            notifyListeners();
+            return 0;
+
+          case 'Name':
+            db.saveInventoryData(_inventory);
+            return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+          case 'Price':
+            db.saveInventoryData(_inventory);
+            final double priceA = double.tryParse(a.price) ?? 0;
+            final double priceB = double.tryParse(b.price) ?? 0;
+            return priceA.compareTo(priceB);
+          case 'Quantity':
+            db.saveInventoryData(_inventory);
+            final int quantityA = int.tryParse(a.quantity) ?? 0;
+            final int quantityB = int.tryParse(b.quantity) ?? 0;
+            return quantityA.compareTo(quantityB);
+          default:
+            return 0;
+        }
+      },
+    );
 
     notifyListeners();
     db.saveInventoryData(_inventory);

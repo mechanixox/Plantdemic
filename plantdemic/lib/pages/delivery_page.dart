@@ -108,10 +108,25 @@ class _UserDeliverState extends State<UserDelivery> {
         child: SafeArea(
           child: Padding(
             padding:
-                const EdgeInsets.only(right: 15, bottom: 1, top: 0, left: 15),
+                const EdgeInsets.only(right: 15, bottom: 0, top: 10, left: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                if (value.delivery.isEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 250.0),
+                    child: Center(
+                      child: Text(
+                        'Delivery is currently empty.\nPlease go to the inventory to add\nplants to your delivery.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.shade600,
+                          //fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ),
+                  ),
                 //list of plant(s)
                 Expanded(
                   child: ListView.builder(

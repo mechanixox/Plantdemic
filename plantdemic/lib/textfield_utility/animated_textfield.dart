@@ -87,7 +87,7 @@ class _AnimatedTextFieldState extends State<AnimatedTextField>
                 labelText: widget.label,
                 border: InputBorder.none,
                 contentPadding:
-                    EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                    EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 0),
                 suffixIcon: widget.suffix,
               ),
               onTap: widget.onTap, // New addition

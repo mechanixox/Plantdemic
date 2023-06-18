@@ -242,9 +242,15 @@ class _AddPlantPageState extends State<AddPlantPage> {
     );
   }
 
-  String capitalize(String input) {
-    if (input.isEmpty) return input;
-    return input[0].toUpperCase() + input.substring(1);
+  String capitalize(String value) {
+    List<String> words = value.split(' ');
+    for (int i = 0; i < words.length; i++) {
+      String word = words[i];
+      if (word.isNotEmpty) {
+        words[i] = word[0].toUpperCase() + word.substring(1);
+      }
+    }
+    return words.join(' ');
   }
 
   void restrictFields(Plant plant) {

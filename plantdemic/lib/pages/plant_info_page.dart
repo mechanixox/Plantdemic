@@ -153,6 +153,58 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
     );
   }
 
+  void restrictNameOnlyLetters(BuildContext context, Plant plant) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return BackdropFilter(
+          filter:
+              ImageFilter.blur(sigmaX: 5, sigmaY: 5, tileMode: TileMode.mirror),
+          child: AlertDialog(
+            backgroundColor: Colors.green.shade50.withOpacity(0.90),
+            contentPadding: EdgeInsets.only(bottom: 20, left: 24, right: 24),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            title: Text(
+              'Invalid name',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.grey.shade800,
+              ),
+            ),
+            content: Padding(
+              padding: const EdgeInsets.only(top: 10.0),
+              child: Text(
+                'Name for plant should only contain letters.',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 16),
+              ),
+            ),
+            actions: [
+              Container(
+                alignment: Alignment.center,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    '  OK  ',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.blue.shade700,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   void restrictCost(Plant plant) {
     showDialog(
       context: context,
@@ -417,16 +469,21 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
             TextButton(
               onPressed: () {
                 String newName = _nameController.text.trim();
+                newName = capitalize(newName);
                 String newCost = _costController.text.trim();
                 String newPrice = _priceController.text.trim();
                 String newQuantity = _quantityController.text.trim();
 
                 // Validate name
+                if (newName.contains(RegExp(r'[^a-zA-Z\s]'))) {
+                  restrictNameOnlyLetters(context, widget.plant);
+                  return;
+                }
+
                 if (newName == widget.plant.name &&
                     newPrice.isEmpty &&
                     newQuantity.isEmpty &&
                     newCost.isEmpty) {
-                  // Name is empty or unchanged
                   fillFields(context, widget.plant);
                   return;
                 } else if (newName == widget.plant.name) {
@@ -435,6 +492,7 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
                     restrictPrice(widget.plant);
                     return;
                   }
+
                   if (double.tryParse(newCost) == null ||
                       double.parse(newCost) < 0) {
                     restrictCost(widget.plant);
@@ -519,6 +577,17 @@ class _ManagePlantPageState extends State<ManagePlantPage> {
         );
       },
     );
+  }
+
+  String capitalize(String value) {
+    List<String> words = value.split(' ');
+    for (int i = 0; i < words.length; i++) {
+      String word = words[i];
+      if (word.isNotEmpty) {
+        words[i] = word[0].toUpperCase() + word.substring(1);
+      }
+    }
+    return words.join(' ');
   }
 
   void navigateToSellInfoPage() {

@@ -71,7 +71,8 @@ class _UserInventoryState extends State<UserInventory> {
   }
 
   void removeFromInventory(Plant plant) {
-    Provider.of<Plantdemic>(context, listen: false).removeFromInventory(plant);
+    Provider.of<Plantdemic>(context, listen: false)
+        .removeFromInventoryDialog(context, plant);
     setState(() {
       if (searchResults.contains(plant)) {
         searchResults.remove(plant);
@@ -341,7 +342,7 @@ class _UserInventoryState extends State<UserInventory> {
               title: Padding(
                 padding: const EdgeInsets.only(left: 8.0, bottom: 20, top: 5),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 10.0),

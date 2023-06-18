@@ -449,9 +449,9 @@ class Plantdemic extends ChangeNotifier {
                       style: TextStyle(fontSize: 16),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 15),
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 20.0),
+                    padding: const EdgeInsets.only(bottom: 15.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -467,7 +467,7 @@ class Plantdemic extends ChangeNotifier {
                             Navigator.of(context).pop();
                           },
                         ),
-                        SizedBox(width: 5),
+                        SizedBox(width: 15),
                         TextButton(
                           child: Text(
                             'Move',
@@ -478,6 +478,87 @@ class Plantdemic extends ChangeNotifier {
                             // User chose to move the plant to delivery
                             movePlantToDelivery(plant);
                             Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  removeFromInventoryDialog(BuildContext context, Plant plant) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.green.shade50.withOpacity(0.90),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          contentPadding:
+              EdgeInsets.only(top: 10, bottom: 10, left: 5, right: 5),
+          content: Stack(
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding:
+                        EdgeInsets.only(top: 10, left: 0, bottom: 10, right: 0),
+                    child: Text(
+                      'Remove plant',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22,
+                        color: Colors.grey.shade800,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      'Are you sure you want to remove the plant from your inventory? This action will permanently delete the plant from your inventory.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextButton(
+                          child: Text(
+                            'No, cancel',
+                            style: TextStyle(
+                                fontSize: 15, color: Colors.grey.shade800),
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            notifyListeners();
+                            db.saveInventoryData(_inventory);
+                          },
+                        ),
+                        SizedBox(width: 15),
+                        TextButton(
+                          child: Text(
+                            'Yes, remove',
+                            style: TextStyle(
+                                fontSize: 15, color: Colors.red.shade400),
+                          ),
+                          onPressed: () {
+                            removeFromInventory(plant);
+                            Navigator.of(context).pop();
+                            notifyListeners();
+                            db.saveInventoryData(_inventory);
                           },
                         ),
                       ],

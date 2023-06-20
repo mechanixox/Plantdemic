@@ -14,11 +14,11 @@ class AllSummary extends StatefulWidget {
 
 class _AllSummaryState extends State<AllSummary> {
   DateTime today = DateTime.now();
-  void _onDaySelected(DateTime day, DateTime focusedDay) {
+  /*void _onDaySelected(DateTime day, DateTime focusedDay) {
     setState(() {
       today = day;
     });
-  }
+  }*/
 
   DateTime? _selectedDate;
   CalendarFormat _calendarFormat = CalendarFormat.month;

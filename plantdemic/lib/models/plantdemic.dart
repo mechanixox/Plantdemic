@@ -549,7 +549,7 @@ class Plantdemic extends ChangeNotifier {
                           child: Text(
                             'No, cancel',
                             style: TextStyle(
-                                fontSize: 15, color: Colors.grey.shade800),
+                                fontSize: 16, color: Colors.blue.shade700),
                           ),
                           onPressed: () {
                             Navigator.of(context).pop();
@@ -562,7 +562,7 @@ class Plantdemic extends ChangeNotifier {
                           child: Text(
                             'Yes, remove',
                             style: TextStyle(
-                                fontSize: 15, color: Colors.red.shade400),
+                                fontSize: 16, color: Colors.red.shade400),
                           ),
                           onPressed: () {
                             removeFromInventory(plant);

@@ -32,6 +32,7 @@ class PlantdemicDatabase {
   List<Plant> readInventoryData() {
     List savedInventoryPlants = _myBox.get("INVENTORY_PLANTS") ??
         [
+          /*
           Plant(
               name: 'Monstera',
               cost: '400.00',
@@ -116,6 +117,7 @@ class PlantdemicDatabase {
               price: '200.00',
               quantity: '12',
               imagePath: 'assets/icons/new/lucky-bird.jpg'),
+          */
         ];
 
     List<Plant> allInventoryPlants = [];

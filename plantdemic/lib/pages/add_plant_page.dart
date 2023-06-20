@@ -302,6 +302,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
                 padding: const EdgeInsets.only(bottom: 11.0),
                 child: Text(
                   'Invalid input',
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.grey.shade800,
@@ -310,9 +311,10 @@ class _AddPlantPageState extends State<AddPlantPage> {
               ),
 
               content: Padding(
-                padding: const EdgeInsets.only(left: 25.0),
+                padding: const EdgeInsets.only(left: 0.0),
                 child: Text(
                   'Please enter a valid input \nfor ${invalidFields.join(", ")}.',
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.grey.shade800,

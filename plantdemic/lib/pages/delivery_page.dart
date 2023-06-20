@@ -117,7 +117,7 @@ class _UserDeliverState extends State<UserDelivery> {
                     padding: const EdgeInsets.only(top: 250.0),
                     child: Center(
                       child: Text(
-                        'Delivery is currently empty.\nPlease go to the inventory to add\nplants to your delivery.',
+                        'Delivery is currently empty.\nPlease go to the inventory to\nadd plants here.',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 16,

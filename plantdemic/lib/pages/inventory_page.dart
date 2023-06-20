@@ -434,6 +434,22 @@ class _UserInventoryState extends State<UserInventory> {
                     : searchResults.length,
               ),
             ),
+            if (value.inventory.isEmpty)
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 190.0),
+                  child: Center(
+                    child: Text(
+                      'It\'s empty here :-(\nStart adding your plants.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
         floatingActionButton: FloatingActionButton(

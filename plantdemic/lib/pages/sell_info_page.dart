@@ -696,12 +696,13 @@ class _SellInfoPageState extends State<SellInfoPage> {
                       .parse(_dateController.text, true);
                   DateTime now = DateTime.now();
                   DateTime currentWeekStart =
-                      now.subtract(Duration(days: now.weekday % 6));
+                      now.subtract(Duration(days: now.weekday % 7));
                   DateTime currentWeekEnd =
-                      currentWeekStart.add(Duration(days: 7));
+                      currentWeekStart.add(Duration(days: 6));
 
                   if (selectedDateTime.isAfter(currentWeekEnd) ||
-                      selectedDateTime.isBefore(currentWeekStart)) {
+                      selectedDateTime.isBefore(
+                          currentWeekStart.subtract(Duration(days: 1)))) {
                     // Date is beyond the current week, show an error message or handle it accordingly
                     showDialog(
                       context: context,

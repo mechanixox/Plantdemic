@@ -42,17 +42,19 @@ class ProfitGraph extends StatelessWidget {
         BarChartData(
           barTouchData: BarTouchData(
             touchTooltipData: BarTouchTooltipData(
-              tooltipBgColor:
-                  Color.fromARGB(255, 255, 255, 255).withOpacity(0.8),
+              // tooltipBgColor:
+              //     Colors.white.withOpacity(0.8),
               fitInsideVertically: true,
               getTooltipItem: (group, groupIndex, rod, rodIndex) {
                 String tooltipText =
                     myBarData.barData[groupIndex].y.toInt().toString();
                 return BarTooltipItem(
-                    tooltipText,
-                    TextStyle(
-                        color: Colors.green.shade400,
-                        fontWeight: FontWeight.bold));
+                  tooltipText,
+                  TextStyle(
+                    color: Colors.green.shade400,
+                    fontWeight: FontWeight.bold,
+                  ),
+                );
               },
             ),
           ),

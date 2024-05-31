@@ -7,7 +7,7 @@ import '../models/plant.dart';
 import '../components/record_tile.dart';
 
 class UserRecords extends StatefulWidget {
-  const UserRecords({Key? key}) : super(key: key);
+  const UserRecords({super.key});
 
   @override
   State<UserRecords> createState() => _UserRecordsState();

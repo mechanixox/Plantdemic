@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -11,9 +10,13 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
+  late Future<void> _loadFuture;
+
   @override
   void initState() {
     super.initState();
+    _loadFuture =
+        Future.delayed(Duration(seconds: 3)); // Simulate a loading delay
     startTimer();
   }
 
@@ -49,11 +52,12 @@ class _SplashState extends State<Splash> {
                 fit: BoxFit.contain,
               ),
             ),
-            SizedBox(height: 0),
-            FutureBuilder(
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
+            SizedBox(height: 30), // Adjust the height if necessary
+            FutureBuilder<void>(
+              future: _loadFuture,
+              builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Container();
+                  return Container(); // Show nothing while waiting
                 } else {
                   return ShaderMask(
                     blendMode: BlendMode.srcIn,

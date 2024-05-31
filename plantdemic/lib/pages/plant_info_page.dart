@@ -13,7 +13,7 @@ import 'package:plantdemic/textfield_utility/animated_textfield.dart';
 
 class ManagePlantPage extends StatefulWidget {
   final Plant plant;
-  const ManagePlantPage({Key? key, required this.plant}) : super(key: key);
+  const ManagePlantPage({super.key, required this.plant});
 
   @override
   State<ManagePlantPage> createState() => _ManagePlantPageState();

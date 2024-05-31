@@ -3,7 +3,7 @@ import 'package:plantdemic/deliveryTabBar/tab1.dart';
 import 'package:plantdemic/deliveryTabBar/tab2.dart';
 
 class TabBarPage extends StatefulWidget {
-  const TabBarPage({Key? key}) : super(key: key);
+  const TabBarPage({super.key});
 
   @override
   // ignore: library_private_types_in_public_api

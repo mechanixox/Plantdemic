@@ -8,9 +8,9 @@ class DeliveryInfoTile extends StatelessWidget {
   final Plant plant;
 
   DeliveryInfoTile({
-    Key? key,
+    super.key,
     required this.plant,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

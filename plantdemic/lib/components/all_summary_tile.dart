@@ -6,9 +6,9 @@ class AllSummaryTile extends StatelessWidget {
   final Plant plant;
 
   AllSummaryTile({
-    Key? key,
+    super.key,
     required this.plant,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

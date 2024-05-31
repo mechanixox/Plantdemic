@@ -9,10 +9,10 @@ class PlantInfoTile extends StatelessWidget {
   final Function(BuildContext)? editTapped;
 
   PlantInfoTile({
-    Key? key,
+    super.key,
     required this.plant,
     required this.editTapped,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,6 @@ class PlantInfoTile extends StatelessWidget {
           children: [
             // edit tile
             SlidableAction(
-              
               onPressed: editTapped,
               backgroundColor: Colors.green.shade400.withOpacity(0.9),
               icon: Icons.edit_rounded,

@@ -11,12 +11,12 @@ class DeliveryTile extends StatelessWidget {
   final Function(BuildContext)? deleteTapped;
 
   DeliveryTile({
-    Key? key,
+    super.key,
     required this.plant,
     required this.onTap,
     required this.trailing,
     required this.deleteTapped,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

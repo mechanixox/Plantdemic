@@ -13,7 +13,7 @@ import '../textfield_utility/animated_textfield.dart';
 
 class SellInfoPage extends StatefulWidget {
   final Plant plant;
-  const SellInfoPage({Key? key, required this.plant}) : super(key: key);
+  const SellInfoPage({super.key, required this.plant});
 
   @override
   State<SellInfoPage> createState() => _SellInfoPageState();

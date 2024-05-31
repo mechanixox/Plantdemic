@@ -11,7 +11,7 @@ import '../models/plant.dart';
 import 'add_plant_page.dart';
 
 class UserInventory extends StatefulWidget {
-  const UserInventory({Key? key}) : super(key: key);
+  const UserInventory({super.key});
 
   @override
   State<UserInventory> createState() => _UserInventoryState();

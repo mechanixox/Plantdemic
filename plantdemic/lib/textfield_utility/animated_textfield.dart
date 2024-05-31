@@ -9,14 +9,14 @@ class AnimatedTextField extends StatefulWidget {
   final TextInputAction inputAction;
   final VoidCallback? onTap; // New addition
   const AnimatedTextField({
-    Key? key,
+    super.key,
     required this.label,
     required this.suffix,
     required this.controller,
     required this.keyboardType,
     required this.inputAction,
     this.onTap, // New addition
-  }) : super(key: key);
+  });
 
   @override
   State<AnimatedTextField> createState() => _AnimatedTextFieldState();

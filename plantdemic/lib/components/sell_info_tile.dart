@@ -11,13 +11,13 @@ class SellInfoTile extends StatelessWidget {
   Function(BuildContext)? editBuyerTapped;
   Function(BuildContext)? editDateTapped;
   SellInfoTile({
-    Key? key,
+    super.key,
     required this.plant,
     this.editPriceTapped,
     this.editQuantityTapped,
     this.editBuyerTapped,
     this.editDateTapped,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

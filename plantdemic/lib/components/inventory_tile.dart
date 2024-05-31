@@ -15,14 +15,14 @@ class InventoryTile extends StatelessWidget {
   final Function(BuildContext)? sellTapped;
 
   InventoryTile({
-    Key? key,
+    super.key,
     required this.plant,
     required this.selectedImage,
     required this.onTap,
     required this.trailing,
     required this.deleteTapped,
     required this.sellTapped,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

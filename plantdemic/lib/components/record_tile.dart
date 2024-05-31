@@ -9,10 +9,10 @@ class RecordsTile extends StatelessWidget {
   final Function(BuildContext)? deleteTapped;
 
   RecordsTile({
-    Key? key,
+    super.key,
     required this.plant,
     required this.deleteTapped,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
